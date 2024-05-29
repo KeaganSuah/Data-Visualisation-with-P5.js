@@ -24,6 +24,9 @@ function NutrientsTimeSeries() {
   // to set the margin size for the plot
   var marginSize = 35;
 
+  // Legend status if click or unclick
+  var legendButton = false;
+
   // Layout object to store all common plot layout parameters and methods.
   this.layout = {
     marginSize: marginSize,
@@ -74,16 +77,25 @@ function NutrientsTimeSeries() {
     this.endYear = Number(this.data.columns[this.data.columns.length - 1]);
 
     for (var i = 0; i < this.data.getRowCount(); i++) {
-      this.colors.push(color(random(0, 255), random(0, 255), random(0, 255)));
+      this.colors.push(color(random(0, 200), random(0, 200), random(0, 200)));
     }
 
     // Set the min and max percentage,
     //do a dynamic find min and max in the data source
     this.minPercentage = 80;
     this.maxPercentage = 400;
+
+    // Display filter selection button
+    self.makeNutrientFilter();
+
+    // Display Legend button
+    self.createLegendButton();
   };
 
-  this.destroy = function () {};
+  this.destroy = function () {
+    this.filterNutrient.remove();
+    this.button.remove();
+  };
 
   this.draw = function () {
     if (!this.loaded) {
@@ -119,7 +131,6 @@ function NutrientsTimeSeries() {
       var previous = null;
 
       var title = row.getString(0);
-      var userOption = "all";
 
       for (var j = 1; j < numYears; j++) {
         // Create an object to store data for the current year.
@@ -130,20 +141,24 @@ function NutrientsTimeSeries() {
         };
 
         if (previous != null) {
-          // Draw line segment connecting previous year to current
-          // year pay gap.
-          stroke(this.colors[i]);
-          line(
-            this.mapYearToWidth(previous.year),
-            this.mapNutrientsToHeight(previous.percentage),
-            this.mapYearToWidth(current.year),
-            this.mapNutrientsToHeight(current.percentage)
-          );
+          if (
+            this.filterNutrient.value() == title ||
+            this.filterNutrient.value() == "All"
+          ) {
+            // Draw line segment connecting previous year to current
+            // year pay gap.
+            stroke(this.colors[i]);
+            line(
+              this.mapYearToWidth(previous.year),
+              this.mapNutrientsToHeight(previous.percentage),
+              this.mapYearToWidth(current.year),
+              this.mapNutrientsToHeight(current.percentage)
+            );
+          }
 
           // The number of x-axis labels to skip so that only
           // numXTickLabels are drawn.
-
-          var xLabelSkip = ceil(numYears / this.layout.numXTickLabels);
+          var xLabelSkip = this.data.rows.length;
 
           // Draw the tick label marking the start of the previous year.
           if (i % xLabelSkip == 0) {
@@ -163,19 +178,21 @@ function NutrientsTimeSeries() {
             );
           }
         } else {
-          //draw the nutrients label
-          noStroke();
-          this.makeLegendItem(title, i, this.colors[i]);
-          fill(this.colors[i]);
-          text(title, 100, this.mapNutrientsToHeight(current.percentage));
+          if (
+            this.filterNutrient.value() == title ||
+            this.filterNutrient.value() == "All"
+          ) {
+            //draw the nutrients label
+            noStroke();
+            this.makeLegendItem(title, i, this.colors[i], legendButton);
+            fill(this.colors[i]);
+            text(title, 100, this.mapNutrientsToHeight(current.percentage));
+          }
         }
         // Assign current year to previous year so that it is available // during the next iteration of this loop to give us the start // position of the next line segment.
         previous = current;
       }
     }
-
-    // display year when mouse over
-    self.drawYearBesidesMouse();
   };
 
   this.drawTitle = function () {
@@ -210,43 +227,73 @@ function NutrientsTimeSeries() {
     );
   };
 
-  //   Extension
-  self.mapMouseXToYear = function (value) {
-    return int(
-      map(
-        value,
-        this.layout.leftMargin,
-        this.layout.rightMargin,
-        this.startYear,
-        this.endYear
-      )
-    );
-  };
+  // Addition Extension of the nutrients graph, this functions are all private functions
 
-  self.drawYearBesidesMouse = function () {
-    var year = this.mapMouseXToYear(mouseX);
-    fill(0);
-    noStroke();
-    textSize(14);
-    text(year, mouseX, mouseY);
-  };
-
-  self.makeLegendItem = function (label, i, colour) {
-    var boxWidth = 50;
-    var boxHeight = 10;
-    var x = 800;
-    var y = 50 + (boxHeight + 2) * i;
-
-    noStroke();
-    fill(colour);
-    rect(x, y, boxWidth, boxHeight);
-
-    fill(0);
-    noStroke();
+  // function display the legend only when the variable legendButton is true
+  self.makeLegendItem = function (label, i, colour, show) {
     textAlign("left", "center");
-    textSize(12);
-    text(label, x + boxWidth + 10, y + boxHeight / 2);
-    // Reset back the font size
-    textSize(16);
+    if (show) {
+      // Private variables for the legend, showing the axis and length
+      var boxWidth = 50;
+      var boxHeight = 15;
+      var x = 700;
+      var y = 50 + (boxHeight + 2) * i;
+
+      // To create the big white box at the back to show the legend better
+      if (i == 1) {
+        fill(230);
+        rect(x - 10, 50, 260, 170, 10);
+      }
+
+      // Draw the legend box with colours
+      noStroke();
+      fill(colour);
+      rect(x, y, boxWidth, boxHeight);
+
+      // Display the text beside the legend box
+      fill(0);
+      noStroke();
+      textSize(14);
+      text(label, x + boxWidth + 10, y + boxHeight / 2);
+      // Reset back the font size
+      textSize(16);
+    }
+  };
+
+  // Function is to change the variable legendButton so that is alternate when it is called
+  self.legendButtonClick = function () {
+    if (legendButton) {
+      legendButton = false;
+    } else {
+      legendButton = true;
+    }
+  };
+
+  // Create the button that display the legend, allowing user to open and close
+  self.createLegendButton = function () {
+    this.button = createButton("Show Legend");
+    this.button.position(width + 130, 12);
+
+    // Call repaint() when the button is pressed.
+    this.button.mousePressed(self.legendButtonClick);
+  };
+
+  // To create the filter option button to filter the nutrients, user can pick which nutrient they would like to see
+  self.makeNutrientFilter = function () {
+    // Create a select DOM element.
+    this.filterNutrient = createSelect();
+    this.filterNutrient.position(width - 80, 15);
+
+    // Fill the options with all company names.
+    var nutrients = this.data.rows;
+
+    // Fill all first
+    this.filterNutrient.option("All");
+
+    // First entry is empty.
+    for (let i = 1; i < nutrients.length; i++) {
+      var nutrient = nutrients[i].getString(0);
+      this.filterNutrient.option(nutrient);
+    }
   };
 }
