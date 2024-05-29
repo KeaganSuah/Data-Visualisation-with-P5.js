@@ -154,6 +154,23 @@ function NutrientsTimeSeries() {
               this.mapYearToWidth(current.year),
               this.mapNutrientsToHeight(current.percentage)
             );
+
+            // Extension
+            ellipse(
+              this.mapYearToWidth(current.year),
+              this.mapNutrientsToHeight(current.percentage),
+              4,
+              4
+            );
+            var distancePoint = dist(
+              mouseX,
+              mouseY,
+              this.mapYearToWidth(current.year),
+              this.mapNutrientsToHeight(current.percentage)
+            );
+            if (distancePoint < 2) {
+              console.log(title, current.year, current.percentage);
+            }
           }
 
           // The number of x-axis labels to skip so that only
@@ -239,12 +256,6 @@ function NutrientsTimeSeries() {
       var x = 700;
       var y = 50 + (boxHeight + 2) * i;
 
-      // To create the big white box at the back to show the legend better
-      if (i == 1) {
-        fill(230);
-        rect(x - 10, 50, 260, 170, 10);
-      }
-
       // Draw the legend box with colours
       noStroke();
       fill(colour);
@@ -291,7 +302,7 @@ function NutrientsTimeSeries() {
     this.filterNutrient.option("All");
 
     // First entry is empty.
-    for (let i = 1; i < nutrients.length; i++) {
+    for (let i = 0; i < nutrients.length; i++) {
       var nutrient = nutrients[i].getString(0);
       this.filterNutrient.option(nutrient);
     }
