@@ -111,16 +111,17 @@ function drawYAxisTickLabels(min, max, layout, mapFunction, decimalPlaces) {
   }
 }
 
-function drawXAxisTickLabel(value, layout, mapFunction) {
+function drawXAxisTickLabel(value, layout, mapFunction, displayLabel) {
   // Map function must be passed with .bind(this).
   var x = mapFunction(value);
-
   fill(0);
   noStroke();
   textAlign("center", "center");
 
-  // Add tick label.
-  text(value, x, layout.bottomMargin + layout.marginSize / 2);
+  // Add tick label if displayLabel boolean is true
+  if (displayLabel) {
+    text(value, x, layout.bottomMargin + layout.marginSize / 2);
+  }
 
   if (layout.grid) {
     // Add grid line.

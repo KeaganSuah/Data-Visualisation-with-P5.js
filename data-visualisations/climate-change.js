@@ -209,7 +209,8 @@ function ClimateChange() {
           drawXAxisTickLabel(
             previous.year,
             this.layout,
-            this.mapYearToWidth.bind(this)
+            this.mapYearToWidth.bind(this),
+            true
           );
         }
 
@@ -219,7 +220,8 @@ function ClimateChange() {
           drawXAxisTickLabel(
             current.year,
             this.layout,
-            this.mapYearToWidth.bind(this)
+            this.mapYearToWidth.bind(this),
+            true
           );
         }
 
@@ -310,7 +312,7 @@ function ClimateChange() {
     // When conditions are met, draw the value on the canvas
     if (distance < size / 2) {
       // Change Cursor type of mouse
-      cursor(HAND)
+      cursor(HAND);
       // Display values on canvas
       textSize(64);
       fill(this.mapTemperatureToColour(current.temperature), 255);

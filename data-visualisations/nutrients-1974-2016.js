@@ -119,6 +119,7 @@ function NutrientsTimeSeries() {
       var previous = null;
 
       var title = row.getString(0);
+      var userOption = "all";
 
       for (var j = 1; j < numYears; j++) {
         // Create an object to store data for the current year.
@@ -146,14 +147,20 @@ function NutrientsTimeSeries() {
 
           // Draw the tick label marking the start of the previous year.
           if (i % xLabelSkip == 0) {
-            var currentTextSize = textSize();
-            textSize(9);
+            // variable to determine if the variable has to be displayed or not
+            var displayLabel = true;
+            if (previous.year == this.endYear - 3 || previous.year % 5 == 0) {
+              displayLabel = true;
+            } else {
+              displayLabel = false;
+            }
+            // Create vertical grid line, label at the bottom depends on the value of displayLabel variable
             drawXAxisTickLabel(
               previous.year,
               this.layout,
-              this.mapYearToWidth.bind(this)
+              this.mapYearToWidth.bind(this),
+              displayLabel
             );
-            textSize(currentTextSize);
           }
         } else {
           //draw the nutrients label

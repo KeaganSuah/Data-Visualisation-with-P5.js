@@ -139,7 +139,8 @@ function PayGapTimeSeries() {
           drawXAxisTickLabel(
             previous.year,
             this.layout,
-            this.mapYearToWidth.bind(this)
+            this.mapYearToWidth.bind(this),
+            true
           );
         }
       }
