@@ -10,6 +10,7 @@ function PieChart(x, y, diameter) {
   var previousWord = "";
   var word = "";
   var wordSize = 20;
+  var hoverSize = 0;
 
   // Convert the data into radians for the slice
   this.get_radians = function (data) {
@@ -58,14 +59,28 @@ function PieChart(x, y, diameter) {
       stroke(0);
       strokeWeight(1);
 
-      arc(
-        this.x,
-        this.y,
-        this.diameter,
-        this.diameter,
-        lastAngle,
-        lastAngle + angles[i] + 0.001
-      ); // Hack for 0!
+      // When the arc has been hovered, increase the size of the arc
+      if (word == data[i]) {
+        arc(
+          this.x,
+          this.y,
+          this.diameter + 50,
+          this.diameter + 50,
+          lastAngle,
+          lastAngle + angles[i] + 0.001
+        );
+      }
+      // When the arc is not hovered
+      else {
+        arc(
+          this.x,
+          this.y,
+          this.diameter,
+          this.diameter,
+          lastAngle,
+          lastAngle + angles[i] + 0.001
+        );
+      }
 
       self.mouseHover(distance, lastAngle, angles[i], data[i]);
 
@@ -76,15 +91,15 @@ function PieChart(x, y, diameter) {
       textAlign(CENTER);
       textSize(wordSize);
       noStroke();
-      text(word, this.x - 95, this.y - 5, 200);
+      if (word != "Hover over the Slice for Percentage") {
+        var displayWord = `${Number(word).toFixed(2)}%`;
+        text(displayWord, this.x - 95, this.y - 5, 200);
+      } else {
+        text(word, this.x - 95, this.y - 5, 200);
+      }
 
       if (labels) {
-        this.makeLegendItem(
-          labels[i],
-          i,
-          colour,
-          word == `${data[i].toFixed(2)}%`
-        );
+        this.makeLegendItem(labels[i], i, colour, word == data[i]);
       }
 
       lastAngle += angles[i];
@@ -133,7 +148,7 @@ function PieChart(x, y, diameter) {
         word = "Hover over the Slice for Percentage";
       } else if (distance < this.diameter / 2 && distance > 150) {
         wordSize = 32;
-        word = `${data.toFixed(2)}%`;
+        word = data;
         previousWord = word;
         // Change mouse cursor type
         cursor(HAND);

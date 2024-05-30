@@ -159,8 +159,8 @@ function NutrientsTimeSeries() {
             ellipse(
               this.mapYearToWidth(current.year),
               this.mapNutrientsToHeight(current.percentage),
-              4,
-              4
+              5,
+              5
             );
             var distancePoint = dist(
               mouseX,
@@ -168,8 +168,16 @@ function NutrientsTimeSeries() {
               this.mapYearToWidth(current.year),
               this.mapNutrientsToHeight(current.percentage)
             );
-            if (distancePoint < 2) {
-              console.log(title, current.year, current.percentage);
+            if (distancePoint < 5 / 2) {
+              cursor(HAND);
+              // Display Industry and values
+              var details = `${title} has a percentage of ${current.percentage}% during ${current.year}`;
+              // Draw Breakdown of details below canvas
+              textAlign("center", "center");
+              textSize(20);
+              text(details, width / 2, marginSize*3);
+              //  Text reset
+              textSize(16);
             }
           }
 
