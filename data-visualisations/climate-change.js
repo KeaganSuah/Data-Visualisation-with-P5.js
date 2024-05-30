@@ -28,7 +28,7 @@ function ClimateChange() {
     leftMargin: marginSize * 2,
     rightMargin: width - marginSize,
     topMargin: marginSize,
-    bottomMargin: height - marginSize * 2,
+    bottomMargin: (height-operationHeight) - marginSize * 2,
     pad: 5,
 
     plotWidth: function () {
@@ -103,7 +103,7 @@ function ClimateChange() {
       this.maxYear,
       1
     );
-    this.endSlider.position(600, 10);
+    this.endSlider.position(550, 10);
   };
 
   this.destroy = function () {
@@ -133,8 +133,8 @@ function ClimateChange() {
       1
     );
 
-    // Draw header
-    text(this.title, width / 2 + 300, 10);
+    // Draw the title above the plot.
+    this.drawTitle();
 
     // Draw x and y axis.
     drawAxis(this.layout);
@@ -278,6 +278,18 @@ function ClimateChange() {
     return color(red, 0, blue, 100);
   };
 
+  this.drawTitle = function () {
+    fill(0);
+    noStroke();
+    textAlign("center", "center");
+
+    text(
+      this.title,
+      this.layout.plotWidth() / 2 + this.layout.leftMargin,
+      this.layout.topMargin - 20
+    );
+  };
+
   // Private Method, design and display the points of the graph
   self.temperaturePoints = function (previous, current) {
     var pointSize =
@@ -300,7 +312,7 @@ function ClimateChange() {
   // Private Method, When the temperature points is hovered, display text on to the middle of the canvas
   self.temperaturePointsHovered = function (size, current, previous) {
     // Using the y-axis of the points, calculate the y-axis of the text. If points are high, text will be low
-    var textHeight = map(current.temperature, -0.5, 1, 100, height - 200);
+    var textHeight = map(current.temperature, -0.5, 1, 100, (height-operationHeight) - 200);
     // Distance between the mouse coords and the point coords
     var distance = dist(
       mouseX,

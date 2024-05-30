@@ -6,6 +6,9 @@ function TechDiversityGender() {
   // characters.
   this.id = "tech-diversity-gender";
 
+  // Title to display above the plot.
+  this.title = "Tech Diversity: Gender.";
+
   // Layout object to store all common plot layout parameters and
   // methods.
   this.layout = {
@@ -14,7 +17,7 @@ function TechDiversityGender() {
     leftMargin: 130,
     rightMargin: width,
     topMargin: 30,
-    bottomMargin: height,
+    bottomMargin: height - operationHeight,
     pad: 5,
 
     plotWidth: function () {
@@ -69,10 +72,15 @@ function TechDiversityGender() {
       return;
     }
 
+    // Draw the title above the plot.
+    this.drawTitle();
+
     // Draw Female/Male labels at the top of the plot.
     this.drawCategoryLabels();
 
-    var lineHeight = (height - this.layout.topMargin) / this.data.getRowCount();
+    var lineHeight =
+      (height - operationHeight - this.layout.topMargin) /
+      this.data.getRowCount();
 
     for (var i = 0; i < this.data.getRowCount(); i++) {
       // Calculate the y position for each company.
@@ -110,7 +118,6 @@ function TechDiversityGender() {
         lineHeight - this.layout.pad
       );
     }
-
     // Draw 50% line
     stroke(150);
     strokeWeight(1);
@@ -121,14 +128,26 @@ function TechDiversityGender() {
     fill(0);
     noStroke();
     textAlign("left", "top");
-    text("Female", this.layout.leftMargin, this.layout.pad);
+    text("Female", this.layout.leftMargin, height - operationHeight);
     textAlign("center", "top");
-    text("50%", this.midX, this.layout.pad);
+    text("50%", this.midX, height - operationHeight);
     textAlign("right", "top");
-    text("Male", this.layout.rightMargin, this.layout.pad);
+    text("Male", this.layout.rightMargin, height - operationHeight);
   };
 
   this.mapPercentToWidth = function (percent) {
     return map(percent, 0, 100, 0, this.layout.plotWidth());
+  };
+
+  this.drawTitle = function () {
+    fill(0);
+    noStroke();
+    textAlign("center", "center");
+
+    text(
+      this.title,
+      this.layout.plotWidth() / 2 + this.layout.leftMargin,
+      this.layout.topMargin - 20
+    );
   };
 }

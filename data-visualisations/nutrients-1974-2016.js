@@ -34,7 +34,7 @@ function NutrientsTimeSeries() {
     leftMargin: marginSize * 2,
     rightMargin: width - marginSize,
     topMargin: marginSize,
-    bottomMargin: height - marginSize * 2,
+    bottomMargin: height - operationHeight - marginSize * 2,
     pad: 5,
 
     plotWidth: function () {
@@ -175,7 +175,7 @@ function NutrientsTimeSeries() {
               // Draw Breakdown of details below canvas
               textAlign("center", "center");
               textSize(20);
-              text(details, width / 2, marginSize*3);
+              text(details, width / 2, marginSize * 3);
               //  Text reset
               textSize(16);
             }

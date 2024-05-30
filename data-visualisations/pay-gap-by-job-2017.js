@@ -49,18 +49,16 @@ function PayGapByJob2017() {
       console.log("Data not yet loaded");
       return;
     }
-    // Draw header
-    fill(0);
-    strokeWeight(1);
-    textSize(20);
-    text(this.title, width / 2, 10);
+
+    // Draw the title above the plot.
+    this.drawTitle();
 
     // Draw Breakdown of details below canvas
     textAlign("center", "center ");
     fill(0);
     noStroke();
     textSize(20);
-    text(details, this.pad, height - 15, width - this.pad);
+    text(details, this.pad, height - operationHeight - 15, width - this.pad);
 
     // Draw the axes.
     this.addAxes();
@@ -116,7 +114,13 @@ function PayGapByJob2017() {
           this.pad,
           width - this.pad
         ),
-        map(payGap[i], payGapMin, payGapMax, height - this.pad, this.pad),
+        map(
+          payGap[i],
+          payGapMin,
+          payGapMax,
+          height - operationHeight - this.pad,
+          this.pad
+        ),
         map(
           numJobs[i],
           numJobsMin,
@@ -147,25 +151,35 @@ function PayGapByJob2017() {
     noStroke();
     // Top-Left Quadrant
     fill(0, 0, 255, 50);
-    rect(this.pad, this.pad, width / 2 - this.pad, height / 2 - this.pad);
+    rect(
+      this.pad,
+      this.pad,
+      width / 2 - this.pad,
+      (height - operationHeight) / 2 - this.pad
+    );
     // Top-Right Quadrant
     fill(128, 0, 128, 50);
-    rect(width / 2, this.pad, width / 2 - this.pad, height / 2 - this.pad);
+    rect(
+      width / 2,
+      this.pad,
+      width / 2 - this.pad,
+      (height - operationHeight) / 2 - this.pad
+    );
     // Bottom-Left Quadrant
     fill(255, 165, 0, 50);
     rect(
       this.pad,
-      height / 2,
+      (height - operationHeight) / 2,
       width / 2 - this.pad,
-      height / 2 - this.pad - 20
+      (height - operationHeight) / 2 - this.pad - 20
     );
     // Bottom-Left Quadrant
     fill(255, 192, 203, 50);
     rect(
       width / 2,
-      height / 2,
+      (height - operationHeight) / 2,
       width / 2 - this.pad,
-      height / 2 - this.pad - 20
+      (height - operationHeight) / 2 - this.pad - 20
     );
 
     // Add Quadrant boxes label
@@ -173,29 +187,60 @@ function PayGapByJob2017() {
     textAlign("center", "center");
     // Top-Left Quadrant
     fill(0, 0, 55);
-    text("Male-Dominated, Higher Male Pay", width / 4, height / 4);
+    text(
+      "Male-Dominated, Higher Male Pay",
+      width / 4,
+      (height - operationHeight) / 4
+    );
     // Top-Right Quadrant
     fill(0, 0, 55);
-    text("Female-Dominated, Higher Male Pay", 3 * (width / 4), height / 4);
+    text(
+      "Female-Dominated, Higher Male Pay",
+      3 * (width / 4),
+      (height - operationHeight) / 4
+    );
     // Bottom-Left Quadrant
     fill(0, 0, 55);
-    text("Male-Dominated, Higher Female Pay", width / 4, 3 * (height / 4));
+    text(
+      "Male-Dominated, Higher Female Pay",
+      width / 4,
+      3 * ((height - operationHeight) / 4)
+    );
     // Bottom-Left Quadrant
     fill(0, 0, 55);
     text(
       "Female-Dominated, Higher Female Pay",
       3 * (width / 4),
-      3 * (height / 4)
+      3 * ((height - operationHeight) / 4)
     );
 
     stroke(100);
     strokeWeight(2);
 
     // Add vertical line.
-    line(width / 2, 0 + this.pad, width / 2, height - this.pad - 20);
+    line(
+      width / 2,
+      0 + this.pad,
+      width / 2,
+      height - operationHeight - this.pad - 20
+    );
 
     // Add horizontal line.
-    line(0 + this.pad, height / 2, width - this.pad, height / 2);
+    line(
+      0 + this.pad,
+      (height - operationHeight) / 2,
+      width - this.pad,
+      (height - operationHeight) / 2
+    );
+  };
+
+  this.drawTitle = function () {
+    fill(0);
+    noStroke();
+    textAlign("center", "center");
+
+    textSize(16);
+    text(this.title, width / 2, 10);
   };
 
   // Private function, to set the intensity of points to see how far it is from center
@@ -249,7 +294,13 @@ function PayGapByJob2017() {
       mouseX,
       mouseY,
       map(propFemale, propFemaleMin, propFemaleMax, this.pad, width - this.pad),
-      map(payGap, payGapMin, payGapMax, height - this.pad, this.pad)
+      map(
+        payGap,
+        payGapMin,
+        payGapMax,
+        height - operationHeight - this.pad,
+        this.pad
+      )
     );
 
     // when mouse is on the points, it passes the condition

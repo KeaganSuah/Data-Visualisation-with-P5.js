@@ -26,7 +26,7 @@ function PayGapTimeSeries() {
     leftMargin: marginSize * 2,
     rightMargin: width - marginSize,
     topMargin: marginSize,
-    bottomMargin: height - marginSize * 2,
+    bottomMargin: (height-operationHeight) - marginSize * 2,
     pad: 5,
 
     plotWidth: function () {
