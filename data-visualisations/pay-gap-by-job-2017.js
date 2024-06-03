@@ -17,6 +17,12 @@ function PayGapByJob2017() {
   // Title to display above the plot.
   this.title = "Pay Gap by job 2017 quadrant chart";
 
+  // Load number of controls user has on the data
+  this.noControls = 0;
+
+  // Has Data breakdown or not
+  this.dataBreakdown = true;
+
   // Private Variables
   // Details breakdown of each points
   var details = "";
@@ -58,7 +64,7 @@ function PayGapByJob2017() {
     fill(0);
     noStroke();
     textSize(20);
-    text(details, this.pad, height - operationHeight - 15, width - this.pad);
+    text(details, this.pad, height - operation.height - 15, width - this.pad);
 
     // Draw the axes.
     this.addAxes();
@@ -118,7 +124,7 @@ function PayGapByJob2017() {
           payGap[i],
           payGapMin,
           payGapMax,
-          height - operationHeight - this.pad,
+          height - operation.height - this.pad,
           this.pad
         ),
         map(
@@ -155,7 +161,7 @@ function PayGapByJob2017() {
       this.pad,
       this.pad,
       width / 2 - this.pad,
-      (height - operationHeight) / 2 - this.pad
+      (height - operation.height) / 2 - this.pad
     );
     // Top-Right Quadrant
     fill(128, 0, 128, 50);
@@ -163,23 +169,23 @@ function PayGapByJob2017() {
       width / 2,
       this.pad,
       width / 2 - this.pad,
-      (height - operationHeight) / 2 - this.pad
+      (height - operation.height) / 2 - this.pad
     );
     // Bottom-Left Quadrant
     fill(255, 165, 0, 50);
     rect(
       this.pad,
-      (height - operationHeight) / 2,
+      (height - operation.height) / 2,
       width / 2 - this.pad,
-      (height - operationHeight) / 2 - this.pad - 20
+      (height - operation.height) / 2 - this.pad - 20
     );
     // Bottom-Left Quadrant
     fill(255, 192, 203, 50);
     rect(
       width / 2,
-      (height - operationHeight) / 2,
+      (height - operation.height) / 2,
       width / 2 - this.pad,
-      (height - operationHeight) / 2 - this.pad - 20
+      (height - operation.height) / 2 - this.pad - 20
     );
 
     // Add Quadrant boxes label
@@ -190,28 +196,28 @@ function PayGapByJob2017() {
     text(
       "Male-Dominated, Higher Male Pay",
       width / 4,
-      (height - operationHeight) / 4
+      (height - operation.height) / 4
     );
     // Top-Right Quadrant
     fill(0, 0, 55);
     text(
       "Female-Dominated, Higher Male Pay",
       3 * (width / 4),
-      (height - operationHeight) / 4
+      (height - operation.height) / 4
     );
     // Bottom-Left Quadrant
     fill(0, 0, 55);
     text(
       "Male-Dominated, Higher Female Pay",
       width / 4,
-      3 * ((height - operationHeight) / 4)
+      3 * ((height - operation.height) / 4)
     );
     // Bottom-Left Quadrant
     fill(0, 0, 55);
     text(
       "Female-Dominated, Higher Female Pay",
       3 * (width / 4),
-      3 * ((height - operationHeight) / 4)
+      3 * ((height - operation.height) / 4)
     );
 
     stroke(100);
@@ -222,15 +228,15 @@ function PayGapByJob2017() {
       width / 2,
       0 + this.pad,
       width / 2,
-      height - operationHeight - this.pad - 20
+      height - operation.height - this.pad - 20
     );
 
     // Add horizontal line.
     line(
       0 + this.pad,
-      (height - operationHeight) / 2,
+      (height - operation.height) / 2,
       width - this.pad,
-      (height - operationHeight) / 2
+      (height - operation.height) / 2
     );
   };
 
@@ -298,7 +304,7 @@ function PayGapByJob2017() {
         payGap,
         payGapMin,
         payGapMax,
-        height - operationHeight - this.pad,
+        height - operation.height - this.pad,
         this.pad
       )
     );

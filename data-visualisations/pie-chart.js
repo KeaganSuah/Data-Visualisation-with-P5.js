@@ -109,6 +109,7 @@ function PieChart(x, y, diameter) {
       noStroke();
       textAlign("center");
       textSize(24);
+      fill(0)
       text(title, this.x, this.y - this.diameter * 0.6);
     }
   };
@@ -124,7 +125,7 @@ function PieChart(x, y, diameter) {
 
     fill("black");
     noStroke();
-    textAlign("left", "center");
+    textAlign("left");
     textSize(12);
     text(label, x + boxWidth + 10, y + boxWidth / 2);
 

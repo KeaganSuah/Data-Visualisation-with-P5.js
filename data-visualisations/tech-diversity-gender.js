@@ -17,7 +17,7 @@ function TechDiversityGender() {
     leftMargin: 130,
     rightMargin: width,
     topMargin: 30,
-    bottomMargin: height - operationHeight,
+    bottomMargin: height - operation.height - 50,
     pad: 5,
 
     plotWidth: function () {
@@ -79,7 +79,7 @@ function TechDiversityGender() {
     this.drawCategoryLabels();
 
     var lineHeight =
-      (height - operationHeight - this.layout.topMargin) /
+      (height - operation.height - 50 - this.layout.topMargin) /
       this.data.getRowCount();
 
     for (var i = 0; i < this.data.getRowCount(); i++) {
@@ -128,11 +128,11 @@ function TechDiversityGender() {
     fill(0);
     noStroke();
     textAlign("left", "top");
-    text("Female", this.layout.leftMargin, height - operationHeight);
+    text("Female", this.layout.leftMargin, height - operation.height - 50);
     textAlign("center", "top");
-    text("50%", this.midX, height - operationHeight);
+    text("50%", this.midX, height - operation.height - 50);
     textAlign("right", "top");
-    text("Male", this.layout.rightMargin, height - operationHeight);
+    text("Male", this.layout.rightMargin, height - operation.height - 50);
   };
 
   this.mapPercentToWidth = function (percent) {

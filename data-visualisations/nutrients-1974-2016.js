@@ -27,6 +27,12 @@ function NutrientsTimeSeries() {
   // Legend status if click or unclick
   var legendButton = false;
 
+  // Load number of controls user has on the data
+  this.noControls = 2;
+
+  // Has Data breakdown or not
+  this.dataBreakdown = true;
+
   // Layout object to store all common plot layout parameters and methods.
   this.layout = {
     marginSize: marginSize,
@@ -34,7 +40,7 @@ function NutrientsTimeSeries() {
     leftMargin: marginSize * 2,
     rightMargin: width - marginSize,
     topMargin: marginSize,
-    bottomMargin: height - operationHeight - marginSize * 2,
+    bottomMargin: height - operation.height - marginSize * 2,
     pad: 5,
 
     plotWidth: function () {
@@ -86,7 +92,7 @@ function NutrientsTimeSeries() {
     this.maxPercentage = 400;
 
     // Display filter selection button
-    self.makeNutrientFilter();
+    self.operationControl();
 
     // Display Legend button
     self.createLegendButton();
@@ -105,6 +111,9 @@ function NutrientsTimeSeries() {
 
     // Draw the title above the plot.
     this.drawTitle();
+
+    // Draw control labels
+    self.operationLabel();
 
     // Draw all y-axis labels.
     drawYAxisTickLabels(
@@ -264,6 +273,9 @@ function NutrientsTimeSeries() {
       var x = 700;
       var y = 50 + (boxHeight + 2) * i;
 
+      fill(245);
+      rect(x, y, 250, 20);
+
       // Draw the legend box with colours
       noStroke();
       fill(colour);
@@ -298,10 +310,10 @@ function NutrientsTimeSeries() {
   };
 
   // To create the filter option button to filter the nutrients, user can pick which nutrient they would like to see
-  self.makeNutrientFilter = function () {
+  self.makeNutrientFilter = function (x, y) {
     // Create a select DOM element.
     this.filterNutrient = createSelect();
-    this.filterNutrient.position(width - 80, 15);
+    this.filterNutrient.position(450 + x, y);
 
     // Fill the options with all company names.
     var nutrients = this.data.rows;
@@ -314,5 +326,20 @@ function NutrientsTimeSeries() {
       var nutrient = nutrients[i].getString(0);
       this.filterNutrient.option(nutrient);
     }
+  };
+
+  // Control panel label and controls
+  // Draw the label for the controls on the left
+  self.operationLabel = function () {
+    // Draw operation label
+    textAlign("left");
+    textSize(16);
+    fill(0);
+    text("Select Nutrient: ", operation.box_x_axis, operation.box1_y_axis);
+  };
+
+  // Display the operation controls on the graph for users
+  self.operationControl = function () {
+    self.makeNutrientFilter(operation.box_x_axis, operation.box1_y_axis);
   };
 }

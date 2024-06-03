@@ -13,6 +13,12 @@ function ClimateChange() {
   // Title to display above the plot.
   this.title = "Climate Change Data, hover on the points for data";
 
+  // Load number of controls user has on the data
+  this.noControls = 2;
+
+  // Has Data breakdown or not
+  this.dataBreakdown = true;
+
   var marginSize = 35;
 
   // declare private methods
@@ -28,7 +34,7 @@ function ClimateChange() {
     leftMargin: marginSize * 2,
     rightMargin: width - marginSize,
     topMargin: marginSize,
-    bottomMargin: (height-operationHeight) - marginSize * 2,
+    bottomMargin: height - operation.height - marginSize * 2,
     pad: 5,
 
     plotWidth: function () {
@@ -87,23 +93,7 @@ function ClimateChange() {
     // started so that we can animate the plot.
     this.frameCount = 0;
 
-    // Create sliders to control start and end years. Default to
-    // visualise full range.
-    this.startSlider = createSlider(
-      this.minYear,
-      this.maxYear - 1,
-      this.minYear,
-      1
-    );
-    this.startSlider.position(400, 10);
-
-    this.endSlider = createSlider(
-      this.minYear + 1,
-      this.maxYear,
-      this.maxYear,
-      1
-    );
-    this.endSlider.position(550, 10);
+    self.operationControl(this.minYear, this.maxYear);
   };
 
   this.destroy = function () {
@@ -116,6 +106,9 @@ function ClimateChange() {
       console.log("Data not yet loaded");
       return;
     }
+
+    // Draw control labels
+    self.operationLabel();
 
     // Prevent slider ranges overlapping.
     if (this.startSlider.value() >= this.endSlider.value()) {
@@ -312,7 +305,13 @@ function ClimateChange() {
   // Private Method, When the temperature points is hovered, display text on to the middle of the canvas
   self.temperaturePointsHovered = function (size, current, previous) {
     // Using the y-axis of the points, calculate the y-axis of the text. If points are high, text will be low
-    var textHeight = map(current.temperature, -0.5, 1, 100, (height-operationHeight) - 200);
+    var textHeight = map(
+      current.temperature,
+      -0.5,
+      1,
+      100,
+      height - operation.height - 200
+    );
     // Distance between the mouse coords and the point coords
     var distance = dist(
       mouseX,
@@ -331,5 +330,40 @@ function ClimateChange() {
       text(`${current.temperature} on ${current.year}`, width / 2, textHeight);
       textSize(16);
     }
+  };
+
+  // Control panel label and controls
+  // Draw the label for the controls on the left
+  self.operationLabel = function () {
+    // Draw operation label
+    textAlign("left");
+    textSize(16);
+    fill(0);
+    text("Zoom into 2017: ", operation.box_x_axis, operation.box1_y_axis);
+    text("Zoom into 1880: ", operation.box_x_axis, operation.box2_y_axis);
+  };
+
+  // Display the operation controls on the graph for users
+  self.operationControl = function (minYear, maxYear) {
+    // Create sliders to control start and end years. Default to
+    // visualise full range.
+    this.startSlider = createSlider(
+      this.minYear,
+      this.maxYear - 1,
+      this.minYear,
+      1
+    );
+    this.startSlider.position(
+      450 + operation.box_x_axis,
+      operation.box1_y_axis
+    );
+
+    this.endSlider = createSlider(
+      this.minYear + 1,
+      this.maxYear,
+      this.maxYear,
+      1
+    );
+    this.endSlider.position(450 + operation.box_x_axis, operation.box2_y_axis);
   };
 }

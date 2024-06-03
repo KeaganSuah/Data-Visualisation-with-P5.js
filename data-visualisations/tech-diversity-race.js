@@ -9,6 +9,14 @@ function TechDiversityRace() {
   // Property to represent whether data has been loaded.
   this.loaded = false;
 
+  // Load number of controls user has on the data
+  this.noControls = 1;
+
+  // Has Data breakdown or not
+  this.dataBreakdown = false;
+
+  var self = this;
+
   // Preload the data. This function is called automatically by the
   // gallery when a visualisation is added.
   this.preload = function () {
@@ -31,9 +39,7 @@ function TechDiversityRace() {
       return;
     }
 
-    // Create a select DOM element.
-    this.select = createSelect();
-    this.select.position(350, 40);
+    self.operationControl();
 
     // Fill the options with all company names.
     var companies = this.data.columns;
@@ -48,13 +54,23 @@ function TechDiversityRace() {
   };
 
   // Create a new pie chart object.
-  this.pie = new PieChart(width / 2, (height-operationHeight) / 2, width * 0.4);
+  this.pie = new PieChart(
+    width / 2,
+    (height - operation.height) / 2,
+    width * 0.4
+  );
 
   this.draw = function () {
     if (!this.loaded) {
       console.log("Data not yet loaded");
       return;
     }
+
+    // Draw operation label
+    self.operationLabel();
+
+    // Make a title.
+    var title = "Employee diversity at " + companyName;
 
     // Get the value of the company we're interested in from the
     // select item.
@@ -71,10 +87,24 @@ function TechDiversityRace() {
     // Colour to use for each category.
     var colours = ["blue", "red", "green", "pink", "purple", "yellow"];
 
-    // Make a title.
-    var title = "Employee diversity at " + companyName;
-
     // Draw the pie chart!
     this.pie.draw(col, labels, colours, title);
+  };
+
+  // Control panel label and controls
+  // Draw the label for the controls on the left
+  self.operationLabel = function () {
+    // Draw operation label
+    textAlign("left");
+    textSize(16);
+    fill(0);
+    text("Select Company: ", operation.box_x_axis, operation.box1_y_axis);
+  };
+
+  // Display the operation controls on the graph for users
+  self.operationControl = function () {
+    // Create a select DOM element.
+    this.select = createSelect();
+    this.select.position(450 + operation.box_x_axis, operation.box1_y_axis);
   };
 }
