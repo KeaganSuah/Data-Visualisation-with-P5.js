@@ -67,6 +67,7 @@ function Operation() {
     fill(0);
     noStroke();
     for (var i = 0; i < array.length; i++) {
+      ellipse(operation.data_x_axis - 10, operation.labelHeight[i], 5, 5);
       text(array[i], operation.data_x_axis, operation.labelHeight[i], 400);
     }
     stroke(1);

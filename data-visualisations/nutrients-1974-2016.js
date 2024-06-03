@@ -221,7 +221,7 @@ function NutrientsTimeSeries() {
     fill(0);
     noStroke();
     textAlign("center", "center");
-
+    textSize(16)
     text(
       this.title,
       this.layout.plotWidth() / 2 + this.layout.leftMargin,
@@ -335,7 +335,7 @@ function NutrientsTimeSeries() {
       cursor(HAND);
       // Display Industry and values
       details = [
-        `Current on ${title}`,
+        `Nutrient is ${title}`,
         `Percentage of ${current.percentage}%`,
         `During ${current.year}`,
       ];
