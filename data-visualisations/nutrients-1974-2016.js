@@ -21,6 +21,9 @@ function NutrientsTimeSeries() {
 
   // Private variables
 
+  // Create a variable so that only one point can be hovered at a time
+  var details = ["Hover on Points to get Breakdown of data"];
+
   // to set the margin size for the plot
   var marginSize = 35;
 
@@ -109,6 +112,9 @@ function NutrientsTimeSeries() {
       return;
     }
 
+    // Display points hovered
+    operation.listDisplayData(details);
+
     // Draw the title above the plot.
     this.drawTitle();
 
@@ -164,30 +170,8 @@ function NutrientsTimeSeries() {
               this.mapNutrientsToHeight(current.percentage)
             );
 
-            // Extension
-            ellipse(
-              this.mapYearToWidth(current.year),
-              this.mapNutrientsToHeight(current.percentage),
-              5,
-              5
-            );
-            var distancePoint = dist(
-              mouseX,
-              mouseY,
-              this.mapYearToWidth(current.year),
-              this.mapNutrientsToHeight(current.percentage)
-            );
-            if (distancePoint < 5 / 2) {
-              cursor(HAND);
-              // Display Industry and values
-              var details = `${title} has a percentage of ${current.percentage}% during ${current.year}`;
-              // Draw Breakdown of details below canvas
-              textAlign("center", "center");
-              textSize(20);
-              text(details, width / 2, marginSize * 3);
-              //  Text reset
-              textSize(16);
-            }
+            // Points on line graph that can be hovered
+            self.pointHover(current, title);
           }
 
           // The number of x-axis labels to skip so that only
@@ -220,7 +204,11 @@ function NutrientsTimeSeries() {
             noStroke();
             this.makeLegendItem(title, i, this.colors[i], legendButton);
             fill(this.colors[i]);
-            text(title, 100, this.mapNutrientsToHeight(current.percentage));
+            text(
+              title,
+              width - 200,
+              this.mapNutrientsToHeight(row.getNum(numYears - 3) + 15)
+            );
           }
         }
         // Assign current year to previous year so that it is available // during the next iteration of this loop to give us the start // position of the next line segment.
@@ -328,6 +316,32 @@ function NutrientsTimeSeries() {
     }
   };
 
+  // Create points on line graph that can be hovered to display breakdown of data in each point
+  self.pointHover = function (current, title) {
+    // Create Points on Line graph to hover on
+    ellipse(
+      this.mapYearToWidth(current.year),
+      this.mapNutrientsToHeight(current.percentage),
+      5,
+      5
+    );
+    var distancePoint = dist(
+      mouseX,
+      mouseY,
+      this.mapYearToWidth(current.year),
+      this.mapNutrientsToHeight(current.percentage)
+    );
+    if (distancePoint < 5 / 2) {
+      cursor(HAND);
+      // Display Industry and values
+      details = [
+        `Current on ${title}`,
+        `Percentage of ${current.percentage}%`,
+        `During ${current.year}`,
+      ];
+    }
+  };
+
   // Control panel label and controls
   // Draw the label for the controls on the left
   self.operationLabel = function () {
@@ -335,11 +349,15 @@ function NutrientsTimeSeries() {
     textAlign("left");
     textSize(16);
     fill(0);
-    text("Select Nutrient: ", operation.box_x_axis, operation.box1_y_axis);
+    text(
+      "Select Nutrient: ",
+      operation.control_x_axis,
+      operation.labelHeight[0]
+    );
   };
 
   // Display the operation controls on the graph for users
   self.operationControl = function () {
-    self.makeNutrientFilter(operation.box_x_axis, operation.box1_y_axis);
+    self.makeNutrientFilter(operation.control_x_axis, operation.labelHeight[0]);
   };
 }

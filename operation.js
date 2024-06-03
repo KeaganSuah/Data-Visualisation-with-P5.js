@@ -6,9 +6,9 @@ function Operation() {
   this.y = 576;
 
   // Placement of label to boxs
-  this.box_x_axis = this.x + 30;
-  this.box1_y_axis = this.y + 68;
-  this.box2_y_axis = this.y + 113;
+  this.control_x_axis = this.x + 30;
+  this.data_x_axis = this.x + 490;
+  this.labelHeight = [this.y + 68, this.y + 113, this.y + 158];
 
   var self = this;
 
@@ -60,6 +60,19 @@ function Operation() {
     }
   };
 
+  self.listDisplayData = function (array) {
+    // Display Industry and values
+    textAlign("left");
+    textSize(20);
+    fill(0);
+    noStroke();
+    for (var i = 0; i < array.length; i++) {
+      text(array[i], operation.data_x_axis, operation.labelHeight[i], 400);
+    }
+    stroke(1);
+  };
+
+  // Display title on the control panel and on data breakdown box
   self.displayTitle = function (title, x, y) {
     fill(0);
     noStroke();

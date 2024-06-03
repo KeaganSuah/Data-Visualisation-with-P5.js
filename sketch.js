@@ -31,7 +31,7 @@ function draw() {
   cursor(ARROW);
   if (gallery.selectedVisual != null) {
     gallery.selectedVisual.draw();
-    console.log(gallery.selectedVisual)
+    // console.log(gallery.selectedVisual)
     operation.draw(gallery.selectedVisual.noControls,gallery.selectedVisual.dataBreakdown);
   }
 }

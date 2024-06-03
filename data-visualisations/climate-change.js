@@ -21,6 +21,9 @@ function ClimateChange() {
 
   var marginSize = 35;
 
+  // Create a variable so that only one point can be hovered at a time
+  var details = ["Hover on Points to get Breakdown of data"];
+
   // declare private methods
   var self = this;
 
@@ -109,6 +112,11 @@ function ClimateChange() {
 
     // Draw control labels
     self.operationLabel();
+
+    // Display points hovered
+    operation.listDisplayData(details);
+    // reset textsize
+    textSize(16);
 
     // Prevent slider ranges overlapping.
     if (this.startSlider.value() >= this.endSlider.value()) {
@@ -304,14 +312,6 @@ function ClimateChange() {
 
   // Private Method, When the temperature points is hovered, display text on to the middle of the canvas
   self.temperaturePointsHovered = function (size, current, previous) {
-    // Using the y-axis of the points, calculate the y-axis of the text. If points are high, text will be low
-    var textHeight = map(
-      current.temperature,
-      -0.5,
-      1,
-      100,
-      height - operation.height - 200
-    );
     // Distance between the mouse coords and the point coords
     var distance = dist(
       mouseX,
@@ -325,10 +325,10 @@ function ClimateChange() {
       // Change Cursor type of mouse
       cursor(HAND);
       // Display values on canvas
-      textSize(64);
-      fill(this.mapTemperatureToColour(current.temperature), 255);
-      text(`${current.temperature} on ${current.year}`, width / 2, textHeight);
-      textSize(16);
+      details = [
+        `${current.temperature} degree celsius`,
+        `During ${current.year}`,
+      ];
     }
   };
 
@@ -339,8 +339,16 @@ function ClimateChange() {
     textAlign("left");
     textSize(16);
     fill(0);
-    text("Zoom into 2017: ", operation.box_x_axis, operation.box1_y_axis);
-    text("Zoom into 1880: ", operation.box_x_axis, operation.box2_y_axis);
+    text(
+      "Zoom into 2017: ",
+      operation.control_x_axis,
+      operation.labelHeight[0]
+    );
+    text(
+      "Zoom into 1880: ",
+      operation.control_x_axis,
+      operation.labelHeight[1]
+    );
   };
 
   // Display the operation controls on the graph for users
@@ -354,8 +362,8 @@ function ClimateChange() {
       1
     );
     this.startSlider.position(
-      450 + operation.box_x_axis,
-      operation.box1_y_axis
+      450 + operation.control_x_axis,
+      operation.labelHeight[0]
     );
 
     this.endSlider = createSlider(
@@ -364,6 +372,9 @@ function ClimateChange() {
       this.maxYear,
       1
     );
-    this.endSlider.position(450 + operation.box_x_axis, operation.box2_y_axis);
+    this.endSlider.position(
+      450 + operation.control_x_axis,
+      operation.labelHeight[1]
+    );
   };
 }

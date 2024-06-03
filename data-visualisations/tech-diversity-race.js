@@ -98,13 +98,20 @@ function TechDiversityRace() {
     textAlign("left");
     textSize(16);
     fill(0);
-    text("Select Company: ", operation.box_x_axis, operation.box1_y_axis);
+    text(
+      "Select Company: ",
+      operation.control_x_axis,
+      operation.labelHeight[0]
+    );
   };
 
   // Display the operation controls on the graph for users
   self.operationControl = function () {
     // Create a select DOM element.
     this.select = createSelect();
-    this.select.position(450 + operation.box_x_axis, operation.box1_y_axis);
+    this.select.position(
+      450 + operation.control_x_axis,
+      operation.labelHeight[0]
+    );
   };
 }

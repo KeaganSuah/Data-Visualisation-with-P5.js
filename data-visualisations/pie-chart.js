@@ -10,7 +10,7 @@ function PieChart(x, y, diameter) {
   var previousWord = "";
   var word = "";
   var wordSize = 20;
-  var hoverSize = 0;
+  var hoverColour = ""
 
   // Convert the data into radians for the slice
   this.get_radians = function (data) {
@@ -60,7 +60,7 @@ function PieChart(x, y, diameter) {
       strokeWeight(1);
 
       // When the arc has been hovered, increase the size of the arc
-      if (word == data[i]) {
+      if (hoverColour == colour) {
         arc(
           this.x,
           this.y,
@@ -82,24 +82,14 @@ function PieChart(x, y, diameter) {
         );
       }
 
-      self.mouseHover(distance, lastAngle, angles[i], data[i]);
+      self.mouseHover(distance, lastAngle, angles[i], data[i],colour);
+      console.log(hoverColour)
 
       // Design the center of the pie chart to display the values
-      fill(255);
-      ellipse(this.x, this.y, 300, 300);
-      fill(0);
-      textAlign(CENTER);
-      textSize(wordSize);
-      noStroke();
-      if (word != "Hover over the Slice for Percentage") {
-        var displayWord = `${Number(word).toFixed(2)}%`;
-        text(displayWord, this.x - 95, this.y - 5, 200);
-      } else {
-        text(word, this.x - 95, this.y - 5, 200);
-      }
+      self.displayCirlceData()
 
       if (labels) {
-        this.makeLegendItem(labels[i], i, colour, word == data[i]);
+        this.makeLegendItem(labels[i], i, colour, hoverColour == colour);
       }
 
       lastAngle += angles[i];
@@ -109,7 +99,7 @@ function PieChart(x, y, diameter) {
       noStroke();
       textAlign("center");
       textSize(24);
-      fill(0)
+      fill(0);
       text(title, this.x, this.y - this.diameter * 0.6);
     }
   };
@@ -138,7 +128,7 @@ function PieChart(x, y, diameter) {
   };
 
   // Private Method, Mouse condition to hover on the slice
-  self.mouseHover = function (distance, lastAngle, angle, data) {
+  self.mouseHover = function (distance, lastAngle, angle, data,colour) {
     // see the hover
     if (
       lastAngle < self.mouseHoverAngle(distance) &&
@@ -147,9 +137,11 @@ function PieChart(x, y, diameter) {
       if (distance > this.diameter / 2) {
         wordSize = 20;
         word = "Hover over the Slice for Percentage";
+        hoverColour = ""
       } else if (distance < this.diameter / 2 && distance > 150) {
         wordSize = 32;
         word = data;
+        hoverColour = colour
         previousWord = word;
         // Change mouse cursor type
         cursor(HAND);
@@ -188,4 +180,21 @@ function PieChart(x, y, diameter) {
       return angle;
     }
   };
+
+  // Private method, to create the center circle in the middle that displays the percentage as well
+  self.displayCirlceData = function(){
+    // Design the center of the pie chart to display the values
+    fill(255);
+    ellipse(this.x, this.y, 300, 300);
+    fill(0);
+    textAlign(CENTER);
+    textSize(wordSize);
+    noStroke();
+    if (word != "Hover over the Slice for Percentage") {
+      var displayWord = `${Number(word).toFixed(2)}%`;
+      text(displayWord, this.x - 95, this.y - 5, 200);
+    } else {
+      text("Hover over the Slice for Percentage", this.x - 95, this.y - 5, 200);
+    }
+  }
 }

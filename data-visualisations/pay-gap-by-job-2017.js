@@ -24,11 +24,11 @@ function PayGapByJob2017() {
   this.dataBreakdown = true;
 
   // Private Variables
-  // Details breakdown of each points
-  var details = "";
-  var hoverIndex = 0;
   // for private function
   var self = this;
+
+  // Create a variable so that only one point can be hovered at a time
+  var details = ["Hover on Points to get Breakdown of data"];
 
   // Preload the data. This function is called automatically by the
   // gallery when a visualisation is added.
@@ -59,15 +59,11 @@ function PayGapByJob2017() {
     // Draw the title above the plot.
     this.drawTitle();
 
-    // Draw Breakdown of details below canvas
-    textAlign("center", "center ");
-    fill(0);
-    noStroke();
-    textSize(20);
-    text(details, this.pad, height - operation.height - 15, width - this.pad);
-
     // Draw the axes.
     this.addAxes();
+
+    // Display points hovered
+    operation.listDisplayData(details);
 
     // Get data from the table object.
     var jobs = this.data.getColumn("job_subtype");
@@ -317,15 +313,11 @@ function PayGapByJob2017() {
       // Change mouse cursor type
       cursor(HAND);
       // Display Industry and values
-      details = `${propFemale.toFixed(
-        2
-      )}% females in ${jobs} with pay gap of ${payGap.toFixed(2)}`;
-      hoverIndex = i;
-    }
-    // to stop the iteration when a point is hovered
-    else if (hoverIndex == i) {
-      details = "Hover on the points for Breakdown";
-      hoverIndex = 0;
+      details = [
+        `${propFemale.toFixed(2)}% females`,
+        `${jobs}`,
+        `Pay gap of ${payGap.toFixed(2)}`,
+      ];
     }
   };
 }
