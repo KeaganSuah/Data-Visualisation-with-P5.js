@@ -18,17 +18,17 @@ function PayGapByJob2017() {
   this.title = "Pay Gap by job 2017 quadrant chart";
 
   // Load number of controls user has on the data
-  this.noControls = 0;
+  this.labelArray = 0;
 
   // Has Data breakdown or not
   this.dataBreakdown = true;
 
+  // Create a variable so that only one point can be hovered at a time
+  this.details = ["Hover on Points to get Breakdown of data"];
+
   // Private Variables
   // for private function
   var self = this;
-
-  // Create a variable so that only one point can be hovered at a time
-  var details = ["Hover on Points to get Breakdown of data"];
 
   // Preload the data. This function is called automatically by the
   // gallery when a visualisation is added.
@@ -63,7 +63,7 @@ function PayGapByJob2017() {
     this.addAxes();
 
     // Display points hovered
-    operation.listDisplayData(details);
+    operation.listDisplayData(this.details);
 
     // Get data from the table object.
     var jobs = this.data.getColumn("job_subtype");
@@ -313,7 +313,7 @@ function PayGapByJob2017() {
       // Change mouse cursor type
       cursor(HAND);
       // Display Industry and values
-      details = [
+      this.details = [
         `${propFemale.toFixed(2)}% females`,
         `${jobs}`,
         `Pay gap of ${payGap.toFixed(2)}`,

@@ -10,7 +10,7 @@ function TechDiversityRace() {
   this.loaded = false;
 
   // Load number of controls user has on the data
-  this.noControls = 1;
+  this.labelArray = ["Select Company: "];
 
   // Has Data breakdown or not
   this.dataBreakdown = false;
@@ -67,7 +67,7 @@ function TechDiversityRace() {
     }
 
     // Draw operation label
-    self.operationLabel();
+    operation.listControlLabel(this.labelArray);
 
     // Make a title.
     var title = "Employee diversity at " + companyName;
@@ -92,19 +92,6 @@ function TechDiversityRace() {
   };
 
   // Control panel label and controls
-  // Draw the label for the controls on the left
-  self.operationLabel = function () {
-    // Draw operation label
-    textAlign("left");
-    textSize(16);
-    fill(0);
-    text(
-      "Select Company: ",
-      operation.control_x_axis,
-      operation.labelHeight[0]
-    );
-  };
-
   // Display the operation controls on the graph for users
   self.operationControl = function () {
     // Create a select DOM element.

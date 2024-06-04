@@ -10,23 +10,26 @@ function Operation() {
   this.data_x_axis = this.x + 490;
   this.labelHeight = [this.y + 68, this.y + 113, this.y + 158];
 
+  // Declare for private functions
   var self = this;
 
   //   To draw the operation table
-  this.draw = function (noControls, breakdown) {
-    self.controlPanel(noControls);
+  this.draw = function (labelArray, breakdown) {
+    if(typeof labelArray !== 'undefined'){
+    self.controlPanel(labelArray);
+  }
     self.displayData(breakdown);
   };
 
   //   Draw the control panel
-  self.controlPanel = function (noControls) {
-    if (noControls > 0) {
+  self.controlPanel = function (labelArray) {
+    if (labelArray.length > 0) {
       fill(0, 0);
       stroke(0);
       strokeWeight(1);
       rect(this.x, this.y, width / 2 - 70, this.height - 10, 10);
 
-      for (var i = 0; i < noControls; i++) {
+      for (var i = 0; i < labelArray.length; i++) {
         rect(this.x + 20, this.y + 50 + 45 * i, width / 2 - 110, 35, 5);
       }
 
@@ -71,6 +74,16 @@ function Operation() {
       text(array[i], operation.data_x_axis, operation.labelHeight[i], 400);
     }
     stroke(1);
+  };
+
+  self.listControlLabel = function (array) {
+    // Draw operation label
+    textAlign("left");
+    textSize(16);
+    fill(0);
+    for (var i = 0; i < array.length; i++) {
+      text(array[i], operation.control_x_axis, operation.labelHeight[i]);
+    }
   };
 
   // Display title on the control panel and on data breakdown box

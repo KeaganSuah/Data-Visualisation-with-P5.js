@@ -19,11 +19,10 @@ function NutrientsTimeSeries() {
   // Colour list of each nutrient line
   this.colors = [];
 
-  // Private variables
-
   // Create a variable so that only one point can be hovered at a time
-  var details = ["Hover on Points to get Breakdown of data"];
+  this.details = ["Hover on Points to get Breakdown of data"];
 
+  // Private variables
   // to set the margin size for the plot
   var marginSize = 35;
 
@@ -31,7 +30,11 @@ function NutrientsTimeSeries() {
   var legendButton = false;
 
   // Load number of controls user has on the data
-  this.noControls = 2;
+  this.labelArray = [
+    "Select Nutrient: ",
+    "Zoom into 2017: ",
+    "Zoom into 1880: ",
+  ];
 
   // Has Data breakdown or not
   this.dataBreakdown = true;
@@ -104,6 +107,8 @@ function NutrientsTimeSeries() {
   this.destroy = function () {
     this.filterNutrient.remove();
     this.button.remove();
+    this.startSlider.remove();
+    this.endSlider.remove();
   };
 
   this.draw = function () {
@@ -112,14 +117,18 @@ function NutrientsTimeSeries() {
       return;
     }
 
+    // Get the value from user to see what are the year range user want to see, similar to climate-change visualisation
+    this.startYearValue = this.startSlider.value();
+    this.endYearValue = this.endSlider.value();
+
     // Display points hovered
-    operation.listDisplayData(details);
+    operation.listDisplayData(this.details);
 
     // Draw the title above the plot.
     this.drawTitle();
 
     // Draw control labels
-    self.operationLabel();
+    operation.listControlLabel(this.labelArray);
 
     // Draw all y-axis labels.
     drawYAxisTickLabels(
@@ -138,7 +147,7 @@ function NutrientsTimeSeries() {
 
     // Plot all pay gaps between startYear and endYear using the width
     // of the canvas minus margins.
-    var numYears = this.endYear - this.startYear;
+    var numYears = this.endYearValue - this.startYearValue;
 
     // Loop over all rows and draw a line from the previous value to // the current.
     for (var i = 0; i < this.data.getRowCount(); i++) {
@@ -151,7 +160,7 @@ function NutrientsTimeSeries() {
         // Create an object to store data for the current year.
         var current = {
           // Convert strings to numbers.
-          year: this.startYear + j - 1,
+          year: this.startYearValue + j - 1,
           percentage: row.getNum(j),
         };
 
@@ -182,7 +191,10 @@ function NutrientsTimeSeries() {
           if (i % xLabelSkip == 0) {
             // variable to determine if the variable has to be displayed or not
             var displayLabel = true;
-            if (previous.year == this.endYear - 3 || previous.year % 5 == 0) {
+            if (
+              previous.year == this.endYearValue - 3 ||
+              previous.year % 5 == 0
+            ) {
               displayLabel = true;
             } else {
               displayLabel = false;
@@ -221,7 +233,7 @@ function NutrientsTimeSeries() {
     fill(0);
     noStroke();
     textAlign("center", "center");
-    textSize(16)
+    textSize(16);
     text(
       this.title,
       this.layout.plotWidth() / 2 + this.layout.leftMargin,
@@ -232,8 +244,8 @@ function NutrientsTimeSeries() {
   this.mapYearToWidth = function (value) {
     return map(
       value,
-      this.startYear,
-      this.endYear,
+      this.startYearValue,
+      this.endYearValue,
       this.layout.leftMargin,
       this.layout.rightMargin
     );
@@ -334,7 +346,7 @@ function NutrientsTimeSeries() {
     if (distancePoint < 5 / 2) {
       cursor(HAND);
       // Display Industry and values
-      details = [
+      this.details = [
         `Nutrient is ${title}`,
         `Percentage of ${current.percentage}%`,
         `During ${current.year}`,
@@ -343,21 +355,33 @@ function NutrientsTimeSeries() {
   };
 
   // Control panel label and controls
-  // Draw the label for the controls on the left
-  self.operationLabel = function () {
-    // Draw operation label
-    textAlign("left");
-    textSize(16);
-    fill(0);
-    text(
-      "Select Nutrient: ",
-      operation.control_x_axis,
-      operation.labelHeight[0]
-    );
-  };
-
   // Display the operation controls on the graph for users
   self.operationControl = function () {
     self.makeNutrientFilter(operation.control_x_axis, operation.labelHeight[0]);
+
+    // Create sliders to control start and end years. Default to
+    // To reduce the starting range of years.
+    this.startSlider = createSlider(
+      this.startYear,
+      this.endYear - 11,
+      this.startYear,
+      1
+    );
+    this.startSlider.position(
+      450 + operation.control_x_axis,
+      operation.labelHeight[1]
+    );
+
+    // To reduce the ending range of years.
+    this.endSlider = createSlider(
+      this.startYear + 11,
+      this.endYear,
+      this.endYear,
+      1
+    );
+    this.endSlider.position(
+      450 + operation.control_x_axis,
+      operation.labelHeight[2]
+    );
   };
 }

@@ -14,15 +14,17 @@ function ClimateChange() {
   this.title = "Climate Change Data, hover on the points for data";
 
   // Load number of controls user has on the data
-  this.noControls = 2;
+  this.labelArray = ["Zoom into 2017: ", "Zoom into 1880: "];
 
   // Has Data breakdown or not
   this.dataBreakdown = true;
 
-  var marginSize = 35;
-
   // Create a variable so that only one point can be hovered at a time
-  var details = ["Hover on Points to get Breakdown of data"];
+  this.details = ["Hover on Points to get Breakdown of data"];
+
+  // Private variables
+  // Create the margin gap for data visualisation
+  var marginSize = 35;
 
   // declare private methods
   var self = this;
@@ -111,10 +113,10 @@ function ClimateChange() {
     }
 
     // Draw control labels
-    self.operationLabel();
+    operation.listControlLabel(this.labelArray);
 
     // Display points hovered
-    operation.listDisplayData(details);
+    operation.listDisplayData(this.details);
     // reset textsize
     textSize(16);
 
@@ -325,7 +327,7 @@ function ClimateChange() {
       // Change Cursor type of mouse
       cursor(HAND);
       // Display values on canvas
-      details = [
+      this.details = [
         `${current.temperature} degree celsius`,
         `During ${current.year}`,
       ];
@@ -333,45 +335,17 @@ function ClimateChange() {
   };
 
   // Control panel label and controls
-  // Draw the label for the controls on the left
-  self.operationLabel = function () {
-    // Draw operation label
-    textAlign("left");
-    textSize(16);
-    fill(0);
-    text(
-      "Zoom into 2017: ",
-      operation.control_x_axis,
-      operation.labelHeight[0]
-    );
-    text(
-      "Zoom into 1880: ",
-      operation.control_x_axis,
-      operation.labelHeight[1]
-    );
-  };
-
   // Display the operation controls on the graph for users
-  self.operationControl = function (minYear, maxYear) {
+  self.operationControl = function (min, max) {
     // Create sliders to control start and end years. Default to
     // visualise full range.
-    this.startSlider = createSlider(
-      this.minYear,
-      this.maxYear - 1,
-      this.minYear,
-      1
-    );
+    this.startSlider = createSlider(min, max - 1, min, 1);
     this.startSlider.position(
       450 + operation.control_x_axis,
       operation.labelHeight[0]
     );
 
-    this.endSlider = createSlider(
-      this.minYear + 1,
-      this.maxYear,
-      this.maxYear,
-      1
-    );
+    this.endSlider = createSlider(min + 1, max, max, 1);
     this.endSlider.position(
       450 + operation.control_x_axis,
       operation.labelHeight[1]
