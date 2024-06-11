@@ -10,7 +10,7 @@ function TechDiversityRace() {
   this.loaded = false;
 
   // Load number of controls user has on the data
-  this.labelArray = ["Select Company: "];
+  this.labelArray = ["Select Company"];
 
   // Has Data breakdown or not
   this.dataBreakdown = false;

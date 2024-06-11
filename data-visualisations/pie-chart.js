@@ -83,7 +83,6 @@ function PieChart(x, y, diameter) {
       }
 
       self.mouseHover(distance, lastAngle, angles[i], data[i],colour);
-      console.log(hoverColour)
 
       // Design the center of the pie chart to display the values
       self.displayCirlceData()

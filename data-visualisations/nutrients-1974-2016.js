@@ -20,7 +20,7 @@ function NutrientsTimeSeries() {
   this.colors = [];
 
   // Create a variable so that only one point can be hovered at a time
-  this.details = ["Hover on Points to get Breakdown of data"];
+  this.details = ["Nutrient", "year", "percentage"];
 
   // Private variables
   // to set the margin size for the plot
@@ -30,11 +30,7 @@ function NutrientsTimeSeries() {
   var legendButton = false;
 
   // Load number of controls user has on the data
-  this.labelArray = [
-    "Select Nutrient: ",
-    "Zoom into 2017: ",
-    "Zoom into 1880: ",
-  ];
+  this.labelArray = ["Select Nutrient", "Zoom into 2017", "Zoom into 1880"];
 
   // Has Data breakdown or not
   this.dataBreakdown = true;
@@ -117,18 +113,25 @@ function NutrientsTimeSeries() {
       return;
     }
 
+    // Prevent slider ranges overlapping.
+    if (this.startSlider.value() >= this.endSlider.value() - 10) {
+      this.startSlider.value(this.endSlider.value() - 11);
+    }
     // Get the value from user to see what are the year range user want to see, similar to climate-change visualisation
     this.startYearValue = this.startSlider.value();
     this.endYearValue = this.endSlider.value();
 
     // Display points hovered
-    operation.listDisplayData(this.details);
+    operation.listDisplayData(
+      this.details,
+      typeof this.details !== "undefined"
+    );
 
     // Draw the title above the plot.
     this.drawTitle();
 
     // Draw control labels
-    operation.listControlLabel(this.labelArray);
+    operation.listControlLabel(this.labelArray, this.labelArray);
 
     // Draw all y-axis labels.
     drawYAxisTickLabels(
@@ -153,7 +156,6 @@ function NutrientsTimeSeries() {
     for (var i = 0; i < this.data.getRowCount(); i++) {
       var row = this.data.getRow(i);
       var previous = null;
-
       var title = row.getString(0);
 
       for (var j = 1; j < numYears; j++) {
@@ -161,7 +163,7 @@ function NutrientsTimeSeries() {
         var current = {
           // Convert strings to numbers.
           year: this.startYearValue + j - 1,
-          percentage: row.getNum(j),
+          percentage: row.getNum(j + (this.startYearValue - this.startYear)),
         };
 
         if (previous != null) {
@@ -212,9 +214,11 @@ function NutrientsTimeSeries() {
             this.filterNutrient.value() == title ||
             this.filterNutrient.value() == "All"
           ) {
-            //draw the nutrients label
             noStroke();
+            // draw nutrients legend table
             this.makeLegendItem(title, i, this.colors[i], legendButton);
+
+            //draw the nutrients label
             fill(this.colors[i]);
             text(
               title,
@@ -330,12 +334,15 @@ function NutrientsTimeSeries() {
 
   // Create points on line graph that can be hovered to display breakdown of data in each point
   self.pointHover = function (current, title) {
+    var pointSize =
+      map(this.startSlider.value(), 1974, 2016, 12, 18) -
+      map(this.endSlider.value(), 1974, 2016, 0, 6);
     // Create Points on Line graph to hover on
     ellipse(
       this.mapYearToWidth(current.year),
       this.mapNutrientsToHeight(current.percentage),
-      5,
-      5
+      pointSize,
+      pointSize
     );
     var distancePoint = dist(
       mouseX,
@@ -343,7 +350,7 @@ function NutrientsTimeSeries() {
       this.mapYearToWidth(current.year),
       this.mapNutrientsToHeight(current.percentage)
     );
-    if (distancePoint < 5 / 2) {
+    if (distancePoint < pointSize / 2) {
       cursor(HAND);
       // Display Industry and values
       this.details = [

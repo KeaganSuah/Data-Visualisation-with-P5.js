@@ -31,10 +31,5 @@ function draw() {
   cursor(ARROW);
   if (gallery.selectedVisual != null) {
     gallery.selectedVisual.draw();
-    // console.log(gallery.selectedVisual)
-    operation.draw(
-      gallery.selectedVisual.labelArray,
-      typeof gallery.selectedVisual.details !== "undefined"
-    );
   }
 }

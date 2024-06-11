@@ -14,7 +14,7 @@ function ClimateChange() {
   this.title = "Climate Change Data, hover on the points for data";
 
   // Load number of controls user has on the data
-  this.labelArray = ["Zoom into 2017: ", "Zoom into 1880: "];
+  this.labelArray = ["Zoom into 2017", "Zoom into 1880"];
 
   // Has Data breakdown or not
   this.dataBreakdown = true;
