@@ -20,11 +20,8 @@ function PayGapByJob2017() {
   // Load number of controls user has on the data
   this.labelArray = 0;
 
-  // Has Data breakdown or not
-  this.dataBreakdown = true;
-
   // Create a variable so that only one point can be hovered at a time
-  this.details = ["Hover on Points to get Breakdown of data"];
+  this.details;
 
   // Private Variables
   // for private function
@@ -46,7 +43,11 @@ function PayGapByJob2017() {
     );
   };
 
-  this.setup = function () {};
+  this.setup = function () {
+    // Reset the data table for new data visualisation
+    this.details = ["Industry", "Female", "Pay Gap"];
+    operation.refreshData(this.details);
+  };
 
   this.destroy = function () {};
 
@@ -63,7 +64,7 @@ function PayGapByJob2017() {
     this.addAxes();
 
     // Display points hovered
-    operation.listDisplayData(this.details);
+    operation.listDisplayData(this.details, [0.7, 0.15, 0.15]);
 
     // Get data from the table object.
     var jobs = this.data.getColumn("job_subtype");
@@ -314,9 +315,9 @@ function PayGapByJob2017() {
       cursor(HAND);
       // Display Industry and values
       this.details = [
-        `${propFemale.toFixed(2)}% females`,
         `${jobs}`,
-        `Pay gap of ${payGap.toFixed(2)}`,
+        `${propFemale.toFixed(2)}%`,
+        `${payGap.toFixed(2)}`,
       ];
     }
   };

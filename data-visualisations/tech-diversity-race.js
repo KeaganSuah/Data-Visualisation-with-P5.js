@@ -12,9 +12,6 @@ function TechDiversityRace() {
   // Load number of controls user has on the data
   this.labelArray = ["Select Company"];
 
-  // Has Data breakdown or not
-  this.dataBreakdown = false;
-
   var self = this;
 
   // Preload the data. This function is called automatically by the

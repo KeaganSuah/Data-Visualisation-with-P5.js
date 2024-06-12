@@ -23,6 +23,8 @@ function setup() {
   gallery.addVisual(new PayGapTimeSeries());
   gallery.addVisual(new ClimateChange());
   gallery.addVisual(new NutrientsTimeSeries());
+  gallery.addVisual(new bankruptDyanmicBall());
+  gallery.addVisual(new covidMap());
 }
 
 function draw() {

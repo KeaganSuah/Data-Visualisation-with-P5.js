@@ -16,11 +16,8 @@ function ClimateChange() {
   // Load number of controls user has on the data
   this.labelArray = ["Zoom into 2017", "Zoom into 1880"];
 
-  // Has Data breakdown or not
-  this.dataBreakdown = true;
-
   // Create a variable so that only one point can be hovered at a time
-  this.details = ["Hover on Points to get Breakdown of data"];
+  this.details;
 
   // Private variables
   // Create the margin gap for data visualisation
@@ -83,6 +80,10 @@ function ClimateChange() {
     textSize(16);
     textAlign("center", "center");
 
+    // Reset the data table for new data visualisation
+    this.details = ["Nutrient", "year", "percentage"]
+    operation.refreshData(this.details)
+
     // Set min and max years: assumes data is sorted by year.
     this.minYear = this.data.getNum(0, "year");
     this.maxYear = this.data.getNum(this.data.getRowCount() - 1, "year");
@@ -116,7 +117,7 @@ function ClimateChange() {
     operation.listControlLabel(this.labelArray);
 
     // Display points hovered
-    operation.listDisplayData(this.details);
+    operation.listDisplayData(this.details, [0.5,0.5]);
     // reset textsize
     textSize(16);
 
