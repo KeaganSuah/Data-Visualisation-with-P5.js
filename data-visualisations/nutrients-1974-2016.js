@@ -333,8 +333,8 @@ function NutrientsTimeSeries() {
   // Create points on line graph that can be hovered to display breakdown of data in each point
   self.pointHover = function (current, title) {
     var pointSize =
-      map(this.startSlider.value(), 1974, 2016, 12, 18) -
-      map(this.endSlider.value(), 1974, 2016, 0, 6);
+      map(this.startSlider.value(), 1974, 2016, 20, 30) -
+      map(this.endSlider.value(), 1974, 2016, 0, 10);
     // Create Points on Line graph to hover on
     ellipse(
       this.mapYearToWidth(current.year),

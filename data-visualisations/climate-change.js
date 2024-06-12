@@ -81,8 +81,8 @@ function ClimateChange() {
     textAlign("center", "center");
 
     // Reset the data table for new data visualisation
-    this.details = ["Nutrient", "year", "percentage"]
-    operation.refreshData(this.details)
+    this.details = ["Nutrient", "year", "percentage"];
+    operation.refreshData(this.details);
 
     // Set min and max years: assumes data is sorted by year.
     this.minYear = this.data.getNum(0, "year");
@@ -117,7 +117,7 @@ function ClimateChange() {
     operation.listControlLabel(this.labelArray);
 
     // Display points hovered
-    operation.listDisplayData(this.details, [0.5,0.5]);
+    operation.listDisplayData(this.details, [0.5, 0.5]);
     // reset textsize
     textSize(16);
 
@@ -297,8 +297,8 @@ function ClimateChange() {
   // Private Method, design and display the points of the graph
   self.temperaturePoints = function (previous, current) {
     var pointSize =
-      map(this.startSlider.value(), 1880, 2017, 14, 21) -
-      map(this.endSlider.value(), 1880, 2017, 0, 7);
+      map(this.startSlider.value(), 1880, 2017, 20, 30) -
+      map(this.endSlider.value(), 1880, 2017, 0, 10);
 
     // Draw the Points on the line
     fill(255);

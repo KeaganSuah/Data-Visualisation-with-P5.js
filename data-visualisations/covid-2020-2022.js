@@ -4,13 +4,13 @@ function covidMap() {
   // Add global variables
 
   // Name for the visualisation to appear in the menu bar.
-  this.name = "Bankruptcy: 2000-2018";
+  this.name = "Covid: 2020-2022";
 
   // Each visualisation must have a unique ID with no special characters.
-  this.id = "bankruptcy-dyanmicball";
+  this.id = "covid-mapl";
 
   // Title to display above the plot.
-  this.title = "Bankruptcy Amount by Age & Sex: 2000-2018";
+  this.title = "Covid: 2020-2022";
 
   // Load number of controls user has on the data
   this.labelArray = ["Display Legend", "Filter Years"];
