@@ -293,43 +293,6 @@ function NutrientsTimeSeries() {
     }
   };
 
-  // Function is to change the variable legendButton so that is alternate when it is called
-  self.legendButtonClick = function () {
-    if (legendButton) {
-      legendButton = false;
-    } else {
-      legendButton = true;
-    }
-  };
-
-  // Create the button that display the legend, allowing user to open and close
-  self.createLegendButton = function () {
-    this.button = createButton("Show Legend");
-    this.button.position(width + 130, 12);
-
-    // Call repaint() when the button is pressed.
-    this.button.mousePressed(self.legendButtonClick);
-  };
-
-  // To create the filter option button to filter the nutrients, user can pick which nutrient they would like to see
-  self.makeNutrientFilter = function (x, y) {
-    // Create a select DOM element.
-    this.filterNutrient = createSelect();
-    this.filterNutrient.position(450 + x, y);
-
-    // Fill the options with all company names.
-    var nutrients = this.data.rows;
-
-    // Fill all first
-    this.filterNutrient.option("All");
-
-    // First entry is empty.
-    for (let i = 0; i < nutrients.length; i++) {
-      var nutrient = nutrients[i].getString(0);
-      this.filterNutrient.option(nutrient);
-    }
-  };
-
   // Create points on line graph that can be hovered to display breakdown of data in each point
   self.pointHover = function (current, title) {
     var pointSize =
@@ -353,6 +316,24 @@ function NutrientsTimeSeries() {
       // Display Industry and values
       this.details = [title, current.year, `${current.percentage}%`];
     }
+  };
+
+   // Function is to change the variable legendButton so that is alternate when it is called
+   self.legendButtonClick = function () {
+    if (legendButton) {
+      legendButton = false;
+    } else {
+      legendButton = true;
+    }
+  };
+
+  // Create the button that display the legend, allowing user to open and close
+  self.createLegendButton = function () {
+    this.button = createButton("Show Legend");
+    this.button.position(width + 130, 12);
+
+    // Call repaint() when the button is pressed.
+    this.button.mousePressed(self.legendButtonClick);
   };
 
   // Control panel label and controls
@@ -385,4 +366,24 @@ function NutrientsTimeSeries() {
       operation.labelHeight[2]
     );
   };
+
+  // To create the filter option button to filter the nutrients, user can pick which nutrient they would like to see
+  self.makeNutrientFilter = function (x, y) {
+    // Create a select DOM element.
+    this.filterNutrient = createSelect();
+    this.filterNutrient.position(450 + x, y);
+
+    // Fill the options with all company names.
+    var nutrients = this.data.rows;
+
+    // Fill all first
+    this.filterNutrient.option("All");
+
+    // First entry is empty.
+    for (let i = 0; i < nutrients.length; i++) {
+      var nutrient = nutrients[i].getString(0);
+      this.filterNutrient.option(nutrient);
+    }
+  };
+
 }

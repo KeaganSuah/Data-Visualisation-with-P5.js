@@ -13,12 +13,13 @@ function bankruptDyanmicBall() {
   this.title = "Bankruptcy Amount by Age & Sex: 2000-2018";
 
   // Load number of controls user has on the data
-  this.labelArray = ["Display Legend", "Filter Years"];
+  this.labelArray = ["Filter Years", "Balls Animation"];
+
+  // status for the balls to bounce or to freeze on screen
+  var bounceStatus = true;
 
   // Property to represent whether data has been loaded.
   this.loaded = false;
-
-  var selectedInput = 2;
 
   // Private variables
   // to set the margin size for the plot
@@ -60,7 +61,7 @@ function bankruptDyanmicBall() {
     textSize(16);
 
     // Reset the data table for new data visualisation
-    this.details = ["Nutrient", "year", "percentage"];
+    this.details = ["Gender", "Year", "Bankrupt Amount"];
     operation.refreshData(this.details);
 
     // Get the Largest amount and smallest amount
@@ -75,41 +76,82 @@ function bankruptDyanmicBall() {
       var yearList = [];
       for (let i = 0; i < this.data.getColumnCount() - 1; i++) {
         var colour;
-        if (i <= 6) {
+        var gender;
+        if (i <= 5) {
           colour = color(255, 100, 100, 235);
+          gender = "Female";
         } else {
           colour = color(100, 100, 255, 235);
+          gender = "Male";
         }
-        var size = self.mapAmtSize(bankruptAmtByYear[i], minAmount, maxAmount);
-        var speed = self.mapAmtSpeed(
-          bankruptAmtByYear[i],
-          minAmount,
-          maxAmount
+        var bankruptAmt = bankruptAmtByYear[i];
+        var size = self.mapAmtSize(bankruptAmt, minAmount, maxAmount);
+        var speed = self.mapAmtSpeed(bankruptAmt, minAmount, maxAmount);
+        var textAge = this.data.columns.slice(1)[i];
+        yearList.push(
+          new bounchingBall(
+            size,
+            speed,
+            colour,
+            gender,
+            bankruptAmt,
+            textAge,
+            this.layout
+          )
         );
-        yearList.push(new bounchingBall(size, speed, colour, this.layout));
       }
       this.ball.push(yearList);
     }
+
+    // Create filter for years
+    self.makeYearFilter();
+
+    // Create stop animation bouncing button
+    self.createStopButton();
   };
 
-  this.destroy = function () {};
+  this.destroy = function () {
+    this.bounceButton.remove();
+    this.yearFilter.remove();
+  };
 
   this.draw = function () {
     // Draw the title above the plot.
     this.drawTitle();
 
+    // Display the ball according to the year that is filtered
+    var filterValue = this.yearFilter.value();
+    var years = this.data.getColumn(0);
     for (let j = 0; j < this.data.getRowCount(); j++) {
-      if (j == selectedInput) {
+      if (years[j] == filterValue) {
         for (let i = 0; i < this.data.getColumnCount() - 1; i++) {
           this.ball[j][i].draw();
+          this.ball[j][i].displayText();
           this.ball[j][i].checkCondition();
-          this.ball[j][i].ballAcceleration(false);
+          this.ball[j][i].ballAcceleration(bounceStatus);
+        }
+      }
+    }
+
+    for (let j = 0; j < this.data.getRowCount(); j++) {
+      if (years[j] == filterValue) {
+        for (let i = 0; i < this.data.getColumnCount() - 1; i++) {
+          var currentBall = this.ball[j][i];
+          var distance = dist(mouseX, mouseY, currentBall.x, currentBall.y);
+          if (distance < currentBall.size / 2) {
+            cursor(HAND);
+            this.details = [
+              currentBall.gender,
+              years[j],
+              currentBall.bankruptAmt,
+            ];
+          }
         }
       }
     }
 
     // Display points hovered
-    operation.listDisplayData(this.details, [0.6, 0.2, 0.2]);
+    operation.listDisplayData(this.details, [0.33, 0.33, 0.33]);
 
     // Draw control labels
     operation.listControlLabel(this.labelArray);
@@ -154,10 +196,49 @@ function bankruptDyanmicBall() {
   };
 
   self.mapAmtSize = function (value, min, max) {
-    return map(value, min, max, 50, 300);
+    return map(value, min, max, 25, 100);
   };
 
   self.mapAmtSpeed = function (value, min, max) {
-    return map(value, min, max, 1, 15);
+    return map(value, min, max, 0.5, 3);
+  };
+
+  self.makeYearFilter = function () {
+    // Create a select DOM element.
+    this.yearFilter = createSelect();
+    this.yearFilter.position(
+      450 + operation.control_x_axis,
+      operation.labelHeight[0]
+    );
+
+    // Fill the options with all bankruptcy years.
+    var years = this.data.getColumn(0);
+
+    // First entry is empty.
+    for (let i = 0; i < years.length; i++) {
+      var year = years[i];
+      this.yearFilter.option(year);
+    }
+  };
+
+  // Function is to change the variable legendButton so that is alternate when it is called
+  self.stopBounceClick = function () {
+    if (bounceStatus) {
+      bounceStatus = false;
+    } else {
+      bounceStatus = true;
+    }
+  };
+
+  // Create the button that display the legend, allowing user to open and close
+  self.createStopButton = function () {
+    this.bounceButton = createButton("Start/Stop Bouncing");
+    this.bounceButton.position(
+      450 + operation.control_x_axis,
+      operation.labelHeight[1] - 2
+    );
+
+    // Call repaint() when the button is pressed.
+    this.bounceButton.mousePressed(self.stopBounceClick);
   };
 }
