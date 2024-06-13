@@ -318,8 +318,8 @@ function NutrientsTimeSeries() {
     }
   };
 
-   // Function is to change the variable legendButton so that is alternate when it is called
-   self.legendButtonClick = function () {
+  // Function is to change the variable legendButton so that is alternate when it is called
+  self.legendButtonClick = function () {
     if (legendButton) {
       legendButton = false;
     } else {
@@ -385,5 +385,4 @@ function NutrientsTimeSeries() {
       this.filterNutrient.option(nutrient);
     }
   };
-
 }

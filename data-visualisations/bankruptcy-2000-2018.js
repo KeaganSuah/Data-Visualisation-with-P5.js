@@ -1,8 +1,8 @@
 function bankruptDyanmicBall() {
   // To initial private variables or functions
   var self = this;
-  // Add global variables
 
+  // Add global variables
   // Name for the visualisation to appear in the menu bar.
   this.name = "Bankruptcy: 2000-2018";
 
@@ -15,13 +15,13 @@ function bankruptDyanmicBall() {
   // Load number of controls user has on the data
   this.labelArray = ["Filter Years", "Balls Animation"];
 
-  // status for the balls to bounce or to freeze on screen
-  var bounceStatus = true;
-
   // Property to represent whether data has been loaded.
   this.loaded = false;
 
   // Private variables
+  // status for the balls to bounce or to freeze on screen
+  var bounceStatus = true;
+
   // to set the margin size for the plot
   var marginSize = 35;
 
@@ -71,12 +71,16 @@ function bankruptDyanmicBall() {
     // Array to store all the bouncing balls objects
     this.ball = [];
 
+    // To create the bouncing balls object and insert them into the array
+    // Loop through the years
     for (let j = 0; j < this.data.getRowCount(); j++) {
       var bankruptAmtByYear = this.data.getRow(j).arr.slice(1);
       var yearList = [];
+      // Loop through the age groups and genders
       for (let i = 0; i < this.data.getColumnCount() - 1; i++) {
         var colour;
         var gender;
+        // Switch colours for different genders
         if (i <= 5) {
           colour = color(255, 100, 100, 235);
           gender = "Female";
@@ -84,6 +88,7 @@ function bankruptDyanmicBall() {
           colour = color(100, 100, 255, 235);
           gender = "Male";
         }
+        // Ball details
         var bankruptAmt = bankruptAmtByYear[i];
         var size = self.mapAmtSize(bankruptAmt, minAmount, maxAmount);
         var speed = self.mapAmtSpeed(bankruptAmt, minAmount, maxAmount);
@@ -110,6 +115,7 @@ function bankruptDyanmicBall() {
     self.createStopButton();
   };
 
+  // Remove the DOM functions in Data Visualisation
   this.destroy = function () {
     this.bounceButton.remove();
     this.yearFilter.remove();
@@ -119,33 +125,20 @@ function bankruptDyanmicBall() {
     // Draw the title above the plot.
     this.drawTitle();
 
-    // Display the ball according to the year that is filtered
     var filterValue = this.yearFilter.value();
     var years = this.data.getColumn(0);
+    // Loop through the years
     for (let j = 0; j < this.data.getRowCount(); j++) {
+      // Display the ball according to the year that is filtered
       if (years[j] == filterValue) {
+        // Loop through the age groups and genders
         for (let i = 0; i < this.data.getColumnCount() - 1; i++) {
           this.ball[j][i].draw();
           this.ball[j][i].displayText();
           this.ball[j][i].checkCondition();
           this.ball[j][i].ballAcceleration(bounceStatus);
-        }
-      }
-    }
-
-    for (let j = 0; j < this.data.getRowCount(); j++) {
-      if (years[j] == filterValue) {
-        for (let i = 0; i < this.data.getColumnCount() - 1; i++) {
-          var currentBall = this.ball[j][i];
-          var distance = dist(mouseX, mouseY, currentBall.x, currentBall.y);
-          if (distance < currentBall.size / 2) {
-            cursor(HAND);
-            this.details = [
-              currentBall.gender,
-              years[j],
-              currentBall.bankruptAmt,
-            ];
-          }
+          // Push the data into the operation data table when points hovered
+          self.ballHover(this.ball, years, j, i);
         }
       }
     }
@@ -157,6 +150,7 @@ function bankruptDyanmicBall() {
     operation.listControlLabel(this.labelArray);
   };
 
+  // Draw the standardise title on the top of the data visualisation
   this.drawTitle = function () {
     fill(0);
     noStroke();
@@ -169,6 +163,7 @@ function bankruptDyanmicBall() {
     );
   };
 
+  // Get the max amount among the years, age groups and gender
   self.getMaxAmt = function (data) {
     var maxNum = 0;
     for (var i = 0; i < data.getRowCount(); i++) {
@@ -182,6 +177,7 @@ function bankruptDyanmicBall() {
     return maxNum;
   };
 
+  // Get the min amount among the years, age groups and gender
   self.getMinAmt = function (data) {
     var minNum = 1000;
     for (var i = 0; i < data.getRowCount(); i++) {
@@ -195,14 +191,27 @@ function bankruptDyanmicBall() {
     return minNum;
   };
 
+  // map value of max and min bankrupt amount to create a better range for ball size
   self.mapAmtSize = function (value, min, max) {
-    return map(value, min, max, 25, 100);
+    return map(value, min, max, 50, 150);
   };
 
+  // map value of max and min bankrupt amount to create a better range for ball speed, bigger amount will have slower speed, small amount will have faster speed
   self.mapAmtSpeed = function (value, min, max) {
-    return map(value, min, max, 0.5, 3);
+    return map(value, min, max, 2, 0.5);
   };
 
+  // When ball hovered, it pushes the ball into the
+  self.ballHover = function (ball, years, j, i) {
+    var currentBall = ball[j][i];
+    var distance = dist(mouseX, mouseY, currentBall.x, currentBall.y);
+    if (distance < currentBall.size / 2) {
+      cursor(HAND);
+      this.details = [currentBall.gender, years[j], currentBall.bankruptAmt];
+    }
+  };
+
+  // Create the years filter for data visualisation to display based on years
   self.makeYearFilter = function () {
     // Create a select DOM element.
     this.yearFilter = createSelect();

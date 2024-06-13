@@ -7,8 +7,10 @@ function bounchingBall(
   ballText,
   layout
 ) {
-  this.layout = layout;
   // Public Variables
+  // Layout Object from Bankruptcy file
+  this.layout = layout;
+  // Size and coordinates
   this.size = size;
   this.x = random(
     this.layout.leftMargin + this.size / 2,
@@ -18,24 +20,30 @@ function bounchingBall(
     this.layout.topMargin + this.size / 2,
     this.layout.bottomMargin - this.size / 2
   );
-  this.xspeed = speed;
-  this.yspeed = speed;
+  // Coordinates speed
+  this.xspeed = speed * random([-1, 1]);
+  this.yspeed = speed * random([-1, 1]);
+  // Ball colour
   this.colour = colour;
+  // Data of balls
   this.ballText = ballText;
   this.gender = gender;
-  this.bankruptAmt = bankruptAmt
+  this.bankruptAmt = bankruptAmt;
 
+  // Draw balls on convas
   this.draw = function () {
     fill(this.colour);
     ellipse(this.x, this.y, this.size, this.size);
   };
 
+  // Draw text in the middle of the balls
   this.displayText = function () {
     fill(0);
     textAlign("center");
     text(this.ballText, this.x, this.y);
   };
 
+  // This condition is for the balls to move only when pause status is false, if true, all balls should freeze
   this.ballAcceleration = function (pause) {
     if (pause) {
       this.x += this.xspeed;
@@ -43,6 +51,7 @@ function bounchingBall(
     }
   };
 
+  // Condition to keep the balls within the canvas
   this.checkCondition = function () {
     if (
       this.x > this.layout.rightMargin - this.size / 2 ||
