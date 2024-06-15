@@ -35,3 +35,13 @@ function draw() {
     gallery.selectedVisual.draw();
   }
 }
+
+// To change the mouse click status to true so that the data will be registered into the data table in the operations object
+function mousePressed() {
+  operation.mouseClickStatus = true;
+}
+
+// reset the object operations variable
+function mouseReleased() {
+  operation.mouseClickStatus = false;
+}

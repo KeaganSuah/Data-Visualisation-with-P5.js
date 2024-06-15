@@ -62,6 +62,7 @@ function bankruptDyanmicBall() {
 
     // Reset the data table for new data visualisation
     this.details = ["Gender", "Year", "Bankrupt Amount"];
+    this.gridLayout = [0.33, 0.33, 0.33];
     operation.refreshData(this.details);
 
     // Get the Largest amount and smallest amount
@@ -137,6 +138,9 @@ function bankruptDyanmicBall() {
           this.ball[j][i].displayText();
           this.ball[j][i].checkCondition();
           this.ball[j][i].ballAcceleration(bounceStatus);
+        }
+        // Two loops to prevent the balls to overlap with the data
+        for (let i = 0; i < this.data.getColumnCount() - 1; i++) {
           // Push the data into the operation data table when points hovered
           self.ballHover(this.ball, years, j, i);
         }
@@ -144,7 +148,7 @@ function bankruptDyanmicBall() {
     }
 
     // Display points hovered
-    operation.listDisplayData(this.details, [0.33, 0.33, 0.33]);
+    operation.listDisplayData(this.details, this.gridLayout);
 
     // Draw control labels
     operation.listControlLabel(this.labelArray);
@@ -201,12 +205,43 @@ function bankruptDyanmicBall() {
     return map(value, min, max, 2, 0.5);
   };
 
-  // When ball hovered, it pushes the ball into the
+  // When ball hovered, it changes the details array into the data on the balls
   self.ballHover = function (ball, years, j, i) {
+    // Function for when the balls is clicked
     var currentBall = ball[j][i];
     var distance = dist(mouseX, mouseY, currentBall.x, currentBall.y);
     if (distance < currentBall.size / 2) {
       cursor(HAND);
+
+      var length = 200;
+      var height = 75;
+
+      fill(200);
+      rect(mouseX, mouseY, length, height, 4);
+
+      textAlign();
+      fill(0);
+      text("Data Preview", mouseX + length / 2, mouseY + 15);
+
+      // Create boxes for the controls to be inside of
+      for (var i = 0; i < 2; i++) {
+        var previous = 0;
+        for (var j = 0; j < this.gridLayout.length; j++) {
+          if (i == 0) {
+            fill(100, 100, 190);
+          } else {
+            fill(255);
+          }
+          rect(
+            mouseX + 2 + previous,
+            mouseY + 30 + 23 * i,
+            length * this.gridLayout[j] - 2,
+            20
+          );
+          previous += length * this.gridLayout[j];
+        }
+      }
+
       this.details = [currentBall.gender, years[j], currentBall.bankruptAmt];
     }
   };

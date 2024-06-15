@@ -10,6 +10,9 @@ function Operation() {
   this.data_x_axis = this.x + 425;
   this.labelHeight = [this.y + 68, this.y + 113, this.y + 158];
 
+  // The status for the mouse click function, if true, it will register the data into the data table
+  this.mouseClickStatus = false;
+
   // Nested array to keep array of data
   this.dataBreakdown = [];
 
@@ -115,7 +118,9 @@ function Operation() {
     }
 
     // To add the datas inside the data table
-    self.dataQueueCondition(array);
+    if (this.mouseClickStatus) {
+      self.dataQueueCondition(array);
+    }
 
     stroke(1);
   };
