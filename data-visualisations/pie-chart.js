@@ -10,7 +10,7 @@ function PieChart(x, y, diameter) {
   var previousWord = "";
   var word = "";
   var wordSize = 20;
-  var hoverColour = ""
+  var hoverColour = "";
 
   // Convert the data into radians for the slice
   this.get_radians = function (data) {
@@ -82,10 +82,10 @@ function PieChart(x, y, diameter) {
         );
       }
 
-      self.mouseHover(distance, lastAngle, angles[i], data[i],colour);
+      mouseHover(distance, lastAngle, angles[i], data[i], colour);
 
       // Design the center of the pie chart to display the values
-      self.displayCirlceData()
+      displayCirlceData();
 
       if (labels) {
         this.makeLegendItem(labels[i], i, colour, hoverColour == colour);
@@ -126,21 +126,26 @@ function PieChart(x, y, diameter) {
     }
   };
 
+  /////////////////// Private Functions /////////////////////////
+
+  // Declare for variables in objects for private functions
+  var self = this;
+
   // Private Method, Mouse condition to hover on the slice
-  self.mouseHover = function (distance, lastAngle, angle, data,colour) {
+  var mouseHover = function (distance, lastAngle, angle, data, colour) {
     // see the hover
     if (
-      lastAngle < self.mouseHoverAngle(distance) &&
-      self.mouseHoverAngle(distance) < lastAngle + angle + 0.001
+      lastAngle < mouseHoverAngle(distance) &&
+      mouseHoverAngle(distance) < lastAngle + angle + 0.001
     ) {
-      if (distance > this.diameter / 2) {
+      if (distance > self.diameter / 2) {
         wordSize = 20;
         word = "Hover over the Slice for Percentage";
-        hoverColour = ""
-      } else if (distance < this.diameter / 2 && distance > 150) {
+        hoverColour = "";
+      } else if (distance < self.diameter / 2 && distance > 150) {
         wordSize = 32;
         word = data;
-        hoverColour = colour
+        hoverColour = colour;
         previousWord = word;
         // Change mouse cursor type
         cursor(HAND);
@@ -152,48 +157,48 @@ function PieChart(x, y, diameter) {
   };
 
   // Private Method, Using Trigonometric Functions to find the angle of the mouse
-  self.mouseHoverAngle = function (hypotenuse) {
+  var mouseHoverAngle = function (hypotenuse) {
     // Length of variables
-    var opposite = abs(mouseY - this.y);
+    var opposite = abs(mouseY - self.y);
     var angle = 0;
     var mouse_radian = asin(opposite / hypotenuse);
 
     // Bottom-right quadrant
-    if (mouseX < this.x && mouseY > this.y) {
+    if (mouseX < self.x && mouseY > self.y) {
       angle = abs(PI / 2 - mouse_radian) + PI / 2;
       return angle;
     }
     // Bottom-left quadrant
-    else if (mouseX < this.x && mouseY < this.y) {
+    else if (mouseX < self.x && mouseY < self.y) {
       angle = mouse_radian + PI;
       return angle;
     }
     // Top-left quadrant
-    else if (mouseX > this.x && mouseY < this.y) {
+    else if (mouseX > self.x && mouseY < self.y) {
       angle = abs(PI / 2 - mouse_radian) + PI + PI / 2;
       return angle;
     }
     // Top-right quadrant
-    else if (mouseX > this.x && mouseY > this.y) {
+    else if (mouseX > self.x && mouseY > self.y) {
       angle = mouse_radian;
       return angle;
     }
   };
 
   // Private method, to create the center circle in the middle that displays the percentage as well
-  self.displayCirlceData = function(){
+  var displayCirlceData = function () {
     // Design the center of the pie chart to display the values
     fill(255);
-    ellipse(this.x, this.y, 300, 300);
+    ellipse(self.x, self.y, 300, 300);
     fill(0);
     textAlign(CENTER);
     textSize(wordSize);
     noStroke();
     if (word != "Hover over the Slice for Percentage") {
       var displayWord = `${Number(word).toFixed(2)}%`;
-      text(displayWord, this.x - 95, this.y - 5, 200);
+      text(displayWord, self.x - 95, self.y - 5, 200);
     } else {
-      text("Hover over the Slice for Percentage", this.x - 95, this.y - 5, 200);
+      text("Hover over the Slice for Percentage", self.x - 95, self.y - 5, 200);
     }
-  }
+  };
 }

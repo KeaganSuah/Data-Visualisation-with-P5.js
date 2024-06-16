@@ -1,8 +1,4 @@
 function NutrientsTimeSeries() {
-  // To initial private variables or functions
-  var self = this;
-  // Add global variables
-
   // Name for the visualisation to appear in the menu bar.
   this.name = "Nutrients: 1974-2016";
 
@@ -95,10 +91,10 @@ function NutrientsTimeSeries() {
     this.maxPercentage = 400;
 
     // Display filter selection button
-    self.operationControl();
+    operationControl();
 
     // Display Legend button
-    self.createLegendButton();
+    createLegendButton();
   };
 
   this.destroy = function () {
@@ -174,7 +170,7 @@ function NutrientsTimeSeries() {
             );
 
             // Points on line graph that can be hovered
-            self.pointHover(current, title);
+            pointHover(current, title);
           }
 
           // The number of x-axis labels to skip so that only
@@ -208,7 +204,7 @@ function NutrientsTimeSeries() {
           ) {
             noStroke();
             // draw nutrients legend table
-            this.makeLegendItem(title, i, this.colors[i], legendButton);
+            makeLegendItem(title, i, this.colors[i], legendButton);
 
             //draw the nutrients label
             fill(this.colors[i]);
@@ -263,10 +259,15 @@ function NutrientsTimeSeries() {
     );
   };
 
-  // Addition Extension of the nutrients graph, this functions are all private functions
+  /////////////////// Private Functions /////////////////////////
+
+  // Declare for variables in objects for private functions
+  var self = this;
+
+  // Addition Extension of the nutrients graph
 
   // function display the legend only when the variable legendButton is true
-  self.makeLegendItem = function (label, i, colour, show) {
+  var makeLegendItem = function (label, i, colour, show) {
     textAlign("left", "center");
     if (show) {
       // Private variables for the legend, showing the axis and length
@@ -294,32 +295,32 @@ function NutrientsTimeSeries() {
   };
 
   // Create points on line graph that can be hovered to display breakdown of data in each point
-  self.pointHover = function (current, title) {
+  var pointHover = function (current, title) {
     var pointSize =
-      map(this.startSlider.value(), 1974, 2016, 20, 30) -
-      map(this.endSlider.value(), 1974, 2016, 0, 10);
+      map(self.startSlider.value(), 1974, 2016, 20, 30) -
+      map(self.endSlider.value(), 1974, 2016, 0, 10);
     // Create Points on Line graph to hover on
     ellipse(
-      this.mapYearToWidth(current.year),
-      this.mapNutrientsToHeight(current.percentage),
+      self.mapYearToWidth(current.year),
+      self.mapNutrientsToHeight(current.percentage),
       pointSize,
       pointSize
     );
     var distancePoint = dist(
       mouseX,
       mouseY,
-      this.mapYearToWidth(current.year),
-      this.mapNutrientsToHeight(current.percentage)
+      self.mapYearToWidth(current.year),
+      self.mapNutrientsToHeight(current.percentage)
     );
     if (distancePoint < pointSize / 2) {
       cursor(HAND);
       // Display Industry and values
-      this.details = [title, current.year, `${current.percentage}%`];
+      self.details = [title, current.year, `${current.percentage}%`];
     }
   };
 
   // Function is to change the variable legendButton so that is alternate when it is called
-  self.legendButtonClick = function () {
+  var legendButtonClick = function () {
     if (legendButton) {
       legendButton = false;
     } else {
@@ -328,61 +329,61 @@ function NutrientsTimeSeries() {
   };
 
   // Create the button that display the legend, allowing user to open and close
-  self.createLegendButton = function () {
-    this.button = createButton("Show Legend");
-    this.button.position(width + 130, 12);
+  var createLegendButton = function () {
+    self.button = createButton("Show Legend");
+    self.button.position(width + 130, 12);
 
     // Call repaint() when the button is pressed.
-    this.button.mousePressed(self.legendButtonClick);
+    self.button.mousePressed(legendButtonClick);
   };
 
   // Control panel label and controls
   // Display the operation controls on the graph for users
-  self.operationControl = function () {
-    self.makeNutrientFilter(operation.control_x_axis, operation.labelHeight[0]);
+  var operationControl = function () {
+    makeNutrientFilter(operation.control_x_axis, operation.labelHeight[0]);
 
     // Create sliders to control start and end years. Default to
     // To reduce the starting range of years.
-    this.startSlider = createSlider(
-      this.startYear,
-      this.endYear - 11,
-      this.startYear,
+    self.startSlider = createSlider(
+      self.startYear,
+      self.endYear - 11,
+      self.startYear,
       1
     );
-    this.startSlider.position(
+    self.startSlider.position(
       450 + operation.control_x_axis,
       operation.labelHeight[1]
     );
 
     // To reduce the ending range of years.
-    this.endSlider = createSlider(
-      this.startYear + 11,
-      this.endYear,
-      this.endYear,
+    self.endSlider = createSlider(
+      self.startYear + 11,
+      self.endYear,
+      self.endYear,
       1
     );
-    this.endSlider.position(
+    self.endSlider.position(
       450 + operation.control_x_axis,
       operation.labelHeight[2]
     );
   };
 
   // To create the filter option button to filter the nutrients, user can pick which nutrient they would like to see
-  self.makeNutrientFilter = function (x, y) {
+  var makeNutrientFilter = function (x, y) {
     // Create a select DOM element.
-    this.filterNutrient = createSelect();
-    this.filterNutrient.position(450 + x, y);
+    self.filterNutrient = createSelect();
+    self.filterNutrient.position(450 + x, y);
 
     // Fill the options with all company names.
-    var nutrients = this.data.rows;
+    var nutrients = self.data.rows;
 
     // Fill all first
-    this.filterNutrient.option("All");
+    self.filterNutrient.option("All");
 
     // First entry is empty.
     for (let i = 0; i < nutrients.length; i++) {
       var nutrient = nutrients[i].getString(0);
-      this.filterNutrient.option(nutrient);
+      self.filterNutrient.option(nutrient);
     }
   };
 }

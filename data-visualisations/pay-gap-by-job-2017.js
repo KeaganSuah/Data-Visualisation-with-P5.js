@@ -23,10 +23,6 @@ function PayGapByJob2017() {
   // Create a variable so that only one point can be hovered at a time
   this.details;
 
-  // Private Variables
-  // for private function
-  var self = this;
-
   // Preload the data. This function is called automatically by the
   // gallery when a visualisation is added.
   this.preload = function () {
@@ -101,7 +97,7 @@ function PayGapByJob2017() {
 
     for (i = 0; i < this.data.getRowCount(); i++) {
       // Set the colour for each points for the intensity to see how far it is from the center
-      self.colourIntensifier(
+      colourIntensifier(
         payGap[i],
         propFemale[i],
         propFemaleMin,
@@ -134,7 +130,7 @@ function PayGapByJob2017() {
       );
 
       // When points hovered, show breakdown details
-      self.pointHover(
+      pointHover(
         propFemale[i],
         propFemaleMin,
         propFemaleMax,
@@ -150,39 +146,151 @@ function PayGapByJob2017() {
   };
 
   this.addAxes = function () {
+    // Add quadrant onto the axis
+    quadrant();
+
+    stroke(100);
+    strokeWeight(2);
+    // Add vertical line.
+    line(
+      width / 2,
+      0 + this.pad,
+      width / 2,
+      height - operation.height - this.pad - 20
+    );
+
+    // Add horizontal line.
+    line(
+      0 + this.pad,
+      (height - operation.height) / 2,
+      width - this.pad,
+      (height - operation.height) / 2
+    );
+  };
+
+  this.drawTitle = function () {
+    fill(0);
+    noStroke();
+    textAlign("center", "center");
+
+    textSize(16);
+    text(this.title, width / 2, 10);
+  };
+
+  /////////////////// Private Functions /////////////////////////
+
+  // Declare for variables in objects for private functions
+  var self = this;
+
+  var colourIntensifier = function (
+    payGap,
+    propFemale,
+    propFemaleMin,
+    propFemaleMax,
+    payGapMax
+  ) {
+    // Check the distance between pay gap to the center
+    var distanceAveragePay = abs(payGap);
+    // Check the distance between percentage of female to the center
+    var distanceAverageProp = abs(
+      (propFemaleMin + propFemaleMax) / 2 - propFemale
+    );
+    // Change the pay gap colour intensity
+    var colourIntensityPay = map(distanceAveragePay, 0, payGapMax, 0, 255 / 2);
+    // Change the percentage of female colour intensity
+    var colourIntensityProp = map(
+      distanceAverageProp,
+      0,
+      propFemaleMax / 2,
+      0,
+      255 / 2
+    );
+
+    // For points further away from the center, the more intense the redness will be
+    return fill(
+      255,
+      255 - (colourIntensityPay + colourIntensityProp),
+      255 - (colourIntensityPay + colourIntensityProp)
+    );
+  };
+
+  // Private function, when points is hovered, display the breakdown details of the points by showing the percentage of female, pay gap and industry of the point
+  var pointHover = function (
+    propFemale,
+    propFemaleMin,
+    propFemaleMax,
+    payGap,
+    payGapMin,
+    payGapMax,
+    numJobs,
+    numJobsMin,
+    numJobsMax,
+    jobs
+  ) {
+    // Get distance from mouse axis to the points axis
+    distance = dist(
+      mouseX,
+      mouseY,
+      map(propFemale, propFemaleMin, propFemaleMax, self.pad, width - self.pad),
+      map(
+        payGap,
+        payGapMin,
+        payGapMax,
+        height - operation.height - self.pad,
+        self.pad
+      )
+    );
+
+    // when mouse is on the points, it passes the condition
+    if (
+      distance <
+      map(numJobs, numJobsMin, numJobsMax, self.dotSizeMin, self.dotSizeMax) / 2
+    ) {
+      // Change mouse cursor type
+      cursor(HAND);
+      // Display Industry and values
+      self.details = [
+        `${jobs}`,
+        `${propFemale.toFixed(2)}%`,
+        `${payGap.toFixed(2)}`,
+      ];
+    }
+  };
+
+  var quadrant = function () {
     // Add Quadrant boxes to distinguish the quadrants
     noStroke();
     // Top-Left Quadrant
     fill(0, 0, 255, 50);
     rect(
-      this.pad,
-      this.pad,
-      width / 2 - this.pad,
-      (height - operation.height) / 2 - this.pad
+      self.pad,
+      self.pad,
+      width / 2 - self.pad,
+      (height - operation.height) / 2 - self.pad
     );
     // Top-Right Quadrant
     fill(128, 0, 128, 50);
     rect(
       width / 2,
-      this.pad,
-      width / 2 - this.pad,
-      (height - operation.height) / 2 - this.pad
+      self.pad,
+      width / 2 - self.pad,
+      (height - operation.height) / 2 - self.pad
     );
     // Bottom-Left Quadrant
     fill(255, 165, 0, 50);
     rect(
-      this.pad,
+      self.pad,
       (height - operation.height) / 2,
-      width / 2 - this.pad,
-      (height - operation.height) / 2 - this.pad - 20
+      width / 2 - self.pad,
+      (height - operation.height) / 2 - self.pad - 20
     );
     // Bottom-Left Quadrant
     fill(255, 192, 203, 50);
     rect(
       width / 2,
       (height - operation.height) / 2,
-      width / 2 - this.pad,
-      (height - operation.height) / 2 - this.pad - 20
+      width / 2 - self.pad,
+      (height - operation.height) / 2 - self.pad - 20
     );
 
     // Add Quadrant boxes label
@@ -216,109 +324,5 @@ function PayGapByJob2017() {
       3 * (width / 4),
       3 * ((height - operation.height) / 4)
     );
-
-    stroke(100);
-    strokeWeight(2);
-
-    // Add vertical line.
-    line(
-      width / 2,
-      0 + this.pad,
-      width / 2,
-      height - operation.height - this.pad - 20
-    );
-
-    // Add horizontal line.
-    line(
-      0 + this.pad,
-      (height - operation.height) / 2,
-      width - this.pad,
-      (height - operation.height) / 2
-    );
-  };
-
-  this.drawTitle = function () {
-    fill(0);
-    noStroke();
-    textAlign("center", "center");
-
-    textSize(16);
-    text(this.title, width / 2, 10);
-  };
-
-  // Private function, to set the intensity of points to see how far it is from center
-  self.colourIntensifier = function (
-    payGap,
-    propFemale,
-    propFemaleMin,
-    propFemaleMax,
-    payGapMax
-  ) {
-    // Check the distance between pay gap to the center
-    var distanceAveragePay = abs(payGap);
-    // Check the distance between percentage of female to the center
-    var distanceAverageProp = abs(
-      (propFemaleMin + propFemaleMax) / 2 - propFemale
-    );
-    // Change the pay gap colour intensity
-    var colourIntensityPay = map(distanceAveragePay, 0, payGapMax, 0, 255 / 2);
-    // Change the percentage of female colour intensity
-    var colourIntensityProp = map(
-      distanceAverageProp,
-      0,
-      propFemaleMax / 2,
-      0,
-      255 / 2
-    );
-
-    // For points further away from the center, the more intense the redness will be
-    return fill(
-      255,
-      255 - (colourIntensityPay + colourIntensityProp),
-      255 - (colourIntensityPay + colourIntensityProp)
-    );
-  };
-
-  // Private function, when points is hovered, display the breakdown details of the points by showing the percentage of female, pay gap and industry of the point
-  self.pointHover = function (
-    propFemale,
-    propFemaleMin,
-    propFemaleMax,
-    payGap,
-    payGapMin,
-    payGapMax,
-    numJobs,
-    numJobsMin,
-    numJobsMax,
-    jobs
-  ) {
-    // Get distance from mouse axis to the points axis
-    distance = dist(
-      mouseX,
-      mouseY,
-      map(propFemale, propFemaleMin, propFemaleMax, this.pad, width - this.pad),
-      map(
-        payGap,
-        payGapMin,
-        payGapMax,
-        height - operation.height - this.pad,
-        this.pad
-      )
-    );
-
-    // when mouse is on the points, it passes the condition
-    if (
-      distance <
-      map(numJobs, numJobsMin, numJobsMax, this.dotSizeMin, this.dotSizeMax) / 2
-    ) {
-      // Change mouse cursor type
-      cursor(HAND);
-      // Display Industry and values
-      this.details = [
-        `${jobs}`,
-        `${propFemale.toFixed(2)}%`,
-        `${payGap.toFixed(2)}`,
-      ];
-    }
   };
 }

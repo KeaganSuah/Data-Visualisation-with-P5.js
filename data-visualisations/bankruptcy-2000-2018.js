@@ -66,8 +66,8 @@ function bankruptDyanmicBall() {
     operation.refreshData(this.details);
 
     // Get the Largest amount and smallest amount
-    var maxAmount = self.getMaxAmt(this.data);
-    var minAmount = self.getMinAmt(this.data);
+    var maxAmount = MinMaxAmt(this.data, 0, max);
+    var minAmount = MinMaxAmt(this.data, maxAmount, min);
 
     // Array to store all the bouncing balls objects
     this.ball = [];
@@ -91,8 +91,8 @@ function bankruptDyanmicBall() {
         }
         // Ball details
         var bankruptAmt = bankruptAmtByYear[i];
-        var size = self.mapAmtSize(bankruptAmt, minAmount, maxAmount);
-        var speed = self.mapAmtSpeed(bankruptAmt, minAmount, maxAmount);
+        var size = mapAmtSize(bankruptAmt, minAmount, maxAmount);
+        var speed = mapAmtSpeed(bankruptAmt, minAmount, maxAmount);
         var textAge = this.data.columns.slice(1)[i];
         yearList.push(
           new bounchingBall(
@@ -110,10 +110,12 @@ function bankruptDyanmicBall() {
     }
 
     // Create filter for years
-    self.makeYearFilter();
+    makeYearFilter();
 
     // Create stop animation bouncing button
-    self.createStopButton();
+    createStopButton();
+
+    console.log(operation);
   };
 
   // Remove the DOM functions in Data Visualisation
@@ -142,7 +144,7 @@ function bankruptDyanmicBall() {
         // Two loops to prevent the balls to overlap with the data
         for (let i = 0; i < this.data.getColumnCount() - 1; i++) {
           // Push the data into the operation data table when points hovered
-          self.ballHover(this.ball, years, j, i);
+          ballHover(this.ball, years, j, i);
         }
       }
     }
@@ -167,46 +169,34 @@ function bankruptDyanmicBall() {
     );
   };
 
-  // Get the max amount among the years, age groups and gender
-  self.getMaxAmt = function (data) {
-    var maxNum = 0;
-    for (var i = 0; i < data.getRowCount(); i++) {
-      var rowList = data.getRow(i).arr.slice(1);
-      rowList = stringsToNumbers(rowList);
-      var maxNumList = max(rowList);
-      if (maxNumList > maxNum) {
-        maxNum = maxNumList;
-      }
-    }
-    return maxNum;
-  };
+  /////////////////// Private Functions /////////////////////////
 
-  // Get the min amount among the years, age groups and gender
-  self.getMinAmt = function (data) {
-    var minNum = 1000;
+  // Declare for variables in objects for private functions
+  var self = this;
+
+  // Get the max amount among the years, age groups and gender, using Higher Order Function
+  var MinMaxAmt = function (data, value, fn) {
     for (var i = 0; i < data.getRowCount(); i++) {
       var rowList = data.getRow(i).arr.slice(1);
       rowList = stringsToNumbers(rowList);
-      var minNumList = min(rowList);
-      if (minNumList < minNum) {
-        minNum = minNumList;
-      }
+      var valueInList = fn(rowList);
+      value = fn(value, valueInList);
     }
-    return minNum;
+    return value;
   };
 
   // map value of max and min bankrupt amount to create a better range for ball size
-  self.mapAmtSize = function (value, min, max) {
+  var mapAmtSize = function (value, min, max) {
     return map(value, min, max, 50, 150);
   };
 
   // map value of max and min bankrupt amount to create a better range for ball speed, bigger amount will have slower speed, small amount will have faster speed
-  self.mapAmtSpeed = function (value, min, max) {
+  var mapAmtSpeed = function (value, min, max) {
     return map(value, min, max, 2, 0.5);
   };
 
   // When ball hovered, it changes the details array into the data on the balls
-  self.ballHover = function (ball, years, j, i) {
+  var ballHover = function (ball, years, j, i) {
     // Function for when the balls is clicked
     var currentBall = ball[j][i];
     var distance = dist(mouseX, mouseY, currentBall.x, currentBall.y);
@@ -226,7 +216,7 @@ function bankruptDyanmicBall() {
       // Create boxes for the controls to be inside of
       for (var i = 0; i < 2; i++) {
         var previous = 0;
-        for (var j = 0; j < this.gridLayout.length; j++) {
+        for (var j = 0; j < self.gridLayout.length; j++) {
           if (i == 0) {
             fill(100, 100, 190);
           } else {
@@ -235,38 +225,38 @@ function bankruptDyanmicBall() {
           rect(
             mouseX + 2 + previous,
             mouseY + 30 + 23 * i,
-            length * this.gridLayout[j] - 2,
+            length * self.gridLayout[j] - 2,
             20
           );
-          previous += length * this.gridLayout[j];
+          previous += length * self.gridLayout[j];
         }
       }
 
-      this.details = [currentBall.gender, years[j], currentBall.bankruptAmt];
+      self.details = [currentBall.gender, years[j], currentBall.bankruptAmt];
     }
   };
 
   // Create the years filter for data visualisation to display based on years
-  self.makeYearFilter = function () {
+  var makeYearFilter = function () {
     // Create a select DOM element.
-    this.yearFilter = createSelect();
-    this.yearFilter.position(
+    self.yearFilter = createSelect();
+    self.yearFilter.position(
       450 + operation.control_x_axis,
       operation.labelHeight[0]
     );
 
     // Fill the options with all bankruptcy years.
-    var years = this.data.getColumn(0);
+    var years = self.data.getColumn(0);
 
     // First entry is empty.
     for (let i = 0; i < years.length; i++) {
       var year = years[i];
-      this.yearFilter.option(year);
+      self.yearFilter.option(year);
     }
   };
 
   // Function is to change the variable legendButton so that is alternate when it is called
-  self.stopBounceClick = function () {
+  var stopBounceClick = function () {
     if (bounceStatus) {
       bounceStatus = false;
     } else {
@@ -275,14 +265,14 @@ function bankruptDyanmicBall() {
   };
 
   // Create the button that display the legend, allowing user to open and close
-  self.createStopButton = function () {
-    this.bounceButton = createButton("Start/Stop Bouncing");
-    this.bounceButton.position(
+  var createStopButton = function () {
+    self.bounceButton = createButton("Start/Stop Bouncing");
+    self.bounceButton.position(
       450 + operation.control_x_axis,
       operation.labelHeight[1] - 2
     );
 
     // Call repaint() when the button is pressed.
-    this.bounceButton.mousePressed(self.stopBounceClick);
+    self.bounceButton.mousePressed(stopBounceClick);
   };
 }

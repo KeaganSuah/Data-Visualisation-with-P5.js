@@ -23,9 +23,6 @@ function ClimateChange() {
   // Create the margin gap for data visualisation
   var marginSize = 35;
 
-  // declare private methods
-  var self = this;
-
   // Layout object to store all common plot layout parameters and
   // methods.
   this.layout = {
@@ -99,7 +96,7 @@ function ClimateChange() {
     // started so that we can animate the plot.
     this.frameCount = 0;
 
-    self.operationControl(this.minYear, this.maxYear);
+    operationControl(this.minYear, this.maxYear);
   };
 
   this.destroy = function () {
@@ -202,7 +199,7 @@ function ClimateChange() {
         );
 
         // my own extension
-        self.temperaturePoints(previous, current);
+        temperaturePoints(previous, current);
 
         // The number of x-axis labels to skip so that only
         // numXTickLabels are drawn.
@@ -294,33 +291,38 @@ function ClimateChange() {
     );
   };
 
+  /////////////////// Private Functions /////////////////////////
+
+  // Declare for variables in objects for private functions
+  var self = this;
+
   // Private Method, design and display the points of the graph
-  self.temperaturePoints = function (previous, current) {
+  var temperaturePoints = function (previous, current) {
     var pointSize =
-      map(this.startSlider.value(), 1880, 2017, 20, 30) -
-      map(this.endSlider.value(), 1880, 2017, 0, 10);
+      map(self.startSlider.value(), 1880, 2017, 20, 30) -
+      map(self.endSlider.value(), 1880, 2017, 0, 10);
 
     // Draw the Points on the line
     fill(255);
     ellipse(
-      this.mapYearToWidth(previous.year),
-      this.mapTemperatureToHeight(previous.temperature),
+      self.mapYearToWidth(previous.year),
+      self.mapTemperatureToHeight(previous.temperature),
       pointSize,
       pointSize
     );
 
     // Hovering conditons and design
-    self.temperaturePointsHovered(pointSize, current, previous);
+    temperaturePointsHovered(pointSize, current, previous);
   };
 
   // Private Method, When the temperature points is hovered, display text on to the middle of the canvas
-  self.temperaturePointsHovered = function (size, current, previous) {
+  var temperaturePointsHovered = function (size, current, previous) {
     // Distance between the mouse coords and the point coords
     var distance = dist(
       mouseX,
       mouseY,
-      this.mapYearToWidth(previous.year),
-      this.mapTemperatureToHeight(previous.temperature)
+      self.mapYearToWidth(previous.year),
+      self.mapTemperatureToHeight(previous.temperature)
     );
 
     // When conditions are met, draw the value on the canvas
@@ -328,7 +330,7 @@ function ClimateChange() {
       // Change Cursor type of mouse
       cursor(HAND);
       // Display values on canvas
-      this.details = [
+      self.details = [
         `${current.temperature} degree celsius`,
         `During ${current.year}`,
       ];
@@ -337,17 +339,17 @@ function ClimateChange() {
 
   // Control panel label and controls
   // Display the operation controls on the graph for users
-  self.operationControl = function (min, max) {
+  var operationControl = function (min, max) {
     // Create sliders to control start and end years. Default to
     // visualise full range.
-    this.startSlider = createSlider(min, max - 1, min, 1);
-    this.startSlider.position(
+    self.startSlider = createSlider(min, max - 1, min, 1);
+    self.startSlider.position(
       450 + operation.control_x_axis,
       operation.labelHeight[0]
     );
 
-    this.endSlider = createSlider(min + 1, max, max, 1);
-    this.endSlider.position(
+    self.endSlider = createSlider(min + 1, max, max, 1);
+    self.endSlider.position(
       450 + operation.control_x_axis,
       operation.labelHeight[1]
     );

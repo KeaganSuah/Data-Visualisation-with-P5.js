@@ -36,7 +36,7 @@ function TechDiversityRace() {
       return;
     }
 
-    self.operationControl();
+    operationControl();
 
     // Fill the options with all company names.
     var companies = this.data.columns;
@@ -90,10 +90,10 @@ function TechDiversityRace() {
 
   // Control panel label and controls
   // Display the operation controls on the graph for users
-  self.operationControl = function () {
+  var operationControl = function () {
     // Create a select DOM element.
-    this.select = createSelect();
-    this.select.position(
+    self.select = createSelect();
+    self.select.position(
       450 + operation.control_x_axis,
       operation.labelHeight[0]
     );

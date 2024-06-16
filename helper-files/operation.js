@@ -16,33 +16,9 @@ function Operation() {
   // Nested array to keep array of data
   this.dataBreakdown = [];
 
-  // Declare for private functions
-  var self = this;
-
-  //   Draw the control panel
-  self.controlPanel = function (labelArray) {
-    // Only draw is the label array exists
-    fill(210);
-    noStroke();
-    rect(this.x, this.y, width / 2 - 120, this.height - 10, 10);
-
-    fill(255);
-    // Create boxes for the controls to be inside of
-    for (var i = 0; i < labelArray.length; i++) {
-      rect(this.x + 20, this.y + 50 + 45 * i, 140, 35);
-      rect(this.x + 20 + 145, this.y + 50 + 45 * i, width / 2 - 300, 35);
-    }
-
-    self.displayTitle(
-      "Control Panel",
-      this.x + (width / 2 - 120) / 2,
-      this.y + 30
-    );
-  };
-
   // To list out the label for all the controls
   this.listControlLabel = function (array) {
-    self.controlPanel(array);
+    controlPanel(array);
     // Draw operation label
     textAlign("left");
     textSize(16);
@@ -53,25 +29,10 @@ function Operation() {
     }
   };
 
-  //   Draw the data table
-  self.displayData = function () {
-    // Design of overall table
-    fill(210);
-    noStroke();
-    rect(this.x + (width / 2 - 100), this.y, width / 2, this.height - 10, 10);
-
-    // Display title on the top
-    this.displayTitle(
-      "Data Breakdown",
-      this.x + (width / 2 - 100) + (width / 2 - 20) / 2,
-      this.y + 30
-    );
-  };
-
   // To display and list out all the data in the data breakdown table
   this.listDisplayData = function (array, gridLayout) {
     var length = 495;
-    self.displayData();
+    displayData();
 
     // Display Industry and values
     textAlign("left");
@@ -119,39 +80,24 @@ function Operation() {
 
     // To add the datas inside the data table
     if (this.mouseClickStatus) {
-      self.dataQueueCondition(array);
+      dataQueueCondition(array);
     }
 
     stroke(1);
   };
 
-  // Condition for the data points to be added into the table
-  self.dataQueueCondition = function (array) {
-    // to start the first data hovered
-    if (this.dataBreakdown.length == 1) {
-      if (this.dataBreakdown[0][1] != array[1]) {
-        this.dataBreakdown.splice(1, 0, array);
-      }
-    }
-    // For any other new data hovered, add into the queue of data for the data table
-    else {
-      if (
-        this.dataBreakdown[1][1] != array[1] ||
-        this.dataBreakdown[1][2] != array[2]
-      ) {
-        // If the queue have reached max, add from the front and remove the last
-        if (this.dataBreakdown.length == 4) {
-          this.dataBreakdown.splice(1, 0, array);
-          this.dataBreakdown.pop();
-        } else {
-          this.dataBreakdown.splice(1, 0, array);
-        }
-      }
-    }
+  // Refresh the data breakdown table
+  this.refreshData = function (array) {
+    this.dataBreakdown = [array];
   };
 
+  /////////////////// Private Functions /////////////////////////
+
+  // Declare for variables in objects for private functions
+  var self = this;
+
   // Display title on the control panel and on data breakdown box
-  self.displayTitle = function (title, x, y) {
+  var displayTitle = function (title, x, y) {
     fill(0);
     noStroke();
     textSize(20);
@@ -159,8 +105,60 @@ function Operation() {
     text(title, x, y);
   };
 
-  // Refresh the data breakdown table
-  this.refreshData = function (array) {
-    this.dataBreakdown = [array];
+  //   Draw the control panel
+  var controlPanel = function (labelArray) {
+    // Only draw is the label array exists
+    fill(210);
+    noStroke();
+    rect(self.x, self.y, width / 2 - 120, self.height - 10, 10);
+
+    fill(255);
+    // Create boxes for the controls to be inside of
+    for (var i = 0; i < labelArray.length; i++) {
+      rect(self.x + 20, self.y + 50 + 45 * i, 140, 35);
+      rect(self.x + 20 + 145, self.y + 50 + 45 * i, width / 2 - 300, 35);
+    }
+
+    displayTitle("Control Panel", self.x + (width / 2 - 120) / 2, self.y + 30);
+  };
+
+  //   Draw the data table
+  var displayData = function () {
+    // Design of overall table
+    fill(210);
+    noStroke();
+    rect(self.x + (width / 2 - 100), self.y, width / 2, self.height - 10, 10);
+
+    // Display title on the top
+    displayTitle(
+      "Data Breakdown",
+      self.x + (width / 2 - 100) + (width / 2 - 20) / 2,
+      self.y + 30
+    );
+  };
+
+  // Condition for the data points to be added into the table
+  var dataQueueCondition = function (array) {
+    // to start the first data hovered
+    if (self.dataBreakdown.length == 1) {
+      if (self.dataBreakdown[0][1] != array[1]) {
+        self.dataBreakdown.splice(1, 0, array);
+      }
+    }
+    // For any other new data hovered, add into the queue of data for the data table
+    else {
+      if (
+        self.dataBreakdown[1][1] != array[1] ||
+        self.dataBreakdown[1][2] != array[2]
+      ) {
+        // If the queue have reached max, add from the front and remove the last
+        if (self.dataBreakdown.length == 4) {
+          self.dataBreakdown.splice(1, 0, array);
+          self.dataBreakdown.pop();
+        } else {
+          self.dataBreakdown.splice(1, 0, array);
+        }
+      }
+    }
   };
 }
