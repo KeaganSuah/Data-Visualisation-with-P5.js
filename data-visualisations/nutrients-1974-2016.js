@@ -315,7 +315,9 @@ function NutrientsTimeSeries() {
     if (distancePoint < pointSize / 2) {
       cursor(HAND);
       // Display Industry and values
-      self.details = [title, current.year, `${current.percentage}%`];
+      if (operation.mouseClickStatus) {
+        self.details = [title, current.year, `${current.percentage}%`];
+      }
     }
   };
 

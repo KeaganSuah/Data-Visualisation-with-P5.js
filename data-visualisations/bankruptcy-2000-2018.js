@@ -203,8 +203,8 @@ function bankruptDyanmicBall() {
     if (distance < currentBall.size / 2) {
       cursor(HAND);
 
-      var length = 200;
-      var height = 75;
+      var length = 300;
+      var height = 88;
 
       fill(200);
       rect(mouseX, mouseY, length, height, 4);
@@ -224,15 +224,38 @@ function bankruptDyanmicBall() {
           }
           rect(
             mouseX + 2 + previous,
-            mouseY + 30 + 23 * i,
+            mouseY + 30 + 28 * i,
             length * self.gridLayout[j] - 2,
-            20
+            25
           );
           previous += length * self.gridLayout[j];
         }
       }
 
-      self.details = [currentBall.gender, years[j], currentBall.bankruptAmt];
+      textSize(11);
+      textAlign("left");
+      // Display text and data inside boxes
+      for (var j = 0; j < 2; j++) {
+        var previousText = 0;
+        for (var i = 0; i < operation.dataBreakdown[0].length; i++) {
+          if (j == 0) {
+            fill(0);
+            text(
+              operation.dataBreakdown[0][i],
+              mouseX + previousText + 5,
+              mouseY + 30 + 28 * j,
+              length * self.gridLayout[i] - 5
+            );
+          } else {
+            fill(0);
+          }
+          previousText += length * self.gridLayout[i];
+        }
+      }
+
+      if (operation.mouseClickStatus) {
+        self.details = [currentBall.gender, years[j], currentBall.bankruptAmt];
+      }
     }
   };
 

@@ -330,10 +330,12 @@ function ClimateChange() {
       // Change Cursor type of mouse
       cursor(HAND);
       // Display values on canvas
-      self.details = [
-        `${current.temperature} degree celsius`,
-        `During ${current.year}`,
-      ];
+      if (operation.mouseClickStatus) {
+        self.details = [
+          `${current.temperature} degree celsius`,
+          `During ${current.year}`,
+        ];
+      }
     }
   };
 

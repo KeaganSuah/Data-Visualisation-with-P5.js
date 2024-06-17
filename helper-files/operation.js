@@ -79,9 +79,7 @@ function Operation() {
     }
 
     // To add the datas inside the data table
-    if (this.mouseClickStatus) {
-      dataQueueCondition(array);
-    }
+    dataQueueCondition(array);
 
     stroke(1);
   };
@@ -131,7 +129,7 @@ function Operation() {
 
     // Display title on the top
     displayTitle(
-      "Data Breakdown",
+      "Data Breakdown (Click on Points)",
       self.x + (width / 2 - 100) + (width / 2 - 20) / 2,
       self.y + 30
     );

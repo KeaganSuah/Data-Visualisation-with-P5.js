@@ -249,11 +249,13 @@ function PayGapByJob2017() {
       // Change mouse cursor type
       cursor(HAND);
       // Display Industry and values
-      self.details = [
-        `${jobs}`,
-        `${propFemale.toFixed(2)}%`,
-        `${payGap.toFixed(2)}`,
-      ];
+      if (operation.mouseClickStatus) {
+        self.details = [
+          `${jobs}`,
+          `${propFemale.toFixed(2)}%`,
+          `${payGap.toFixed(2)}`,
+        ];
+      }
     }
   };
 
