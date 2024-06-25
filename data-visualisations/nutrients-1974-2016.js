@@ -15,7 +15,7 @@ function NutrientsTimeSeries() {
   // Colour list of each nutrient line
   this.colors = [];
 
-  // Declare for variables in objects for private functions
+  // Declare for variables in objects for Private Methods
   var self = this;
 
   // Private variables
@@ -53,6 +53,8 @@ function NutrientsTimeSeries() {
 
   // Property to represent whether data has been loaded.
   this.loaded = false;
+
+  /////////////////// Public Methods /////////////////////////
 
   // Preload the data. This function is called automatically by the // gallery when a visualisation is added.
   this.preload = function () {
@@ -261,7 +263,7 @@ function NutrientsTimeSeries() {
     );
   };
 
-  /////////////////// Private Functions /////////////////////////
+  /////////////////// Private Methods /////////////////////////
   // Addition Extension of the nutrients graph
   // function display the legend only when the variable legendButton is true
   let makeLegendItem = function (label, i, colour, show) {

@@ -14,7 +14,7 @@ function PayGapTimeSeries() {
   this.xAxisLabel = "year";
   this.yAxisLabel = "%";
 
-  // Declare for variables in objects for private functions
+  // Declare for variables in objects for Private Methods
   var self = this;
 
   let marginSize = 35;
@@ -51,6 +51,8 @@ function PayGapTimeSeries() {
 
   // Property to represent whether data has been loaded.
   this.loaded = false;
+
+  /////////////////// Public Methods /////////////////////////
 
   // Preload the data. This function is called automatically by the
   // gallery when a visualisation is added.

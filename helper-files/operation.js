@@ -1,3 +1,4 @@
+// This operation object is used to improve the overall UI/UX design of the data visualisation
 function Operation() {
   // set the height of the operation table
   this.height = 200;
@@ -18,6 +19,8 @@ function Operation() {
 
   // Array for data table headers
   this.dataHeader = [];
+
+  /////////////////// Public Methods /////////////////////////
 
   // To list out the label for all the controls
   this.listControlLabel = function (array) {
@@ -89,9 +92,9 @@ function Operation() {
     this.dataBreakdown = [];
   };
 
-  /////////////////// Private Functions /////////////////////////
+  /////////////////// Private Methods /////////////////////////
 
-  // Declare for variables in objects for private functions
+  // Declare for variables in objects for Private Methods
   var self = this;
 
   // Display title on the control panel and on data breakdown box

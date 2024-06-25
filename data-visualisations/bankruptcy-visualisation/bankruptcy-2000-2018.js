@@ -168,9 +168,9 @@ function bankruptDyanmicBall() {
     );
   };
 
-  /////////////////// Private Functions /////////////////////////
+  /////////////////// Private Methods /////////////////////////
 
-  // Declare for variables in objects for private functions
+  // Declare for variables in objects for Private Methods
   var self = this;
 
   // Get the max amount among the years, age groups and gender, using Higher Order Function

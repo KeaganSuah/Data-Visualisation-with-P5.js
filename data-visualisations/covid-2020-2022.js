@@ -38,6 +38,8 @@ function covidMap() {
     },
   };
 
+  /////////////////// Public Methods /////////////////////////
+
   // Preload the data. This function is called automatically by the // gallery when a visualisation is added.
   this.preload = function () {
     this.data = loadTable(

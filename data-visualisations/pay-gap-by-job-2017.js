@@ -20,8 +20,10 @@ function PayGapByJob2017() {
   // Load number of controls user has on the data
   this.controlsLabel = 0;
 
-  // Declare for variables in objects for private functions
+  // Declare for variables in objects for Private Methods
   var self = this;
+
+  /////////////////// Public Methods /////////////////////////
 
   // Preload the data. This function is called automatically by the
   // gallery when a visualisation is added.
@@ -179,7 +181,7 @@ function PayGapByJob2017() {
     text(this.title, width / 2, 10);
   };
 
-  /////////////////// Private Functions /////////////////////////
+  /////////////////// Private Methods /////////////////////////
 
   let colourIntensifier = function (
     payGap,

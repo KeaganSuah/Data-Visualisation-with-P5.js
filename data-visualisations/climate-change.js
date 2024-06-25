@@ -20,7 +20,7 @@ function ClimateChange() {
   // Create the margin gap for data visualisation
   let marginSize = 35;
 
-  // Declare for variables in objects for private functions
+  // Declare for variables in objects for Private Methods
   var self = this;
 
   // Layout object to store all common plot layout parameters and
@@ -55,6 +55,8 @@ function ClimateChange() {
 
   // Property to represent whether data has been loaded.
   this.loaded = false;
+
+  /////////////////// Public Methods /////////////////////////
 
   // Preload the data. This function is called automatically by the
   // gallery when a visualisation is added.
@@ -292,7 +294,7 @@ function ClimateChange() {
     );
   };
 
-  /////////////////// Private Functions /////////////////////////
+  /////////////////// Private Methods /////////////////////////
 
   // Private Method, design and display the points of the graph
   let temperaturePoints = function (previous, current) {

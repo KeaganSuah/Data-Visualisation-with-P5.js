@@ -12,7 +12,10 @@ function TechDiversityRace() {
   // Load number of controls user has on the data
   this.controlsLabel = ["Select Company"];
 
+  // Declare for variables in objects for Private Methods
   var self = this;
+
+  /////////////////// Public Methods /////////////////////////
 
   // Preload the data. This function is called automatically by the
   // gallery when a visualisation is added.

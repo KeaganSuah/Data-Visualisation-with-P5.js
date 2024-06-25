@@ -5,7 +5,7 @@ function PieChart(x, y, diameter) {
   this.diameter = diameter;
   this.labelSpace = 30;
 
-  // Declare for variables in objects for private functions
+  // Declare for variables in objects for Private Methods
   var self = this;
 
   // Private Variables, not needed to be accessed outside
@@ -13,6 +13,8 @@ function PieChart(x, y, diameter) {
   let word = "";
   let wordSize = 20;
   let hoverColour = "";
+
+  /////////////////// Public Methods /////////////////////////
 
   // Convert the data into radians for the slice
   this.get_radians = function (datas) {
@@ -129,7 +131,7 @@ function PieChart(x, y, diameter) {
     }
   };
 
-  /////////////////// Private Functions /////////////////////////
+  /////////////////// Private Methods /////////////////////////
 
   // Private Method, Mouse condition to hover on the slice
   let mouseHover = function (distance, lastAngle, angle, data, colour) {

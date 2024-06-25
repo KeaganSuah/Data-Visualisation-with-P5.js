@@ -43,6 +43,8 @@ function TechDiversityGender() {
   // Property to represent whether data has been loaded.
   this.loaded = false;
 
+  /////////////////// Public Methods /////////////////////////
+
   // Preload the data. This function is called automatically by the
   // gallery when a visualisation is added.
   this.preload = function () {
