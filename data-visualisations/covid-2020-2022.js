@@ -1,3 +1,4 @@
+// This is my third extension, for now its only the skeleton of how the data visualisation will load, currently no data and no visualisation. Only the control panel and data table is shown.
 function covidMap() {
   // To initial private variables or functions
   var self = this;
@@ -13,7 +14,7 @@ function covidMap() {
   this.title = "Covid: 2020-2022";
 
   // Load number of controls user has on the data
-  this.controlsLabel = ["Display Legend", "Filter Years"];
+  this.controlsLabel = ["Display Legend", "Filter Years", "Play Animation"];
 
   // Property to represent whether data has been loaded.
   this.loaded = false;

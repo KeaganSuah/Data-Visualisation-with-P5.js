@@ -182,6 +182,7 @@ function PayGapByJob2017() {
   };
 
   /////////////////// Private Methods /////////////////////////
+  // These Methods below are done by myself (Keagan Suah)
 
   let colourIntensifier = function (
     payGap,

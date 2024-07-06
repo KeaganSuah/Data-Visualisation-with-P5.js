@@ -1,4 +1,4 @@
-// This operation object is used to improve the overall UI/UX design of the data visualisation
+// This operation object is used to improve the overall UI/UX design of the data visualisation. This entire object is done by myself (Keagan Suah)
 function Operation() {
   // set the height of the operation table
   this.height = 200;

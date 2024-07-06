@@ -90,6 +90,9 @@ function TechDiversityRace() {
     this.pie.draw(col, labels, colours, title);
   };
 
+  /////////////////// Private Methods /////////////////////////
+  // These Methods below are done by myself (Keagan Suah)
+
   // Control panel label and controls
   // Display the operation controls on the graph for users
   let operationControl = function () {

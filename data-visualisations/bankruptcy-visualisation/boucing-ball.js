@@ -1,4 +1,4 @@
-// This bounchingBall object is used to display all the balls in the bankruptcy data visualisation
+// This bounchingBall object is used to display all the balls in the bankruptcy data visualisation. This entire object is done by myself (Keagan Suah).
 function bounchingBall(
   size,
   speed,

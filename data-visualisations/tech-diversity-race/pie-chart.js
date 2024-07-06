@@ -132,6 +132,7 @@ function PieChart(x, y, diameter) {
   };
 
   /////////////////// Private Methods /////////////////////////
+  // These Methods below are done by myself (Keagan Suah)
 
   // Private Method, Mouse condition to hover on the slice
   let mouseHover = function (distance, lastAngle, angle, data, colour) {

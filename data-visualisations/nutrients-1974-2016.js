@@ -264,6 +264,8 @@ function NutrientsTimeSeries() {
   };
 
   /////////////////// Private Methods /////////////////////////
+  // These Methods below are done by myself (Keagan Suah)
+
   // Addition Extension of the nutrients graph
   // function display the legend only when the variable legendButton is true
   let makeLegendItem = function (label, i, colour, show) {

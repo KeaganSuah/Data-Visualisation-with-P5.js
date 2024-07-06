@@ -1,3 +1,4 @@
+// This extension was inspired by the interview with the pro for the data visualisation where they show dynamic bouncing ball data visualisation. I only got the inspiration for the design, but the code was design entire by myself(Keagan Suah).
 function bankruptDyanmicBall() {
   // To initial private variables or functions
   var self = this;

@@ -295,6 +295,7 @@ function ClimateChange() {
   };
 
   /////////////////// Private Methods /////////////////////////
+  // These Methods below are done by myself (Keagan Suah)
 
   // Private Method, design and display the points of the graph
   let temperaturePoints = function (previous, current) {
