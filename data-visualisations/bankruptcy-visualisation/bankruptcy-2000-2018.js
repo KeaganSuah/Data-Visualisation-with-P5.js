@@ -21,10 +21,10 @@ function bankruptDyanmicBall() {
 
   // Private variables
   // status for the balls to bounce or to freeze on screen
-  var bounceStatus = true;
+  let bounceStatus = true;
 
   // to set the margin size for the plot
-  var marginSize = 35;
+  let marginSize = 35;
 
   // Layout object to store all common plot layout parameters and methods.
   this.layout = {
@@ -44,7 +44,7 @@ function bankruptDyanmicBall() {
 
   // Preload the data. This function is called automatically by the // gallery when a visualisation is added.
   this.preload = function () {
-    var self = this;
+    let self = this;
     this.data = loadTable(
       "./data/Bankruptcy/Bankruptcy_by_Age_&_Gender_2000-2018.csv",
       "csv",
@@ -62,14 +62,14 @@ function bankruptDyanmicBall() {
     textSize(16);
 
     // Reset the data table for new data visualisation
-    this.dataHeaders = ["Gender", "Year", "Bankrupt Amount"];
+    this.dataHeaders = ["Gender", "Age Group", "Year", "Bankrupt Amt"];
     this.dataList = [];
-    this.gridLayout = [0.33, 0.33, 0.33];
+    this.gridLayout = [0.25, 0.25, 0.25, 0.25];
     operation.refreshData(this.dataHeaders);
 
     // Get the Largest amount and smallest amount
-    var maxAmount = MinMaxAmt(this.data, 0, max);
-    var minAmount = MinMaxAmt(this.data, maxAmount, min);
+    let maxAmount = MinMaxAmt(this.data, 0, max);
+    let minAmount = MinMaxAmt(this.data, maxAmount, min);
 
     // Array to store all the bouncing balls objects
     this.ball = [];
@@ -77,12 +77,12 @@ function bankruptDyanmicBall() {
     // To create the bouncing balls object and insert them into the array
     // Loop through the years
     for (let j = 0; j < this.data.getRowCount(); j++) {
-      var bankruptAmtByYear = this.data.getRow(j).arr.slice(1);
-      var yearList = [];
+      let bankruptAmtByYear = this.data.getRow(j).arr.slice(1);
+      let yearList = [];
       // Loop through the age groups and genders
       for (let i = 0; i < this.data.getColumnCount() - 1; i++) {
-        var colour;
-        var gender;
+        let colour;
+        let gender;
         // Switch colours for different genders
         if (i <= 5) {
           colour = color(255, 100, 100, 235);
@@ -92,10 +92,10 @@ function bankruptDyanmicBall() {
           gender = "Male";
         }
         // Ball dataHeaders
-        var bankruptAmt = bankruptAmtByYear[i];
-        var size = mapAmtSize(bankruptAmt, minAmount, maxAmount);
-        var speed = mapAmtSpeed(bankruptAmt, minAmount, maxAmount);
-        var textAge = this.data.columns.slice(1)[i];
+        let bankruptAmt = bankruptAmtByYear[i];
+        let size = mapAmtSize(bankruptAmt, minAmount, maxAmount);
+        let speed = mapAmtSpeed(bankruptAmt, minAmount, maxAmount);
+        let ageText = this.data.columns.slice(1)[i];
         yearList.push(
           new bounchingBall(
             size,
@@ -103,7 +103,7 @@ function bankruptDyanmicBall() {
             colour,
             gender,
             bankruptAmt,
-            textAge,
+            ageText,
             this.layout
           )
         );
@@ -128,8 +128,8 @@ function bankruptDyanmicBall() {
     // Draw the title above the plot.
     this.drawTitle();
 
-    var filterValue = this.yearFilter.value();
-    var years = this.data.getColumn(0);
+    let filterValue = this.yearFilter.value();
+    let years = this.data.getColumn(0);
     // Loop through the years
     for (let j = 0; j < this.data.getRowCount(); j++) {
       // Display the ball according to the year that is filtered
@@ -175,92 +175,114 @@ function bankruptDyanmicBall() {
   var self = this;
 
   // Get the max amount among the years, age groups and gender, using Higher Order Function
-  var MinMaxAmt = function (data, value, fn) {
-    for (var i = 0; i < data.getRowCount(); i++) {
-      var rowList = data.getRow(i).arr.slice(1);
+  let MinMaxAmt = function (data, value, fn) {
+    for (let i = 0; i < data.getRowCount(); i++) {
+      let rowList = data.getRow(i).arr.slice(1);
       rowList = stringsToNumbers(rowList);
-      var valueInList = fn(rowList);
+      let valueInList = fn(rowList);
       value = fn(value, valueInList);
     }
     return value;
   };
 
   // map value of max and min bankrupt amount to create a better range for ball size
-  var mapAmtSize = function (value, min, max) {
+  let mapAmtSize = function (value, min, max) {
     return map(value, min, max, 50, 150);
   };
 
   // map value of max and min bankrupt amount to create a better range for ball speed, bigger amount will have slower speed, small amount will have faster speed
-  var mapAmtSpeed = function (value, min, max) {
+  let mapAmtSpeed = function (value, min, max) {
     return map(value, min, max, 2, 0.5);
   };
 
   // When ball hovered, it changes the details array into the data on the balls
-  var ballHover = function (ball, year, j, i) {
+  let ballHover = function (ball, year, j, i) {
     // Function for when the balls is clicked
-    var currentBall = ball[j][i];
-    var distance = dist(mouseX, mouseY, currentBall.x, currentBall.y);
+    let currentBall = ball[j][i];
+    let distance = dist(mouseX, mouseY, currentBall.x, currentBall.y);
     if (distance < currentBall.size / 2) {
       cursor(HAND);
 
-      var length = 300;
-      var height = 88;
+      let length = 330;
+      let height = 88;
+      let displayX = mouseX + 10;
+      let displayY = mouseY + 10;
+
+      let hoverArray = [
+        currentBall.gender,
+        currentBall.ageText,
+        year,
+        currentBall.bankruptAmt,
+      ];
+
+      if (mouseX > width - length) {
+        displayX -= length + 10;
+      }
 
       fill(200);
-      rect(mouseX, mouseY, length, height, 4);
+      rect(displayX, displayY, length, height, 4);
 
       textAlign();
       fill(0);
-      text("Data Preview", mouseX + length / 2, mouseY + 15);
+      textSize(18);
+      textAlign("center");
+      text("Data Preview", displayX + length / 2, displayY + 15);
 
       // Create boxes for the controls to be inside of
-      for (var i = 0; i < 2; i++) {
-        var previous = 0;
-        for (var j = 0; j < self.gridLayout.length; j++) {
+      for (let i = 0; i < 2; i++) {
+        let previous = 0;
+        for (let j = 0; j < self.gridLayout.length; j++) {
           if (i == 0) {
             fill(100, 100, 190);
           } else {
             fill(255);
           }
           rect(
-            mouseX + 2 + previous,
-            mouseY + 30 + 28 * i,
-            length * self.gridLayout[j] - 2,
+            displayX + 2 + previous,
+            displayY + 30 + 28 * i,
+            length * self.gridLayout[j] - 3,
             25
           );
           previous += length * self.gridLayout[j];
         }
       }
 
-      textSize(11);
+      textSize(12);
       textAlign("left");
       // Display text and data inside boxes
-      for (var j = 0; j < 2; j++) {
-        var previousText = 0;
-        for (var i = 0; i < operation.dataHeader.length; i++) {
+      for (let j = 0; j < 2; j++) {
+        let previousText = 0;
+        for (let i = 0; i < operation.dataHeader.length; i++) {
           if (j == 0) {
-            fill(0);
+            fill(255);
             text(
               operation.dataHeader[i],
-              mouseX + previousText + 5,
-              mouseY + 30 + 28 * j,
+              displayX + previousText + 5,
+              displayY + 40 + 28 * j,
               length * self.gridLayout[i] - 5
             );
           } else {
             fill(0);
+            textSize(14);
+            text(
+              hoverArray[i],
+              displayX + previousText + 5,
+              displayY + 45 + 28 * j,
+              length * self.gridLayout[i] - 5
+            );
           }
           previousText += length * self.gridLayout[i];
         }
       }
 
       if (operation.mouseClickStatus) {
-        self.dataList = [currentBall.gender, year, currentBall.bankruptAmt];
+        self.dataList = hoverArray;
       }
     }
   };
 
   // Create the years filter for data visualisation to display based on years
-  var makeYearFilter = function () {
+  let makeYearFilter = function () {
     // Create a select DOM element.
     self.yearFilter = createSelect();
     self.yearFilter.position(
@@ -269,17 +291,17 @@ function bankruptDyanmicBall() {
     );
 
     // Fill the options with all bankruptcy years.
-    var years = self.data.getColumn(0);
+    let years = self.data.getColumn(0);
 
     // First entry is empty.
     for (let i = 0; i < years.length; i++) {
-      var year = years[i];
+      let year = years[i];
       self.yearFilter.option(year);
     }
   };
 
   // Function is to change the variable legendButton so that is alternate when it is called
-  var stopBounceClick = function () {
+  let stopBounceClick = function () {
     if (bounceStatus) {
       bounceStatus = false;
     } else {
@@ -288,7 +310,7 @@ function bankruptDyanmicBall() {
   };
 
   // Create the button that display the legend, allowing user to open and close
-  var createStopButton = function () {
+  let createStopButton = function () {
     self.bounceButton = createButton("Start/Stop Bouncing");
     self.bounceButton.position(
       450 + operation.control_x_axis,

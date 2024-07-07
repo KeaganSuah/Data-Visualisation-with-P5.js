@@ -80,16 +80,16 @@ function TechDiversityGender() {
     // Draw Female/Male labels at the top of the plot.
     this.drawCategoryLabels();
 
-    var lineHeight =
+    let lineHeight =
       (height - operation.height - 50 - this.layout.topMargin) /
       this.data.getRowCount();
 
-    for (var i = 0; i < this.data.getRowCount(); i++) {
+    for (let i = 0; i < this.data.getRowCount(); i++) {
       // Calculate the y position for each company.
-      var lineY = lineHeight * i + this.layout.topMargin;
+      let lineY = lineHeight * i + this.layout.topMargin;
 
       // Create an object that stores data from the current row.
-      var company = {
+      let company = {
         // Convert strings to numbers.
         name: this.data.getString(i, "company"),
         female: this.data.getNum(i, "female"),

@@ -18,36 +18,36 @@ function Gallery() {
     this.visuals.push(vis);
 
     // Create menu item.
-    var menuItem = createElement("li", vis.name);
+    let menuItem = createElement("li", vis.name);
     menuItem.addClass("menu-item");
     menuItem.id(vis.id);
 
     menuItem.mouseOver(function (e) {
-      var el = select("#" + e.srcElement.id);
+      let el = select("#" + e.srcElement.id);
       el.addClass("hover");
     });
 
     menuItem.mouseOut(function (e) {
-      var el = select("#" + e.srcElement.id);
+      let el = select("#" + e.srcElement.id);
       el.removeClass("hover");
     });
 
     menuItem.mouseClicked(function (e) {
       //remove selected class from any other menu-items
 
-      var menuItems = selectAll(".menu-item");
+      let menuItems = selectAll(".menu-item");
 
-      for (var i = 0; i < menuItems.length; i++) {
+      for (let i = 0; i < menuItems.length; i++) {
         menuItems[i].removeClass("selected");
       }
 
-      var el = select("#" + e.srcElement.id);
+      let el = select("#" + e.srcElement.id);
       el.addClass("selected");
 
       self.selectVisual(e.srcElement.id);
     });
 
-    var visMenu = select("#visuals-menu");
+    let visMenu = select("#visuals-menu");
     visMenu.child(menuItem);
 
     // Preload data if necessary.
@@ -59,7 +59,7 @@ function Gallery() {
   this.findVisIndex = function (visId) {
     // Search through the visualisations looking for one with the id
     // matching visId.
-    for (var i = 0; i < this.visuals.length; i++) {
+    for (let i = 0; i < this.visuals.length; i++) {
       if (this.visuals[i].id == visId) {
         return i;
       }
@@ -70,7 +70,7 @@ function Gallery() {
   };
 
   this.selectVisual = function (visId) {
-    var visIndex = this.findVisIndex(visId);
+    let visIndex = this.findVisIndex(visId);
 
     if (visIndex != null) {
       // If the current visualisation has a deselect method run it.

@@ -2,7 +2,7 @@
 // Data processing helper functions.
 // --------------------------------------------------------------------
 function sum(data) {
-  var total = 0;
+  let total = 0;
 
   // Ensure that data contains numbers and not strings.
   data = stringsToNumbers(data);
@@ -15,13 +15,13 @@ function sum(data) {
 }
 
 function mean(data) {
-  var total = sum(data);
+  let total = sum(data);
 
   return total / data.length;
 }
 
 function sliceRowNumbers(row, start = 0, end) {
-  var rowData = [];
+  let rowData = [];
 
   if (!end) {
     // Parse all values until the end of the row.
@@ -88,8 +88,8 @@ function drawAxisLabels(xLabel, yLabel, layout) {
 
 function drawYAxisTickLabels(min, max, layout, mapFunction, decimalPlaces) {
   // Map function must be passed with .bind(this).
-  var range = max - min;
-  var yTickStep = range / layout.numYTickLabels;
+  let range = max - min;
+  let yTickStep = range / layout.numYTickLabels;
 
   fill(0);
   noStroke();
@@ -97,8 +97,8 @@ function drawYAxisTickLabels(min, max, layout, mapFunction, decimalPlaces) {
 
   // Draw all axis tick labels and grid lines.
   for (i = 0; i <= layout.numYTickLabels; i++) {
-    var value = min + i * yTickStep;
-    var y = mapFunction(value);
+    let value = min + i * yTickStep;
+    let y = mapFunction(value);
 
     // Add tick label.
     text(value.toFixed(decimalPlaces), layout.leftMargin - layout.pad, y);
@@ -113,7 +113,7 @@ function drawYAxisTickLabels(min, max, layout, mapFunction, decimalPlaces) {
 
 function drawXAxisTickLabel(value, layout, mapFunction, displayLabel) {
   // Map function must be passed with .bind(this).
-  var x = mapFunction(value);
+  let x = mapFunction(value);
   fill(0);
   noStroke();
   textAlign("center", "center");

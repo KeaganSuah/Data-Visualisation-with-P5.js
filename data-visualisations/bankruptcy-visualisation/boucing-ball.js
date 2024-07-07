@@ -5,7 +5,7 @@ function bounchingBall(
   colour,
   gender,
   bankruptAmt,
-  ballText,
+  ageText,
   layout
 ) {
   // Public Variables
@@ -27,7 +27,7 @@ function bounchingBall(
   // Ball colour
   this.colour = colour;
   // Data of balls
-  this.ballText = ballText;
+  this.ageText = ageText;
   this.gender = gender;
   this.bankruptAmt = bankruptAmt;
 
@@ -41,7 +41,7 @@ function bounchingBall(
   this.displayText = function () {
     fill(0);
     textAlign("center");
-    text(this.ballText, this.x, this.y);
+    text(this.ageText, this.x, this.y);
   };
 
   // This condition is for the balls to move only when pause status is false, if true, all balls should freeze
