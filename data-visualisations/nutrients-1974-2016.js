@@ -314,11 +314,9 @@ function NutrientsTimeSeries() {
       self.mapNutrientsToHeight(current.percentage)
     );
     if (distancePoint < pointSize / 2) {
-      cursor(HAND);
-      // Display Industry and values
-      if (operation.mouseClickStatus) {
-        self.dataList = [title, current.year, `${current.percentage}%`];
-      }
+      // Array of data belonging to the point currently being hovered
+      let hoverArray = [title, current.year, `${current.percentage}%`];
+      self.dataList = operation.mouseHoverTable(hoverArray, self.gridLayout);
     }
   };
 

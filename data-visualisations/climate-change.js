@@ -79,7 +79,7 @@ function ClimateChange() {
     textAlign("center", "center");
 
     // Reset the data table for new data visualisation
-    this.dataHeaders = ["Nutrient", "year", "percentage"];
+    this.dataHeaders = ["degree celsius", "percentage"];
     this.dataList = [];
     this.gridLayout = [0.5, 0.5];
     operation.refreshData(this.dataHeaders);
@@ -303,6 +303,9 @@ function ClimateChange() {
       map(self.startSlider.value(), 1880, 2017, 20, 30) -
       map(self.endSlider.value(), 1880, 2017, 0, 10);
 
+    // Hovering conditons and design
+    temperaturePointsHovered(pointSize, current, previous);
+
     // Draw the Points on the line
     fill(255);
     ellipse(
@@ -311,14 +314,12 @@ function ClimateChange() {
       pointSize,
       pointSize
     );
-
-    // Hovering conditons and design
-    temperaturePointsHovered(pointSize, current, previous);
   };
 
   // Private Method, When the temperature points is hovered, display text on to the middle of the canvas
   let temperaturePointsHovered = function (size, current, previous) {
     // Distance between the mouse coords and the point coords
+
     let distance = dist(
       mouseX,
       mouseY,
@@ -328,15 +329,12 @@ function ClimateChange() {
 
     // When conditions are met, draw the value on the canvas
     if (distance < size / 2) {
-      // Change Cursor type of mouse
-      cursor(HAND);
-      // Display values on canvas
-      if (operation.mouseClickStatus) {
-        self.dataList = [
-          `${current.temperature} degree celsius`,
-          `During ${current.year}`,
-        ];
-      }
+      // Array of data belonging to the point currently being hovered
+      let hoverArray = [
+        `${current.temperature} degree celsius`,
+        `During ${current.year}`,
+      ];
+      self.dataList = operation.mouseHoverTable(hoverArray, self.gridLayout);
     }
   };
 

@@ -66,9 +66,6 @@ function Operation() {
       }
     }
 
-    // Display Data Headers
-    displayTextRow(this.dataHeader, gridLayout, color(255), length, 0);
-
     // Display text and data inside boxes
     for (let j = 0; j < this.dataBreakdown.length; j++) {
       displayTextRow(
@@ -80,10 +77,96 @@ function Operation() {
       );
     }
 
+    // Display Data Headers
+    displayTextRow(this.dataHeader, gridLayout, color(255), length, 0);
+
     // To add the datas inside the data table
     dataQueueCondition(array);
 
     stroke(1);
+  };
+
+  // Method to display the small data breakdown table beside the mouse to inform user of the data they are adding to the data table
+  this.mouseHoverTable = function (hoverArray, gridLayout) {
+    cursor(HAND);
+
+    // Variables for the mouse Hover Table
+    let length = 330;
+    let height = 88;
+    let displayX = mouseX + 10;
+    let displayY = mouseY + 10;
+
+    // To shift the table to the left side of the mouse, this is to prevent the table from being out of the canvas
+    if (mouseX > width - length) {
+      displayX -= length + 10;
+    }
+
+    // For the base grey rectangle
+    noStroke();
+    fill(200);
+    rect(displayX, displayY, length, height, 4);
+
+    // Title of the hoverable Data Table
+    textAlign();
+    fill(0);
+    textSize(18);
+    textAlign("center");
+    text("Data Preview", displayX + length / 2, displayY + 15);
+
+    // Create boxes for the controls to be inside of
+    for (let i = 0; i < 2; i++) {
+      let previous = 0;
+      for (let j = 0; j < gridLayout.length; j++) {
+        if (i == 0) {
+          fill(100, 100, 190);
+        } else {
+          fill(255);
+        }
+        rect(
+          displayX + 2 + previous,
+          displayY + 30 + 28 * i,
+          length * gridLayout[j] - 3,
+          25
+        );
+        previous += length * gridLayout[j];
+      }
+    }
+
+    textSize(12);
+    textAlign("left");
+    // Display text and data inside boxes
+    for (let j = 0; j < 2; j++) {
+      let previousText = 0;
+      for (let i = 0; i < this.dataHeader.length; i++) {
+        if (j == 0) {
+          fill(255);
+          text(
+            this.dataHeader[i],
+            displayX + previousText + 5,
+            displayY + 40 + 28 * j,
+            length * gridLayout[i] - 5
+          );
+        } else {
+          fill(0);
+          textSize(14);
+          console.log(this.dataHeader);
+          text(
+            hoverArray[i],
+            displayX + previousText + 5,
+            displayY + 45 + 28 * j,
+            length * gridLayout[i] - 5
+          );
+        }
+        previousText += length * gridLayout[i];
+      }
+    }
+
+    // Condition to check if user click the points, if yes, return the data array to transfer the data to the data breakdown table
+    if (this.mouseClickStatus) {
+      return hoverArray;
+    } else {
+      return false;
+    }
   };
 
   // Refresh the data breakdown table

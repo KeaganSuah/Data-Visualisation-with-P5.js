@@ -44,7 +44,7 @@ function PayGapByJob2017() {
     // Reset the data table for new data visualisation
     this.dataHeaders = ["Industry", "Female", "Pay Gap"];
     this.dataList = [];
-    this.gridLayout = [0.7, 0.15, 0.15];
+    this.gridLayout = [0.6, 0.2, 0.2];
     operation.refreshData(this.dataHeaders);
   };
 
@@ -95,11 +95,11 @@ function PayGapByJob2017() {
     let numJobsMax = max(numJobs);
 
     fill(255);
-    stroke(0);
-    strokeWeight(1);
 
     // Unable to use ES6 as index is important
     for (i = 0; i < this.data.getRowCount(); i++) {
+      stroke(0);
+      strokeWeight(1);
       // Set the colour for each points for the intensity to see how far it is from the center
       colourIntensifier(
         payGap[i],
@@ -248,16 +248,13 @@ function PayGapByJob2017() {
       distance <
       map(numJobs, numJobsMin, numJobsMax, self.dotSizeMin, self.dotSizeMax) / 2
     ) {
-      // Change mouse cursor type
-      cursor(HAND);
-      // Display Industry and values
-      if (operation.mouseClickStatus) {
-        self.dataList = [
-          `${jobs}`,
-          `${propFemale.toFixed(2)}%`,
-          `${payGap.toFixed(2)}`,
-        ];
-      }
+      // Array of data belonging to the point currently being hovered
+      let hoverArray = [
+        `${jobs}`,
+        `${propFemale.toFixed(2)}%`,
+        `${payGap.toFixed(2)}`,
+      ];
+      self.dataList = operation.mouseHoverTable(hoverArray, self.gridLayout);
     }
   };
 
