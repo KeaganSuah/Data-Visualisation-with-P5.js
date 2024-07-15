@@ -149,7 +149,6 @@ function Operation() {
         } else {
           fill(0);
           textSize(14);
-          console.log(this.dataHeader);
           text(
             hoverArray[i],
             displayX + previousText + 5,
@@ -247,8 +246,8 @@ function Operation() {
       // For any other new data Clicked, add into the queue of data for the data table
       else {
         if (
-          self.dataBreakdown[0][1] != array[1] ||
-          self.dataBreakdown[0][2] != array[2]
+          self.dataBreakdown[0][0] != array[0] ||
+          self.dataBreakdown[0][1] != array[1]
         ) {
           // If the queue have reached max, add from the front and remove the last
           if (self.dataBreakdown.length == 3) {

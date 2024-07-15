@@ -144,6 +144,11 @@ function NutrientsTimeSeries() {
     // of the canvas minus margins.
     let numYears = this.endYearValue - this.startYearValue;
 
+    // Dynamic point size to increase when zoom in
+    let pointSize =
+      map(self.startSlider.value(), 1974, 2016, 20, 30) -
+      map(self.endSlider.value(), 1974, 2016, 0, 10);
+
     // Loop over all rows and draw a line from the previous value to // the current.
     for (let i = 0; i < this.data.getRowCount(); i++) {
       let row = this.data.getRow(i);
@@ -174,7 +179,8 @@ function NutrientsTimeSeries() {
             );
 
             // Points on line graph that can be hovered
-            pointHover(current, title);
+            fill(this.colors[i]);
+            pointHover(current, pointSize);
           }
 
           // The number of x-axis labels to skip so that only
@@ -217,6 +223,33 @@ function NutrientsTimeSeries() {
               width - 200,
               this.mapNutrientsToHeight(row.getNum(numYears - 3) + 15)
             );
+          }
+        }
+        // Assign current year to previous year so that it is available // during the next iteration of this loop to give us the start // position of the next line segment.
+        previous = current;
+      }
+    }
+
+    // Second Loop for data points conditions to display small data breakdown without overlapping.
+    for (let i = 0; i < this.data.getRowCount(); i++) {
+      let row = this.data.getRow(i);
+      let previous = null;
+      let title = row.getString(0);
+
+      for (let j = 1; j < numYears; j++) {
+        // Create an object to store data for the current year.
+        let current = {
+          // Convert strings to numbers.
+          year: this.startYearValue + j - 1,
+          percentage: row.getNum(j + (this.startYearValue - this.startYear)),
+        };
+
+        if (previous != null) {
+          if (
+            this.filterNutrient.value() == title ||
+            this.filterNutrient.value() == "All"
+          ) {
+            pointHoverCondition(current, title, pointSize);
           }
         }
         // Assign current year to previous year so that it is available // during the next iteration of this loop to give us the start // position of the next line segment.
@@ -296,10 +329,7 @@ function NutrientsTimeSeries() {
   };
 
   // Create points on line graph that can be hovered to display breakdown of data in each point
-  let pointHover = function (current, title) {
-    let pointSize =
-      map(self.startSlider.value(), 1974, 2016, 20, 30) -
-      map(self.endSlider.value(), 1974, 2016, 0, 10);
+  let pointHover = function (current, pointSize) {
     // Create Points on Line graph to hover on
     ellipse(
       self.mapYearToWidth(current.year),
@@ -307,6 +337,9 @@ function NutrientsTimeSeries() {
       pointSize,
       pointSize
     );
+  };
+
+  let pointHoverCondition = function (current, title, pointSize) {
     let distancePoint = dist(
       mouseX,
       mouseY,

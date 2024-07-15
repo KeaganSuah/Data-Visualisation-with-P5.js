@@ -14,7 +14,7 @@ function bankruptDyanmicBall() {
   this.title = "Bankruptcy Amount by Age & Sex: 2000-2018";
 
   // Load number of controls user has on the data
-  this.controlsLabel = ["Filter Years", "Balls Animation"];
+  this.controlsLabel = ["Filter Years", "Balls Animation", "Balls Speed"];
 
   // Property to represent whether data has been loaded.
   this.loaded = false;
@@ -25,6 +25,11 @@ function bankruptDyanmicBall() {
 
   // to set the margin size for the plot
   let marginSize = 35;
+
+  // Get the previous speed of the ball
+  let previousSpeed = 0;
+  // Get the previous year of the filter the user change
+  let previousYear = 2000;
 
   // Layout object to store all common plot layout parameters and methods.
   this.layout = {
@@ -111,6 +116,9 @@ function bankruptDyanmicBall() {
       this.ball.push(yearList);
     }
 
+    // Create Speed Slider
+    createSpeedSlider();
+
     // Create filter for years
     makeYearFilter();
 
@@ -122,6 +130,7 @@ function bankruptDyanmicBall() {
   this.destroy = function () {
     this.bounceButton.remove();
     this.yearFilter.remove();
+    this.speedSlider.remove();
   };
 
   this.draw = function () {
@@ -130,6 +139,7 @@ function bankruptDyanmicBall() {
 
     let filterValue = this.yearFilter.value();
     let years = this.data.getColumn(0);
+    let updateSpeed = this.speedSlider.value();
     // Loop through the years
     for (let j = 0; j < this.data.getRowCount(); j++) {
       // Display the ball according to the year that is filtered
@@ -140,6 +150,9 @@ function bankruptDyanmicBall() {
           this.ball[j][i].displayText();
           this.ball[j][i].checkCondition();
           this.ball[j][i].ballAcceleration(bounceStatus);
+          if (updateSpeed != previousSpeed || filterValue != previousYear) {
+            this.ball[j][i].increaseSpeed(updateSpeed);
+          }
         }
         // Two loops to prevent the balls to overlap with the data
         for (let i = 0; i < this.data.getColumnCount() - 1; i++) {
@@ -148,6 +161,9 @@ function bankruptDyanmicBall() {
         }
       }
     }
+    // Update the previous speed with the new speed the user selected
+    previousSpeed = updateSpeed;
+    previousYear = filterValue;
 
     // Display points hovered
     operation.listDisplayData(this.dataList, this.gridLayout);
@@ -192,7 +208,7 @@ function bankruptDyanmicBall() {
 
   // map value of max and min bankrupt amount to create a better range for ball speed, bigger amount will have slower speed, small amount will have faster speed
   let mapAmtSpeed = function (value, min, max) {
-    return map(value, min, max, 2, 0.5);
+    return map(value, min, max, 2, 0.1);
   };
 
   // When ball hovered, it changes the details array into the data on the balls
@@ -231,6 +247,14 @@ function bankruptDyanmicBall() {
       let year = years[i];
       self.yearFilter.option(year);
     }
+  };
+
+  let createSpeedSlider = function () {
+    self.speedSlider = createSlider(0.2, 3, 1, 0.2);
+    self.speedSlider.position(
+      450 + operation.control_x_axis,
+      operation.labelHeight[2]
+    );
   };
 
   // Function is to change the variable legendButton so that is alternate when it is called

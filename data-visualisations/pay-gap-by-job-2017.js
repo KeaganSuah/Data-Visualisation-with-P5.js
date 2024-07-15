@@ -147,6 +147,23 @@ function PayGapByJob2017() {
         jobs[i]
       );
     }
+
+    // Second Loop for data points conditions to display small data breakdown without overlapping.
+    for (i = 0; i < this.data.getRowCount(); i++) {
+      // When points hovered, show breakdown details
+      pointHover(
+        propFemale[i],
+        propFemaleMin,
+        propFemaleMax,
+        payGap[i],
+        payGapMin,
+        payGapMax,
+        numJobs[i],
+        numJobsMin,
+        numJobsMax,
+        jobs[i]
+      );
+    }
   };
 
   this.addAxes = function () {

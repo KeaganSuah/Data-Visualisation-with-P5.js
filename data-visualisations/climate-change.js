@@ -166,6 +166,11 @@ function ClimateChange() {
     // animation effect.
     let yearCount = 0;
 
+    // my own extension
+    let pointSize =
+      map(self.startSlider.value(), 1880, 2017, 20, 30) -
+      map(self.endSlider.value(), 1880, 2017, 0, 10);
+
     // Loop over all rows but only plot those in range.
     for (let i = 0; i < this.data.getRowCount(); i++) {
       // Create an object to store data for the current year.
@@ -202,7 +207,7 @@ function ClimateChange() {
         );
 
         // my own extension
-        temperaturePoints(previous, current);
+        temperaturePoints(previous, pointSize);
 
         // The number of x-axis labels to skip so that only
         // numXTickLabels are drawn.
@@ -237,6 +242,30 @@ function ClimateChange() {
       // over successive frames.
       if (yearCount >= this.frameCount) {
         break;
+      }
+
+      // Assign current year to previous year so that it is available
+      // during the next iteration of this loop to give us the start
+      // position of the next line segment.
+      previous = current;
+    }
+
+    // Second Loop for data points conditions to display small data breakdown without overlapping.
+    for (let i = 0; i < this.data.getRowCount(); i++) {
+      // Create an object to store data for the current year.
+      let current = {
+        // Convert strings to numbers.
+        year: this.data.getNum(i, "year"),
+        temperature: this.data.getNum(i, "temperature"),
+      };
+
+      if (
+        previous != null &&
+        current.year > this.startYear &&
+        current.year <= this.endYear
+      ) {
+        // Hovering conditons and design
+        temperaturePointsHovered(pointSize, current, previous);
       }
 
       // Assign current year to previous year so that it is available
@@ -298,14 +327,7 @@ function ClimateChange() {
   // These Methods below are done by myself (Keagan Suah)
 
   // Private Method, design and display the points of the graph
-  let temperaturePoints = function (previous, current) {
-    let pointSize =
-      map(self.startSlider.value(), 1880, 2017, 20, 30) -
-      map(self.endSlider.value(), 1880, 2017, 0, 10);
-
-    // Hovering conditons and design
-    temperaturePointsHovered(pointSize, current, previous);
-
+  let temperaturePoints = function (previous, pointSize) {
     // Draw the Points on the line
     fill(255);
     ellipse(

@@ -31,6 +31,8 @@ function bounchingBall(
   this.gender = gender;
   this.bankruptAmt = bankruptAmt;
 
+  let interactiveSpeed = 1
+
   // Draw balls on convas
   this.draw = function () {
     fill(this.colour);
@@ -47,8 +49,8 @@ function bounchingBall(
   // This condition is for the balls to move only when pause status is false, if true, all balls should freeze
   this.ballAcceleration = function (pause) {
     if (pause) {
-      this.x += this.xspeed;
-      this.y += this.yspeed;
+      this.x += this.xspeed * interactiveSpeed;
+      this.y += this.yspeed * interactiveSpeed;
     }
   };
 
@@ -66,5 +68,9 @@ function bounchingBall(
     ) {
       this.yspeed *= -1;
     }
+  };
+
+  this.increaseSpeed = function (amt) {
+    interactiveSpeed = amt
   };
 }

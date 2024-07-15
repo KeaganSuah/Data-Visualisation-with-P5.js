@@ -24,7 +24,8 @@ function setup() {
   gallery.addVisual(new ClimateChange());
   gallery.addVisual(new NutrientsTimeSeries());
   gallery.addVisual(new bankruptDyanmicBall());
-  gallery.addVisual(new covidMap());
+  gallery.addVisual(new covidMap(c));
+  gallery.addVisual(new mapOnly());
 }
 
 function draw() {
