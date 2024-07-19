@@ -113,6 +113,8 @@ function NutrientsTimeSeries() {
       console.log("Data not yet loaded");
       return;
     }
+    // Draw the background for the visualisation
+    background(255);
 
     // Draw the title above the plot.
     this.drawTitle();
@@ -385,7 +387,7 @@ function NutrientsTimeSeries() {
       1
     );
     self.startSlider.position(
-      450 + operation.control_x_axis,
+      operation.control_x_margin + operation.control_x_axis,
       operation.labelHeight[1]
     );
 
@@ -397,7 +399,7 @@ function NutrientsTimeSeries() {
       1
     );
     self.endSlider.position(
-      450 + operation.control_x_axis,
+      operation.control_x_margin + operation.control_x_axis,
       operation.labelHeight[2]
     );
   };
@@ -406,7 +408,7 @@ function NutrientsTimeSeries() {
   let makeNutrientFilter = function (x, y) {
     // Create a select DOM element.
     self.filterNutrient = createSelect();
-    self.filterNutrient.position(450 + x, y);
+    self.filterNutrient.position(operation.control_x_margin + x, y);
 
     // Fill the options with all company names.
     let nutrients = self.data.rows;

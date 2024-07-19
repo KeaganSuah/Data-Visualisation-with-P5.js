@@ -2,6 +2,7 @@
 let gallery;
 // Height of bottom operation display
 let operation;
+var c;
 
 function setup() {
   // Create a canvas to fill the content div from index.html.
@@ -13,7 +14,7 @@ function setup() {
   // Create a new Operation Object
   operation = new Operation();
 
-  let c = createCanvas(1024, 576 + operation.height);
+  c = createCanvas(1024, 576 + operation.height);
   c.parent("app");
 
   // Add the visualisation objects here.
@@ -24,12 +25,10 @@ function setup() {
   gallery.addVisual(new ClimateChange());
   gallery.addVisual(new NutrientsTimeSeries());
   gallery.addVisual(new bankruptDyanmicBall());
-  gallery.addVisual(new covidMap(c));
-  gallery.addVisual(new mapOnly());
+  gallery.addVisual(new covidMap());
 }
 
 function draw() {
-  background(255);
   // Reset Cursor type of mouse
   cursor(ARROW);
   if (gallery.selectedVisual != null) {

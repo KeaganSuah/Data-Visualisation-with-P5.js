@@ -65,6 +65,9 @@ function TechDiversityRace() {
       return;
     }
 
+    // Draw the background for the visualisation
+    background(255);
+
     // Draw operation label
     operation.listControlLabel(this.controlsLabel);
 
@@ -99,7 +102,7 @@ function TechDiversityRace() {
     // Create a select DOM element.
     self.select = createSelect();
     self.select.position(
-      450 + operation.control_x_axis,
+      operation.control_x_margin + operation.control_x_axis,
       operation.labelHeight[0]
     );
   };

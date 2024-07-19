@@ -1,8 +1,5 @@
 // This extension was inspired by the interview with the pro for the data visualisation where they show dynamic bouncing ball data visualisation. I only got the inspiration for the design, but the code was design entire by myself(Keagan Suah).
 function bankruptDyanmicBall() {
-  // To initial private variables or functions
-  var self = this;
-
   // Add global variables
   // Name for the visualisation to appear in the menu bar.
   this.name = "Bankruptcy: 2000-2018";
@@ -134,6 +131,9 @@ function bankruptDyanmicBall() {
   };
 
   this.draw = function () {
+    // Draw the background for the visualisation
+    background(255);
+
     // Draw the title above the plot.
     this.drawTitle();
 
@@ -235,7 +235,7 @@ function bankruptDyanmicBall() {
     // Create a select DOM element.
     self.yearFilter = createSelect();
     self.yearFilter.position(
-      450 + operation.control_x_axis,
+      operation.control_x_margin + operation.control_x_axis,
       operation.labelHeight[0]
     );
 
@@ -252,7 +252,7 @@ function bankruptDyanmicBall() {
   let createSpeedSlider = function () {
     self.speedSlider = createSlider(0.2, 3, 1, 0.2);
     self.speedSlider.position(
-      450 + operation.control_x_axis,
+      operation.control_x_margin + operation.control_x_axis,
       operation.labelHeight[2]
     );
   };
@@ -266,11 +266,11 @@ function bankruptDyanmicBall() {
     }
   };
 
-  // Create the button that display the legend, allowing user to open and close
+  // Create the button that start and stop the ball movement animation
   let createStopButton = function () {
     self.bounceButton = createButton("Start/Stop Bouncing");
     self.bounceButton.position(
-      450 + operation.control_x_axis,
+      operation.control_x_margin + operation.control_x_axis,
       operation.labelHeight[1] - 2
     );
 

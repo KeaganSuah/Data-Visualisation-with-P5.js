@@ -31,7 +31,7 @@ function bounchingBall(
   this.gender = gender;
   this.bankruptAmt = bankruptAmt;
 
-  let interactiveSpeed = 1
+  let interactiveSpeed = 1;
 
   // Draw balls on convas
   this.draw = function () {
@@ -71,6 +71,6 @@ function bounchingBall(
   };
 
   this.increaseSpeed = function (amt) {
-    interactiveSpeed = amt
+    interactiveSpeed = amt;
   };
 }

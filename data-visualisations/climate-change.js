@@ -112,6 +112,8 @@ function ClimateChange() {
       console.log("Data not yet loaded");
       return;
     }
+    // Draw the background for the visualisation
+    background(255);
 
     // Draw control labels
     operation.listControlLabel(this.controlsLabel);
@@ -367,13 +369,13 @@ function ClimateChange() {
     // visualise full range.
     self.startSlider = createSlider(min, max - 1, min, 1);
     self.startSlider.position(
-      450 + operation.control_x_axis,
+      operation.control_x_margin + operation.control_x_axis,
       operation.labelHeight[0]
     );
 
     self.endSlider = createSlider(min + 1, max, max, 1);
     self.endSlider.position(
-      450 + operation.control_x_axis,
+      operation.control_x_margin + operation.control_x_axis,
       operation.labelHeight[1]
     );
   };

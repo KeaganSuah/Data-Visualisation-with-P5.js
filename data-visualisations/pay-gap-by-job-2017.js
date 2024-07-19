@@ -55,6 +55,8 @@ function PayGapByJob2017() {
       console.log("Data not yet loaded");
       return;
     }
+    // Draw the background for the visualisation
+    background(255);
 
     // Draw the title above the plot.
     this.drawTitle();

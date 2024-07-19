@@ -7,6 +7,7 @@ function Operation() {
   this.y = 576;
 
   // Placement of label to boxs
+  this.control_x_margin = 465;
   this.control_x_axis = this.x + 30;
   this.data_x_axis = this.x + 425;
   this.labelHeight = [this.y + 68, this.y + 113, this.y + 158];

@@ -34,8 +34,8 @@
     <script src="data-visualisations/bankruptcy-visualisation/bankruptcy-2000-2018.js"></script>
     <script src="data-visualisations/bankruptcy-visualisation/boucing-ball.js"></script>
     <!-- Personal Extension - Covid19 Map visualisation -->
-    <script src="data-visualisations/covid-2020-2022.js"></script>
-    <script src="data-visualisations/map.js"></script>
+    <script src="data-visualisations/covid-visualisation/covid-2020-2022.js"></script>
+    <script src="data-visualisations/covid-visualisation/glowing-points.js"></script>
 
     <!-- Add extra scripts below -->
     <script src="helper-files/helper-functions.js"></script>
@@ -43,8 +43,11 @@
     <script src="helper-files/operation.js"></script>
   </head>
   <body>
-    <div id="app" class="container">
+    <div id="visual" class="container">
       <ul id="visuals-menu"></ul>
+      <div id="stage">
+        <div id="app"></div>
+      </div>
     </div>
   </body>
 </html>
