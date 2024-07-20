@@ -475,7 +475,7 @@ Barbados,Feb-22,55165,10735,12795,357
 Barbados,Mar-22,59272,4107,1704,374
 Barbados,Apr-22,70080,10808,4123,394
 Barbados,May-22,76261,6181,4405,433
-Belarus,Feb-20,1,0,,0
+Belarus,Feb-20,1,0,0,0
 Belarus,Mar-20,152,151,,1
 Belarus,Apr-20,14027,13875,,89
 Belarus,May-20,42556,28529,,235
@@ -671,7 +671,7 @@ Bolivia,Feb-22,893330,41050,138600,21837
 Bolivia,Mar-22,901943,8613,81842,21894
 Bolivia,Apr-22,904974,3031,41680,21919
 Bolivia,May-22,906083,1109,24198,21943
-Bosnia And Herzegovina,Feb-20,0,0,,0
+Bosnia And Herzegovina,Feb-20,0,0,0,0
 Bosnia And Herzegovina,Mar-20,420,418,,13
 Bosnia And Herzegovina,Apr-20,1757,1337,,69
 Bosnia And Herzegovina,May-20,2510,753,,153
@@ -755,8 +755,8 @@ Brazil,Feb-22,28787620,3333515,3219406,649443
 Brazil,Mar-22,29947895,1160275,1655443,659860
 Brazil,Apr-22,30448236,500341,576770,663551
 Brazil,May-22,30682094,233858,298772,664920
-British Virgin Islands,Feb-20,0,0,,0
-British Virgin Islands,Mar-20,3,1,,0
+British Virgin Islands,Feb-20,0,0,0,0
+British Virgin Islands,Mar-20,3,1,0,0
 British Virgin Islands,Apr-20,6,3,,1
 British Virgin Islands,May-20,8,2,,1
 British Virgin Islands,Jun-20,8,0,,1
@@ -867,8 +867,8 @@ Burkina Faso,Feb-22,20751,127,125,375
 Burkina Faso,Mar-22,20853,102,67,382
 Burkina Faso,Apr-22,20853,0,32,382
 Burkina Faso,May-22,20853,0,32,382
-Burundi,Feb-20,0,0,,0
-Burundi,Mar-20,2,0,,0
+Burundi,Feb-20,0,0,0,0
+Burundi,Mar-20,2,0,0,0
 Burundi,Apr-20,11,9,,1
 Burundi,May-20,63,52,,1
 Burundi,Jun-20,170,107,,1
@@ -1231,34 +1231,34 @@ China Hong Kong Sar,Feb-22,274925,241818,,744
 China Hong Kong Sar,Mar-22,1157415,882490,,7825
 China Hong Kong Sar,Apr-22,1204210,46795,,9308
 China Hong Kong Sar,May-22,1208247,4037,,9360
-China Macao Sar,Feb-20,10,0,7,
-China Macao Sar,Mar-20,41,31,31,
-China Macao Sar,Apr-20,45,4,35,
-China Macao Sar,May-20,45,0,8,
-China Macao Sar,Jun-20,46,1,1,
-China Macao Sar,Jul-20,46,0,1,
-China Macao Sar,Aug-20,46,0,0,
-China Macao Sar,Sep-20,46,0,0,
-China Macao Sar,Oct-20,46,0,0,
-China Macao Sar,Nov-20,46,0,0,
-China Macao Sar,Dec-20,46,0,0,
-China Macao Sar,Jan-21,47,1,1,
-China Macao Sar,Feb-21,48,1,2,
-China Macao Sar,Mar-21,48,0,1,
-China Macao Sar,Apr-21,49,1,1,
-China Macao Sar,May-21,51,2,2,
-China Macao Sar,Jun-21,54,3,3,
-China Macao Sar,Jul-21,59,5,6,
-China Macao Sar,Aug-21,63,4,9,
-China Macao Sar,Sep-21,71,8,8,
-China Macao Sar,Oct-21,77,6,13,
-China Macao Sar,Nov-21,77,0,4,
-China Macao Sar,Dec-21,79,2,2,
-China Macao Sar,Jan-22,79,0,2,
-China Macao Sar,Feb-22,81,2,2,
-China Macao Sar,Mar-22,82,1,3,
-China Macao Sar,Apr-22,82,0,0,
-China Macao Sar,May-22,82,0,0,
+China Macao Sar,Feb-20,10,0,7,0
+China Macao Sar,Mar-20,41,31,31,0
+China Macao Sar,Apr-20,45,4,35,0
+China Macao Sar,May-20,45,0,8,0
+China Macao Sar,Jun-20,46,1,1,0
+China Macao Sar,Jul-20,46,0,1,0
+China Macao Sar,Aug-20,46,0,0,0
+China Macao Sar,Sep-20,46,0,0,0
+China Macao Sar,Oct-20,46,0,0,0
+China Macao Sar,Nov-20,46,0,0,0
+China Macao Sar,Dec-20,46,0,0,0
+China Macao Sar,Jan-21,47,1,1,0
+China Macao Sar,Feb-21,48,1,2,0
+China Macao Sar,Mar-21,48,0,1,0
+China Macao Sar,Apr-21,49,1,1,0
+China Macao Sar,May-21,51,2,2,0
+China Macao Sar,Jun-21,54,3,3,0
+China Macao Sar,Jul-21,59,5,6,0
+China Macao Sar,Aug-21,63,4,9,0
+China Macao Sar,Sep-21,71,8,8,0
+China Macao Sar,Oct-21,77,6,13,0
+China Macao Sar,Nov-21,77,0,4,0
+China Macao Sar,Dec-21,79,2,2,0
+China Macao Sar,Jan-22,79,0,2,0
+China Macao Sar,Feb-22,81,2,2,0
+China Macao Sar,Mar-22,82,1,3,0
+China Macao Sar,Apr-22,82,0,0,0
+China Macao Sar,May-22,82,0,0,0
 Colombia,Feb-20,0,0,0,0
 Colombia,Mar-20,906,905,859,16
 Colombia,Apr-20,6507,5601,4775,293
@@ -1707,7 +1707,7 @@ Dominican Republic,Feb-22,574556,19311,5944,4368
 Dominican Republic,Mar-22,578038,3482,1840,4375
 Dominican Republic,Apr-22,579248,1210,292,4376
 Dominican Republic,May-22,580412,1164,523,4376
-Ecuador,Feb-20,1,0,,0
+Ecuador,Feb-20,1,0,0,0
 Ecuador,Mar-20,2141,2140,,212
 Ecuador,Apr-20,19515,17374,,2384
 Ecuador,May-20,36343,16828,,8890
@@ -1931,34 +1931,34 @@ Faeroe Islands,Feb-22,34237,14612,26516,28
 Faeroe Islands,Mar-22,34237,0,26516,28
 Faeroe Islands,Apr-22,34658,421,26937,28
 Faeroe Islands,May-22,34658,0,26937,28
-Falkland Islands Malvinas,Feb-20,0,0,,
-Falkland Islands Malvinas,Mar-20,0,0,,
-Falkland Islands Malvinas,Apr-20,13,12,,
-Falkland Islands Malvinas,May-20,13,0,,
-Falkland Islands Malvinas,Jun-20,13,0,,
-Falkland Islands Malvinas,Jul-20,13,0,,
-Falkland Islands Malvinas,Aug-20,13,0,,
-Falkland Islands Malvinas,Sep-20,13,0,,
-Falkland Islands Malvinas,Oct-20,13,0,,
-Falkland Islands Malvinas,Nov-20,16,3,,
-Falkland Islands Malvinas,Dec-20,29,13,,
-Falkland Islands Malvinas,Jan-21,41,12,,
-Falkland Islands Malvinas,Feb-21,54,13,,
-Falkland Islands Malvinas,Mar-21,54,0,,
-Falkland Islands Malvinas,Apr-21,63,9,,
-Falkland Islands Malvinas,May-21,63,0,,
-Falkland Islands Malvinas,Jun-21,63,0,,
-Falkland Islands Malvinas,Jul-21,63,0,,
-Falkland Islands Malvinas,Aug-21,66,3,,
-Falkland Islands Malvinas,Sep-21,67,1,,
-Falkland Islands Malvinas,Oct-21,69,2,,
-Falkland Islands Malvinas,Nov-21,79,10,,
-Falkland Islands Malvinas,Dec-21,83,4,,
-Falkland Islands Malvinas,Jan-22,89,6,,
-Falkland Islands Malvinas,Feb-22,110,21,,
-Falkland Islands Malvinas,Mar-22,123,13,,
-Falkland Islands Malvinas,Apr-22,181,58,,
-Falkland Islands Malvinas,May-22,1126,945,,
+Falkland Islands Malvinas,Feb-20,0,0,0,0
+Falkland Islands Malvinas,Mar-20,0,0,0,0
+Falkland Islands Malvinas,Apr-20,13,12,0,0
+Falkland Islands Malvinas,May-20,13,0,0,0
+Falkland Islands Malvinas,Jun-20,13,0,0,0
+Falkland Islands Malvinas,Jul-20,13,0,0,0
+Falkland Islands Malvinas,Aug-20,13,0,0,0
+Falkland Islands Malvinas,Sep-20,13,0,0,0
+Falkland Islands Malvinas,Oct-20,13,0,0,0
+Falkland Islands Malvinas,Nov-20,16,3,0,0
+Falkland Islands Malvinas,Dec-20,29,13,0,0
+Falkland Islands Malvinas,Jan-21,41,12,0,0
+Falkland Islands Malvinas,Feb-21,54,13,0,0
+Falkland Islands Malvinas,Mar-21,54,0,0,0
+Falkland Islands Malvinas,Apr-21,63,9,0,0
+Falkland Islands Malvinas,May-21,63,0,0,0
+Falkland Islands Malvinas,Jun-21,63,0,0,0
+Falkland Islands Malvinas,Jul-21,63,0,0,0
+Falkland Islands Malvinas,Aug-21,66,3,0,0
+Falkland Islands Malvinas,Sep-21,67,1,0,0
+Falkland Islands Malvinas,Oct-21,69,2,0,0
+Falkland Islands Malvinas,Nov-21,79,10,0,0
+Falkland Islands Malvinas,Dec-21,83,4,0,0
+Falkland Islands Malvinas,Jan-22,89,6,0,0
+Falkland Islands Malvinas,Feb-22,110,21,0,0
+Falkland Islands Malvinas,Mar-22,123,13,0,0
+Falkland Islands Malvinas,Apr-22,181,58,0,0
+Falkland Islands Malvinas,May-22,1126,945,0,0
 Fiji,Feb-20,0,0,0,0
 Fiji,Mar-20,5,4,5,0
 Fiji,Apr-20,18,13,17,0
@@ -1987,7 +1987,7 @@ Fiji,Feb-22,63937,1082,2223,861
 Fiji,Mar-22,64412,475,1223,862
 Fiji,Apr-22,64644,232,1073,862
 Fiji,May-22,64773,129,1046,862
-Finland,Feb-20,3,2,,0
+Finland,Feb-20,3,2,0,0
 Finland,Mar-20,1418,1415,,17
 Finland,Apr-20,4995,3577,,211
 Finland,May-20,6859,1864,,318
@@ -2071,13 +2071,13 @@ French Guiana,Feb-22,77652,1939,66007,391
 French Guiana,Mar-22,79075,1423,67427,394
 French Guiana,Apr-22,80859,1784,69210,395
 French Guiana,May-22,81784,925,70133,397
-French Polynesia,Feb-20,0,0,,0
-French Polynesia,Mar-20,37,36,,0
-French Polynesia,Apr-20,58,21,,0
-French Polynesia,May-20,60,2,,0
-French Polynesia,Jun-20,62,2,,0
-French Polynesia,Jul-20,62,0,,0
-French Polynesia,Aug-20,573,511,,0
+French Polynesia,Feb-20,0,0,0,0
+French Polynesia,Mar-20,37,36,0,0
+French Polynesia,Apr-20,58,21,0,0
+French Polynesia,May-20,60,2,0,0
+French Polynesia,Jun-20,62,2,0,0
+French Polynesia,Jul-20,62,0,0,0
+French Polynesia,Aug-20,573,511,0,0
 French Polynesia,Sep-20,1852,1279,,7
 French Polynesia,Oct-20,7262,5410,,29
 French Polynesia,Nov-20,14372,7110,,75
@@ -2519,34 +2519,34 @@ Haiti,Feb-22,30342,1125,4312,820
 Haiti,Mar-22,30547,205,4303,833
 Haiti,Apr-22,30690,143,1183,835
 Haiti,May-22,30713,23,340,835
-Holy See,Feb-20,0,0,0,
-Holy See,Mar-20,6,5,6,
-Holy See,Apr-20,11,5,9,
-Holy See,May-20,12,1,10,
-Holy See,Jun-20,12,0,10,
-Holy See,Jul-20,12,0,0,
-Holy See,Aug-20,12,0,0,
-Holy See,Sep-20,12,0,0,
-Holy See,Oct-20,27,15,14,
-Holy See,Nov-20,27,0,12,
-Holy See,Dec-20,27,0,12,
-Holy See,Jan-21,27,0,12,
-Holy See,Feb-21,27,0,12,
-Holy See,Mar-21,27,0,12,
-Holy See,Apr-21,27,0,12,
-Holy See,May-21,27,0,12,
-Holy See,Jun-21,27,0,0,
-Holy See,Jul-21,27,0,0,
-Holy See,Aug-21,27,0,0,
-Holy See,Sep-21,27,0,0,
-Holy See,Oct-21,27,0,0,
-Holy See,Nov-21,27,0,0,
-Holy See,Dec-21,27,0,0,
-Holy See,Jan-22,29,2,2,
-Holy See,Feb-22,29,0,1,
-Holy See,Mar-22,29,0,1,
-Holy See,Apr-22,29,0,1,
-Holy See,May-22,29,0,0,
+Holy See,Feb-20,0,0,0,0
+Holy See,Mar-20,6,5,6,0
+Holy See,Apr-20,11,5,9,0
+Holy See,May-20,12,1,10,0
+Holy See,Jun-20,12,0,10,0
+Holy See,Jul-20,12,0,0,0
+Holy See,Aug-20,12,0,0,0
+Holy See,Sep-20,12,0,0,0
+Holy See,Oct-20,27,15,14,0
+Holy See,Nov-20,27,0,12,0
+Holy See,Dec-20,27,0,12,0
+Holy See,Jan-21,27,0,12,0
+Holy See,Feb-21,27,0,12,0
+Holy See,Mar-21,27,0,12,0
+Holy See,Apr-21,27,0,12,0
+Holy See,May-21,27,0,12,0
+Holy See,Jun-21,27,0,0,0
+Holy See,Jul-21,27,0,0,0
+Holy See,Aug-21,27,0,0,0
+Holy See,Sep-21,27,0,0,0
+Holy See,Oct-21,27,0,0,0
+Holy See,Nov-21,27,0,0,0
+Holy See,Dec-21,27,0,0,0
+Holy See,Jan-22,29,2,2,0
+Holy See,Feb-22,29,0,1,0
+Holy See,Mar-22,29,0,1,0
+Holy See,Apr-22,29,0,1,0
+Holy See,May-22,29,0,0,0
 Honduras,Feb-20,0,0,0,0
 Honduras,Mar-20,141,139,131,7
 Honduras,Apr-20,771,630,621,71
@@ -2603,7 +2603,7 @@ Hungary,Feb-22,1787544,234139,231613,43949
 Hungary,Mar-22,1851871,64327,150522,45470
 Hungary,Apr-22,1901017,49146,99318,46201
 Hungary,May-22,1909948,8931,50521,46343
-Iceland,Feb-20,1,0,,0
+Iceland,Feb-20,1,0,0,0
 Iceland,Mar-20,1135,1134,,2
 Iceland,Apr-20,1797,662,,10
 Iceland,May-20,1806,9,,10
@@ -3079,21 +3079,21 @@ Kyrgyzstan,Feb-22,200500,2184,7491,2957
 Kyrgyzstan,Mar-22,200935,435,2295,2988
 Kyrgyzstan,Apr-22,200992,57,1744,2991
 Kyrgyzstan,May-22,200993,1,1599,2991
-Laos,Feb-20,0,0,,0
-Laos,Mar-20,9,7,,0
-Laos,Apr-20,19,10,,0
-Laos,May-20,19,0,,0
-Laos,Jun-20,19,0,,0
-Laos,Jul-20,20,1,,0
-Laos,Aug-20,22,2,,0
-Laos,Sep-20,23,1,,0
-Laos,Oct-20,24,1,,0
-Laos,Nov-20,39,15,,0
-Laos,Dec-20,41,2,,0
-Laos,Jan-21,44,3,,0
-Laos,Feb-21,45,1,,0
-Laos,Mar-21,49,4,,0
-Laos,Apr-21,757,708,,0
+Laos,Feb-20,0,0,0,0
+Laos,Mar-20,9,7,0,0
+Laos,Apr-20,19,10,0,0
+Laos,May-20,19,0,0,0
+Laos,Jun-20,19,0,0,0
+Laos,Jul-20,20,1,0,0
+Laos,Aug-20,22,2,0,0
+Laos,Sep-20,23,1,0,0
+Laos,Oct-20,24,1,0,0
+Laos,Nov-20,39,15,0,0
+Laos,Dec-20,41,2,0,0
+Laos,Jan-21,44,3,0,0
+Laos,Feb-21,45,1,0,0
+Laos,Mar-21,49,4,0,0
+Laos,Apr-21,757,708,0,0
 Laos,May-21,1912,1155,,3
 Laos,Jun-21,2121,209,,3
 Laos,Jul-21,6299,4178,,7
@@ -3527,34 +3527,34 @@ Malta,Feb-22,71275,3558,3366,605
 Malta,Mar-22,79539,8264,6036,638
 Malta,Apr-22,91741,12202,9530,698
 Malta,May-22,93446,1705,3820,713
-Marshall Islands,Feb-20,0,0,0,
-Marshall Islands,Mar-20,0,0,0,
-Marshall Islands,Apr-20,0,0,0,
-Marshall Islands,May-20,0,0,0,
-Marshall Islands,Jun-20,0,0,0,
-Marshall Islands,Jul-20,0,0,0,
-Marshall Islands,Aug-20,0,0,0,
-Marshall Islands,Sep-20,0,0,0,
-Marshall Islands,Oct-20,1,0,1,
-Marshall Islands,Nov-20,4,3,3,
-Marshall Islands,Dec-20,4,0,0,
-Marshall Islands,Jan-21,4,0,0,
-Marshall Islands,Feb-21,4,0,0,
-Marshall Islands,Mar-21,4,0,0,
-Marshall Islands,Apr-21,4,0,0,
-Marshall Islands,May-21,4,0,0,
-Marshall Islands,Jun-21,4,0,0,
-Marshall Islands,Jul-21,4,0,0,
-Marshall Islands,Aug-21,4,0,0,
-Marshall Islands,Sep-21,4,0,0,
-Marshall Islands,Oct-21,4,0,0,
-Marshall Islands,Nov-21,4,0,0,
-Marshall Islands,Dec-21,4,0,0,
-Marshall Islands,Jan-22,7,3,3,
-Marshall Islands,Feb-22,7,0,0,
-Marshall Islands,Mar-22,7,0,0,
-Marshall Islands,Apr-22,17,10,10,
-Marshall Islands,May-22,17,0,3,
+Marshall Islands,Feb-20,0,0,0,0
+Marshall Islands,Mar-20,0,0,0,0
+Marshall Islands,Apr-20,0,0,0,0
+Marshall Islands,May-20,0,0,0,0
+Marshall Islands,Jun-20,0,0,0,0
+Marshall Islands,Jul-20,0,0,0,0
+Marshall Islands,Aug-20,0,0,0,0
+Marshall Islands,Sep-20,0,0,0,0
+Marshall Islands,Oct-20,1,0,1,0
+Marshall Islands,Nov-20,4,3,3,0
+Marshall Islands,Dec-20,4,0,0,0
+Marshall Islands,Jan-21,4,0,0,0
+Marshall Islands,Feb-21,4,0,0,0
+Marshall Islands,Mar-21,4,0,0,0
+Marshall Islands,Apr-21,4,0,0,0
+Marshall Islands,May-21,4,0,0,0
+Marshall Islands,Jun-21,4,0,0,0
+Marshall Islands,Jul-21,4,0,0,0
+Marshall Islands,Aug-21,4,0,0,0
+Marshall Islands,Sep-21,4,0,0,0
+Marshall Islands,Oct-21,4,0,0,0
+Marshall Islands,Nov-21,4,0,0,0
+Marshall Islands,Dec-21,4,0,0,0
+Marshall Islands,Jan-22,7,3,3,0
+Marshall Islands,Feb-22,7,0,0,0
+Marshall Islands,Mar-22,7,0,0,0
+Marshall Islands,Apr-22,17,10,10,0
+Marshall Islands,May-22,17,0,3,0
 Martinique,Feb-20,0,0,0,0
 Martinique,Mar-20,128,126,98,3
 Martinique,Apr-20,178,50,115,14
@@ -3695,34 +3695,34 @@ Mexico,Feb-22,5506105,576036,565744,318086
 Mexico,Mar-22,5657077,150972,408916,322948
 Mexico,Apr-22,5738769,81692,379164,324294
 Mexico,May-22,5745652,6883,376648,324465
-Micronesia,Feb-20,0,0,0,
-Micronesia,Mar-20,0,0,0,
-Micronesia,Apr-20,0,0,0,
-Micronesia,May-20,0,0,0,
-Micronesia,Jun-20,0,0,0,
-Micronesia,Jul-20,0,0,0,
-Micronesia,Aug-20,0,0,0,
-Micronesia,Sep-20,0,0,0,
-Micronesia,Oct-20,0,0,0,
-Micronesia,Nov-20,0,0,0,
-Micronesia,Dec-20,0,0,0,
-Micronesia,Jan-21,1,0,1,
-Micronesia,Feb-21,1,0,0,
-Micronesia,Mar-21,1,0,0,
-Micronesia,Apr-21,1,0,0,
-Micronesia,May-21,1,0,0,
-Micronesia,Jun-21,1,0,0,
-Micronesia,Jul-21,1,0,0,
-Micronesia,Aug-21,1,0,0,
-Micronesia,Sep-21,1,0,0,
-Micronesia,Oct-21,1,0,0,
-Micronesia,Nov-21,1,0,0,
-Micronesia,Dec-21,1,0,0,
-Micronesia,Jan-22,1,0,0,
-Micronesia,Feb-22,1,0,0,
-Micronesia,Mar-22,1,0,0,
-Micronesia,Apr-22,7,6,6,
-Micronesia,May-22,7,0,6,
+Micronesia,Feb-20,0,0,0,0
+Micronesia,Mar-20,0,0,0,0
+Micronesia,Apr-20,0,0,0,0
+Micronesia,May-20,0,0,0,0
+Micronesia,Jun-20,0,0,0,0
+Micronesia,Jul-20,0,0,0,0
+Micronesia,Aug-20,0,0,0,0
+Micronesia,Sep-20,0,0,0,0
+Micronesia,Oct-20,0,0,0,0
+Micronesia,Nov-20,0,0,0,0
+Micronesia,Dec-20,0,0,0,0
+Micronesia,Jan-21,1,0,1,0
+Micronesia,Feb-21,1,0,0,0
+Micronesia,Mar-21,1,0,0,0
+Micronesia,Apr-21,1,0,0,0
+Micronesia,May-21,1,0,0,0
+Micronesia,Jun-21,1,0,0,0
+Micronesia,Jul-21,1,0,0,0
+Micronesia,Aug-21,1,0,0,0
+Micronesia,Sep-21,1,0,0,0
+Micronesia,Oct-21,1,0,0,0
+Micronesia,Nov-21,1,0,0,0
+Micronesia,Dec-21,1,0,0,0
+Micronesia,Jan-22,1,0,0,0
+Micronesia,Feb-22,1,0,0,0
+Micronesia,Mar-22,1,0,0,0
+Micronesia,Apr-22,7,6,6,0
+Micronesia,May-22,7,0,6,0
 Moldova,Feb-20,0,0,0,0
 Moldova,Mar-20,353,352,331,4
 Moldova,Apr-20,3897,3544,2597,118
@@ -3975,34 +3975,34 @@ Namibia,Feb-22,157225,1327,6108,4007
 Namibia,Mar-22,157646,421,558,4019
 Namibia,Apr-22,158733,1087,1046,4025
 Namibia,May-22,160074,1341,2384,4028
-Nauru,Feb-20,0,0,0,
-Nauru,Mar-20,0,0,0,
-Nauru,Apr-20,0,0,0,
-Nauru,May-20,0,0,0,
-Nauru,Jun-20,0,0,0,
-Nauru,Jul-20,0,0,0,
-Nauru,Aug-20,0,0,0,
-Nauru,Sep-20,0,0,0,
-Nauru,Oct-20,0,0,0,
-Nauru,Nov-20,0,0,0,
-Nauru,Dec-20,0,0,0,
-Nauru,Jan-21,0,0,0,
-Nauru,Feb-21,0,0,0,
-Nauru,Mar-21,0,0,0,
-Nauru,Apr-21,0,0,0,
-Nauru,May-21,0,0,0,
-Nauru,Jun-21,0,0,0,
-Nauru,Jul-21,0,0,0,
-Nauru,Aug-21,0,0,0,
-Nauru,Sep-21,0,0,0,
-Nauru,Oct-21,0,0,0,
-Nauru,Nov-21,0,0,0,
-Nauru,Dec-21,0,0,0,
-Nauru,Jan-22,0,0,0,
-Nauru,Feb-22,0,0,0,
-Nauru,Mar-22,0,0,0,
-Nauru,Apr-22,5,4,3,
-Nauru,May-22,8,3,3,
+Nauru,Feb-20,0,0,0,0
+Nauru,Mar-20,0,0,0,0
+Nauru,Apr-20,0,0,0,0
+Nauru,May-20,0,0,0,0
+Nauru,Jun-20,0,0,0,0
+Nauru,Jul-20,0,0,0,0
+Nauru,Aug-20,0,0,0,0
+Nauru,Sep-20,0,0,0,0
+Nauru,Oct-20,0,0,0,0
+Nauru,Nov-20,0,0,0,0
+Nauru,Dec-20,0,0,0,0
+Nauru,Jan-21,0,0,0,0
+Nauru,Feb-21,0,0,0,0
+Nauru,Mar-21,0,0,0,0
+Nauru,Apr-21,0,0,0,0
+Nauru,May-21,0,0,0,0
+Nauru,Jun-21,0,0,0,0
+Nauru,Jul-21,0,0,0,0
+Nauru,Aug-21,0,0,0,0
+Nauru,Sep-21,0,0,0,0
+Nauru,Oct-21,0,0,0,0
+Nauru,Nov-21,0,0,0,0
+Nauru,Dec-21,0,0,0,0
+Nauru,Jan-22,0,0,0,0
+Nauru,Feb-22,0,0,0,0
+Nauru,Mar-22,0,0,0,0
+Nauru,Apr-22,5,4,3,0
+Nauru,May-22,8,3,3,0
 Nepal,Feb-20,1,0,0,0
 Nepal,Mar-20,5,4,4,0
 Nepal,Apr-20,57,52,41,0
@@ -4199,35 +4199,35 @@ Nigeria,Feb-22,254560,1379,20593,3142
 Nigeria,Mar-22,255415,855,2667,3142
 Nigeria,Apr-22,255753,338,2747,3143
 Nigeria,May-22,255859,106,2773,3143
-Niue,Feb-20,0,0,0,
-Niue,Mar-20,0,0,0,
-Niue,Apr-20,0,0,0,
-Niue,May-20,0,0,0,
-Niue,Jun-20,0,0,0,
-Niue,Jul-20,0,0,0,
-Niue,Aug-20,0,0,0,
-Niue,Sep-20,0,0,0,
-Niue,Oct-20,0,0,0,
-Niue,Nov-20,0,0,0,
-Niue,Dec-20,0,0,0,
-Niue,Jan-21,0,0,0,
-Niue,Feb-21,0,0,0,
-Niue,Mar-21,0,0,0,
-Niue,Apr-21,0,0,0,
-Niue,May-21,0,0,0,
-Niue,Jun-21,0,0,0,
-Niue,Jul-21,0,0,0,
-Niue,Aug-21,0,0,0,
-Niue,Sep-21,0,0,0,
-Niue,Oct-21,0,0,0,
-Niue,Nov-21,0,0,0,
-Niue,Dec-21,0,0,0,
-Niue,Jan-22,0,0,0,
-Niue,Feb-22,0,0,0,
-Niue,Mar-22,7,6,6,
-Niue,Apr-22,9,2,6,
-Niue,May-22,9,0,2,
-Norway,Feb-20,15,14,,0
+Niue,Feb-20,0,0,0,0
+Niue,Mar-20,0,0,0,0
+Niue,Apr-20,0,0,0,0
+Niue,May-20,0,0,0,0
+Niue,Jun-20,0,0,0,0
+Niue,Jul-20,0,0,0,0
+Niue,Aug-20,0,0,0,0
+Niue,Sep-20,0,0,0,0
+Niue,Oct-20,0,0,0,0
+Niue,Nov-20,0,0,0,0
+Niue,Dec-20,0,0,0,0
+Niue,Jan-21,0,0,0,0
+Niue,Feb-21,0,0,0,0
+Niue,Mar-21,0,0,0,0
+Niue,Apr-21,0,0,0,0
+Niue,May-21,0,0,0,0
+Niue,Jun-21,0,0,0,0
+Niue,Jul-21,0,0,0,0
+Niue,Aug-21,0,0,0,0
+Niue,Sep-21,0,0,0,0
+Niue,Oct-21,0,0,0,0
+Niue,Nov-21,0,0,0,0
+Niue,Dec-21,0,0,0,0
+Niue,Jan-22,0,0,0,0
+Niue,Feb-22,0,0,0,0
+Niue,Mar-22,7,6,6,0
+Niue,Apr-22,9,2,6,0
+Niue,May-22,9,0,2,0
+Norway,Feb-20,15,14,0,0
 Norway,Mar-20,4641,4626,,39
 Norway,Apr-20,7738,3097,,211
 Norway,May-20,8440,702,,237
@@ -4405,7 +4405,7 @@ Paraguay,Feb-22,641767,58105,67297,18603
 Paraguay,Mar-22,647950,6183,13081,18850
 Paraguay,Apr-22,649455,1505,5912,18870
 Paraguay,May-22,649718,263,6173,18872
-Peru,Feb-20,0,0,,0
+Peru,Feb-20,0,0,0,0
 Peru,Mar-20,1065,1064,,153
 Peru,Apr-20,36976,35911,,7060
 Peru,May-20,164476,127500,,25693
@@ -4489,7 +4489,7 @@ Poland,Feb-22,5667050,780894,830725,111317
 Poland,Mar-22,5962917,295867,545033,115173
 Poland,Apr-22,5996514,33597,545775,116059
 Poland,May-22,6003297,6783,551990,116207
-Portugal,Feb-20,0,0,,0
+Portugal,Feb-20,0,0,0,0
 Portugal,Mar-20,7901,7899,,179
 Portugal,Apr-20,25773,17872,,1067
 Portugal,May-20,34191,8418,,1422
@@ -4573,7 +4573,7 @@ Reunion,Feb-22,292126,111595,60238,640
 Reunion,Mar-22,336945,44819,13717,709
 Reunion,Apr-22,387184,50239,17948,749
 Reunion,May-22,405980,18796,17769,762
-Romania,Feb-20,3,2,,0
+Romania,Feb-20,3,2,0,0
 Romania,Mar-20,2245,2242,,82
 Romania,Apr-20,12240,9995,,717
 Romania,May-20,19257,7017,,1268
@@ -4657,15 +4657,15 @@ Rwanda,Feb-22,129502,611,82523,1457
 Rwanda,Mar-22,129722,220,82742,1458
 Rwanda,Apr-22,129806,84,82825,1459
 Rwanda,May-22,129907,101,82926,1459
-Saint Barthelemy,Feb-20,0,0,,0
-Saint Barthelemy,Mar-20,6,5,,0
-Saint Barthelemy,Apr-20,6,0,,0
-Saint Barthelemy,May-20,6,0,,0
-Saint Barthelemy,Jun-20,6,0,,0
-Saint Barthelemy,Jul-20,8,2,,0
-Saint Barthelemy,Aug-20,18,10,,0
-Saint Barthelemy,Sep-20,48,30,,0
-Saint Barthelemy,Oct-20,83,35,,0
+Saint Barthelemy,Feb-20,0,0,0,0
+Saint Barthelemy,Mar-20,6,5,0,0
+Saint Barthelemy,Apr-20,6,0,0,0
+Saint Barthelemy,May-20,6,0,0,0
+Saint Barthelemy,Jun-20,6,0,0,0
+Saint Barthelemy,Jul-20,8,2,0,0
+Saint Barthelemy,Aug-20,18,10,0,0
+Saint Barthelemy,Sep-20,48,30,0,0
+Saint Barthelemy,Oct-20,83,35,0,0
 Saint Barthelemy,Nov-20,147,64,,1
 Saint Barthelemy,Dec-20,190,43,,1
 Saint Barthelemy,Jan-21,360,170,,1
@@ -4685,34 +4685,34 @@ Saint Barthelemy,Feb-22,3758,323,,6
 Saint Barthelemy,Mar-22,4150,392,,6
 Saint Barthelemy,Apr-22,4544,394,,6
 Saint Barthelemy,May-22,4611,67,,6
-Saint Helena,Feb-20,0,0,0,
-Saint Helena,Mar-20,0,0,0,
-Saint Helena,Apr-20,0,0,0,
-Saint Helena,May-20,0,0,0,
-Saint Helena,Jun-20,0,0,0,
-Saint Helena,Jul-20,0,0,0,
-Saint Helena,Aug-20,0,0,0,
-Saint Helena,Sep-20,0,0,0,
-Saint Helena,Oct-20,0,0,0,
-Saint Helena,Nov-20,0,0,0,
-Saint Helena,Dec-20,0,0,0,
-Saint Helena,Jan-21,0,0,0,
-Saint Helena,Feb-21,0,0,0,
-Saint Helena,Mar-21,2,1,1,
-Saint Helena,Apr-21,2,0,1,
-Saint Helena,May-21,2,0,0,
-Saint Helena,Jun-21,2,0,0,
-Saint Helena,Jul-21,2,0,0,
-Saint Helena,Aug-21,2,0,0,
-Saint Helena,Sep-21,2,0,0,
-Saint Helena,Oct-21,2,0,0,
-Saint Helena,Nov-21,2,0,0,
-Saint Helena,Dec-21,2,0,0,
-Saint Helena,Jan-22,2,0,0,
-Saint Helena,Feb-22,2,0,0,
-Saint Helena,Mar-22,2,0,0,
-Saint Helena,Apr-22,2,0,0,
-Saint Helena,May-22,2,0,0,
+Saint Helena,Feb-20,0,0,0,0
+Saint Helena,Mar-20,0,0,0,0
+Saint Helena,Apr-20,0,0,0,0
+Saint Helena,May-20,0,0,0,0
+Saint Helena,Jun-20,0,0,0,0
+Saint Helena,Jul-20,0,0,0,0
+Saint Helena,Aug-20,0,0,0,0
+Saint Helena,Sep-20,0,0,0,0
+Saint Helena,Oct-20,0,0,0,0
+Saint Helena,Nov-20,0,0,0,0
+Saint Helena,Dec-20,0,0,0,0
+Saint Helena,Jan-21,0,0,0,0
+Saint Helena,Feb-21,0,0,0,0
+Saint Helena,Mar-21,2,1,1,0
+Saint Helena,Apr-21,2,0,1,0
+Saint Helena,May-21,2,0,0,0
+Saint Helena,Jun-21,2,0,0,0
+Saint Helena,Jul-21,2,0,0,0
+Saint Helena,Aug-21,2,0,0,0
+Saint Helena,Sep-21,2,0,0,0
+Saint Helena,Oct-21,2,0,0,0
+Saint Helena,Nov-21,2,0,0,0
+Saint Helena,Dec-21,2,0,0,0
+Saint Helena,Jan-22,2,0,0,0
+Saint Helena,Feb-22,2,0,0,0
+Saint Helena,Mar-22,2,0,0,0
+Saint Helena,Apr-22,2,0,0,0
+Saint Helena,May-22,2,0,0,0
 Saint Kitts And Nevis,Feb-20,0,0,0,0
 Saint Kitts And Nevis,Mar-20,8,6,8,0
 Saint Kitts And Nevis,Apr-20,15,7,15,0
@@ -5049,8 +5049,8 @@ Seychelles,Feb-22,39336,2146,2326,163
 Seychelles,Mar-22,40421,1085,467,164
 Seychelles,Apr-22,42474,2053,821,166
 Seychelles,May-22,43235,761,581,167
-Sierra Leone,Feb-20,0,0,,0
-Sierra Leone,Mar-20,1,0,,0
+Sierra Leone,Feb-20,0,0,0,0
+Sierra Leone,Mar-20,1,0,0,0
 Sierra Leone,Apr-20,124,123,,7
 Sierra Leone,May-20,861,737,,46
 Sierra Leone,Jun-20,1462,601,,60
@@ -5413,7 +5413,7 @@ State Of Palestine,Feb-22,576078,85663,59718,5226
 State Of Palestine,Mar-22,581075,4997,15825,5351
 State Of Palestine,Apr-22,581940,865,1050,5353
 State Of Palestine,May-22,582119,179,345,5353
-Sudan,Feb-20,0,0,,0
+Sudan,Feb-20,0,0,0,0
 Sudan,Mar-20,6,5,,2
 Sudan,Apr-20,318,312,,33
 Sudan,May-20,4521,4203,,321
@@ -5637,7 +5637,7 @@ Tajikistan,Feb-22,17388,70,45,124
 Tajikistan,Mar-22,17388,0,1,124
 Tajikistan,Apr-22,17388,0,0,124
 Tajikistan,May-22,17388,0,0,124
-Tanzania,Feb-20,0,0,,0
+Tanzania,Feb-20,0,0,0,0
 Tanzania,Mar-20,358,339,,14
 Tanzania,Apr-20,9016,8658,,229
 Tanzania,May-20,9561,545,,300
@@ -5805,7 +5805,7 @@ Trinidad And Tobago,Feb-22,127767,16218,26158,3628
 Trinidad And Tobago,Mar-22,137860,10093,22912,3750
 Trinidad And Tobago,Apr-22,147867,10007,8829,3829
 Trinidad And Tobago,May-22,154643,6776,10041,3871
-Tunisia,Feb-20,0,0,,0
+Tunisia,Feb-20,0,0,0,0
 Tunisia,Mar-20,400,399,,10
 Tunisia,Apr-20,1005,605,,45
 Tunisia,May-20,1088,83,,52
@@ -5945,7 +5945,7 @@ UK,Feb-22,18983108,1470110,2870009,164255
 UK,Mar-22,21204175,2221067,1998980,168081
 UK,Apr-22,22055214,851039,2014932,175013
 UK,May-22,22159805,104591,678035,176708
-Ukraine,Feb-20,0,0,,0
+Ukraine,Feb-20,0,0,0,0
 Ukraine,Mar-20,645,644,,17
 Ukraine,Apr-20,10406,9761,,261
 Ukraine,May-20,23672,13266,,708

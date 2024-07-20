@@ -144,7 +144,7 @@ function covidMap() {
             minAmountDeathCase,
             maxAmountDeathCase
           );
-          let colour = color(255 - redIntensity, redIntensity, redIntensity);
+          let colour = color(255 - redIntensity, redIntensity, 0);
           let pointSize = mapPointSize(
             totalCase,
             minAmountCovidCase,
@@ -227,6 +227,54 @@ function covidMap() {
       }
     }
 
+    fill(240);
+    rect(width / 4, height / 8, width / 2, height / 2, 10);
+
+    fill(0, 255, 0);
+    ellipse((width * 3) / 8, (height * 3) / 8 + 20, 70, 70);
+
+    setGradient(
+      (width * 5) / 16,
+      height / 2,
+      150,
+      50,
+      color(255, 0, 0),
+      color(0, 255, 0)
+    );
+
+    noStroke();
+    fill(255, 255, 0, 185);
+    ellipse((width * 3) / 8, height / 4 + 10, 70, 70);
+
+    fill(0);
+    textSize(18);
+    text(
+      "Glow represents the amount of new cases",
+      width / 2,
+      height / 4,
+      width / 5
+    );
+    text(
+      "Size of the Point represent the total number of cases",
+      width / 2,
+      (height * 3) / 8,
+      width / 5
+    );
+    text(
+      "Colour represent the number of death",
+      width / 2,
+      height / 2 + 10,
+      width / 5
+    );
+
+    textSize(10);
+    text("More Death", width / 3 - 40, height / 2 + 60, width / 5);
+    text("Less Death", width / 2 - 60, height / 2 + 60, width / 5);
+
+    textAlign(CENTER);
+    textSize(30);
+    text("Covid Visualisation Legends", width / 2, height / 6);
+
     // Draw the title above the plot.
     drawTitle();
 
@@ -283,20 +331,20 @@ function covidMap() {
   };
 
   let mapPointColour = function (value, min, max) {
-    return map(value, min, max, 200, 0);
+    return map(value, min, max, 255, 0);
   };
 
   let mapPointSize = function (value, min, max) {
-    return map(value, min, max, 5, 70);
+    return map(value, min, max, 4, 50);
   };
 
   let mapGlowSpeed = function (value, min, max) {
-    return map(value, min, max, 0.01, 0.1);
+    return map(value, min, max, 1, 5);
   };
 
   let hoverPoints = function (hoveredPoint) {
     distance = dist(hoveredPoint.pointX, hoveredPoint.pointY, mouseX, mouseY);
-    if (distance < hoveredPoint.pointSize / 2) {
+    if (distance < (hoveredPoint.pointSize * myMap.zoom()) / 2) {
       let hoverArray = [
         hoveredPoint.country,
         hoveredPoint.date,
@@ -360,5 +408,16 @@ function covidMap() {
       self.layout.plotWidth() / 2 + self.layout.leftMargin,
       self.layout.topMargin - self.layout.marginSize / 2
     );
+  };
+
+  let setGradient = function (x, y, w, h, c1, c2) {
+    noFill();
+    // Left to right gradient
+    for (let i = x; i <= x + w; i++) {
+      let inter = map(i, x, x + w, 0, 1);
+      let c = lerpColor(c1, c2, inter);
+      stroke(c);
+      line(i, y, i, y + h);
+    }
   };
 }

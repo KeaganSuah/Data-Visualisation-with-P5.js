@@ -20,8 +20,7 @@ function glowingPoints(
   this.totalDeath = totalDeath;
   this.pointSize = pointSize;
 
-  var glowSizeState = false;
-  var glowSize = 2;
+  /////////////////// Public Methods /////////////////////////
 
   this.draw = function () {
     generatePointCoordinates();
@@ -38,20 +37,27 @@ function glowingPoints(
   // Declare for variables in objects for Private Methods
   var self = this;
 
+  let glowSpeedToSize = function (value, min, max) {
+    return map(value, min, max, 1, 2);
+  };
+
   let generatePointCoordinates = function () {
     country = myMap.latLngToPixel(lat, lng);
     self.pointX = country.x;
     self.pointY = country.y;
   };
 
+  var glowSizeState = false;
+  var glowSize = glowSpeedToSize(glowSpeed, 1, 5);
+
   let glowConditions = function () {
     if (glowSizeState) {
-      glowSize -= glowSpeed;
+      glowSize -= glowSize / (100 / glowSpeed);
     } else {
-      glowSize += glowSpeed;
+      glowSize += glowSize / (100 / glowSpeed);
     }
 
-    if (glowSize > 2) {
+    if (glowSize > glowSpeedToSize(glowSpeed, 1, 5)) {
       glowSizeState = true;
     } else if (glowSize < 1) {
       glowSizeState = false;
@@ -59,13 +65,13 @@ function glowingPoints(
   };
 
   let drawGlow = function () {
-    fill(255, 255, 0, 135);
+    fill(255, 255, 0, 185);
     noStroke();
     ellipse(
       self.pointX,
       self.pointY,
-      self.pointSize * glowSize,
-      self.pointSize * glowSize
+      self.pointSize * glowSize * myMap.zoom(),
+      self.pointSize * glowSize * myMap.zoom()
     );
   };
 
@@ -73,6 +79,11 @@ function glowingPoints(
     fill(colour);
     stroke(0);
     strokeWeight(0.5);
-    ellipse(self.pointX, self.pointY, self.pointSize, self.pointSize);
+    ellipse(
+      self.pointX,
+      self.pointY,
+      self.pointSize * myMap.zoom(),
+      self.pointSize * myMap.zoom()
+    );
   };
 }
