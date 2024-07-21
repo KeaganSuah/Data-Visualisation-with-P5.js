@@ -376,7 +376,7 @@ function NutrientsTimeSeries() {
   // Control panel label and controls
   // Display the operation controls on the graph for users
   let operationControl = function () {
-    makeNutrientFilter(operation.control_x_axis, operation.labelHeight[0]);
+    makeNutrientFilter(operation.controlXaxis, operation.labelHeight[0]);
 
     // Create sliders to control start and end years. Default to
     // To reduce the starting range of years.
@@ -387,7 +387,7 @@ function NutrientsTimeSeries() {
       1
     );
     self.startSlider.position(
-      operation.control_x_margin + operation.control_x_axis,
+      operation.controlXmargin + operation.controlXaxis,
       operation.labelHeight[1]
     );
 
@@ -399,7 +399,7 @@ function NutrientsTimeSeries() {
       1
     );
     self.endSlider.position(
-      operation.control_x_margin + operation.control_x_axis,
+      operation.controlXmargin + operation.controlXaxis,
       operation.labelHeight[2]
     );
   };
@@ -408,7 +408,7 @@ function NutrientsTimeSeries() {
   let makeNutrientFilter = function (x, y) {
     // Create a select DOM element.
     self.filterNutrient = createSelect();
-    self.filterNutrient.position(operation.control_x_margin + x, y);
+    self.filterNutrient.position(operation.controlXmargin + x, y);
 
     // Fill the options with all company names.
     let nutrients = self.data.rows;

@@ -102,7 +102,7 @@ function TechDiversityRace() {
     // Create a select DOM element.
     self.select = createSelect();
     self.select.position(
-      operation.control_x_margin + operation.control_x_axis,
+      operation.controlXmargin + operation.controlXaxis,
       operation.labelHeight[0]
     );
   };

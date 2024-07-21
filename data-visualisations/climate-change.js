@@ -369,13 +369,13 @@ function ClimateChange() {
     // visualise full range.
     self.startSlider = createSlider(min, max - 1, min, 1);
     self.startSlider.position(
-      operation.control_x_margin + operation.control_x_axis,
+      operation.controlXmargin + operation.controlXaxis,
       operation.labelHeight[0]
     );
 
     self.endSlider = createSlider(min + 1, max, max, 1);
     self.endSlider.position(
-      operation.control_x_margin + operation.control_x_axis,
+      operation.controlXmargin + operation.controlXaxis,
       operation.labelHeight[1]
     );
   };

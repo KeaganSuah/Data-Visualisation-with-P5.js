@@ -235,7 +235,7 @@ function bankruptDyanmicBall() {
     // Create a select DOM element.
     self.yearFilter = createSelect();
     self.yearFilter.position(
-      operation.control_x_margin + operation.control_x_axis,
+      operation.controlXmargin + operation.controlXaxis,
       operation.labelHeight[0]
     );
 
@@ -252,7 +252,7 @@ function bankruptDyanmicBall() {
   let createSpeedSlider = function () {
     self.speedSlider = createSlider(0.2, 3, 1, 0.2);
     self.speedSlider.position(
-      operation.control_x_margin + operation.control_x_axis,
+      operation.controlXmargin + operation.controlXaxis,
       operation.labelHeight[2]
     );
   };
@@ -270,7 +270,7 @@ function bankruptDyanmicBall() {
   let createStopButton = function () {
     self.bounceButton = createButton("Start/Stop Bouncing");
     self.bounceButton.position(
-      operation.control_x_margin + operation.control_x_axis,
+      operation.controlXmargin + operation.controlXaxis,
       operation.labelHeight[1] - 2
     );
 

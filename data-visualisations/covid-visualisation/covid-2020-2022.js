@@ -33,6 +33,8 @@ function covidMap() {
 
   let dateArray = [];
 
+  let legendState = false;
+
   let playStatus = false;
   let playCount = 60 * 2;
   let playCurrentIndex = 0;
@@ -179,11 +181,15 @@ function covidMap() {
 
     // Create start and stop button for the points animation over the years
     createStartStopButton();
+
+    // Create display legend button
+    createLegendButton();
   };
 
   this.destroy = function () {
     this.dateFilter.remove();
     this.playButton.remove();
+    this.legendButton.remove();
 
     // To destroy the map when change to another visualisation
     select("#stage").html("<div id='app'></div>");
@@ -193,87 +199,25 @@ function covidMap() {
 
   this.draw = function () {
     clear();
-    let userSelectDate;
-    if (!playStatus) {
-      userSelectDate = this.dateFilter.value();
-      playCurrentIndex = 0;
-    } else {
-      if (playCount <= 0) {
-        playCount += 60 * 2;
-        playCurrentIndex += 1;
-        if (playCurrentIndex == dateArray.length) {
-          playStatus = false;
-        }
-      } else {
-        userSelectDate = dateArray[playCurrentIndex];
-        playCount--;
-        if (playCount < 60 * 2 && playCount > 60) {
-          fill(0);
-          textSize(80);
-          text(userSelectDate, width - 280, height - 250);
-        }
-      }
-    }
+    // Based on user input, set the date for the variable
+    let userSelectDate = playCondition();
 
+    // Loop to draw every point object
     for (let point of this.covidPoints) {
       if (point.date == userSelectDate) {
         point.draw();
       }
     }
 
+    // Loop to set the collision method on every point object
     for (let point of this.covidPoints) {
       if (point.date == userSelectDate) {
         hoverPoints(point);
       }
     }
 
-    fill(240);
-    rect(width / 4, height / 8, width / 2, height / 2, 10);
-
-    fill(0, 255, 0);
-    ellipse((width * 3) / 8, (height * 3) / 8 + 20, 70, 70);
-
-    setGradient(
-      (width * 5) / 16,
-      height / 2,
-      150,
-      50,
-      color(255, 0, 0),
-      color(0, 255, 0)
-    );
-
-    noStroke();
-    fill(255, 255, 0, 185);
-    ellipse((width * 3) / 8, height / 4 + 10, 70, 70);
-
-    fill(0);
-    textSize(18);
-    text(
-      "Glow represents the amount of new cases",
-      width / 2,
-      height / 4,
-      width / 5
-    );
-    text(
-      "Size of the Point represent the total number of cases",
-      width / 2,
-      (height * 3) / 8,
-      width / 5
-    );
-    text(
-      "Colour represent the number of death",
-      width / 2,
-      height / 2 + 10,
-      width / 5
-    );
-
-    textSize(10);
-    text("More Death", width / 3 - 40, height / 2 + 60, width / 5);
-    text("Less Death", width / 2 - 60, height / 2 + 60, width / 5);
-
-    textAlign(CENTER);
-    textSize(30);
-    text("Covid Visualisation Legends", width / 2, height / 6);
+    // Draw legend when display legend state is true
+    drawLegend();
 
     // Draw the title above the plot.
     drawTitle();
@@ -285,6 +229,7 @@ function covidMap() {
     // operation.listControlLabel(this.controlsLabel);
   };
 
+  // This public method is update the Z-index of changes made on the map
   this.onMapChange = function () {
     //put the #map_draw on top of #map
     select("#stage").elt.firstChild.style.zIndex = 2;
@@ -302,8 +247,8 @@ function covidMap() {
   // Declare for variables in objects for Private Methods
   var self = this;
 
+  // Functions below are to create and display the Mappa.js Map layout
   let createMapSetup = function () {
-    // Functions below are to create and display the Mappa.js Map layout
     select("#stage").html(
       "<div id='map_draw'></div><canvas id='map'></canvas>"
     );
@@ -330,18 +275,22 @@ function covidMap() {
     return value;
   };
 
+  // map the point colour with the total amount of death
   let mapPointColour = function (value, min, max) {
     return map(value, min, max, 255, 0);
   };
 
+  // map the point size with the total amount of cases
   let mapPointSize = function (value, min, max) {
     return map(value, min, max, 4, 50);
   };
 
+  // map the glow speed with the amount of new cases
   let mapGlowSpeed = function (value, min, max) {
     return map(value, min, max, 1, 5);
   };
 
+  // Function for the collision method to work when points hovered
   let hoverPoints = function (hoveredPoint) {
     distance = dist(hoveredPoint.pointX, hoveredPoint.pointY, mouseX, mouseY);
     if (distance < (hoveredPoint.pointSize * myMap.zoom()) / 2) {
@@ -357,12 +306,12 @@ function covidMap() {
     }
   };
 
-  // Create the years filter for data visualisation to display based on years
+  // Create the years filter dropdown option for data visualisation to display based on years
   let makeDateFilter = function () {
     // Create a select DOM element.
     self.dateFilter = createSelect();
     self.dateFilter.position(
-      operation.control_x_margin + operation.control_x_axis,
+      operation.controlXmargin + operation.controlXaxis,
       operation.labelHeight[0]
     );
 
@@ -386,11 +335,11 @@ function covidMap() {
     }
   };
 
-  // Create the button that start and stop the ball movement animation
+  // Create the button that start the data animation
   let createStartStopButton = function () {
     self.playButton = createButton("Start/Stop");
     self.playButton.position(
-      operation.control_x_margin + operation.control_x_axis,
+      operation.controlXmargin + operation.controlXaxis,
       operation.labelHeight[1] - 2
     );
 
@@ -398,6 +347,119 @@ function covidMap() {
     self.playButton.mousePressed(startStopClick);
   };
 
+  // Condition for the user input to start the data animation or stop
+  let playCondition = function () {
+    let state;
+    if (!playStatus) {
+      state = self.dateFilter.value();
+      playCurrentIndex = 0;
+    } else {
+      if (playCount <= 0) {
+        playCount += 60 * 2;
+        playCurrentIndex += 1;
+        if (playCurrentIndex == dateArray.length) {
+          playStatus = false;
+        }
+      } else {
+        state = dateArray[playCurrentIndex];
+        playCount--;
+        if (playCount < 60 * 2 && playCount > 60) {
+          fill(0);
+          textSize(80);
+          text(state, width - 280, height - 250);
+        }
+      }
+    }
+    return state;
+  };
+
+  // Function is to change the variable legend status to display or stop displaying legend
+  let legendClick = function () {
+    if (legendState) {
+      legendState = false;
+    } else {
+      legendState = true;
+    }
+  };
+
+  // Create the button that display the legend
+  let createLegendButton = function () {
+    self.legendButton = createButton("Display Legend");
+    self.legendButton.position(
+      operation.controlXmargin + operation.controlXaxis,
+      operation.labelHeight[2] - 2
+    );
+
+    // Call repaint() when the button is pressed.
+    self.legendButton.mousePressed(legendClick);
+  };
+
+  // Gradient for the legend to represent the number of death
+  let setGradient = function (x, y, w, h, c1, c2) {
+    noFill();
+    // Left to right gradient
+    for (let i = x; i <= x + w; i++) {
+      let inter = map(i, x, x + w, 0, 1);
+      let c = lerpColor(c1, c2, inter);
+      stroke(c);
+      line(i, y, i, y + h);
+    }
+  };
+
+  // Function to draw the legend and display when the legend status is true
+  let drawLegend = function () {
+    if (legendState) {
+      fill(240);
+      rect(width / 4, height / 8, width / 2, height / 2, 10);
+
+      fill(0, 255, 0);
+      ellipse((width * 3) / 8, (height * 3) / 8 + 20, 70, 70);
+
+      setGradient(
+        (width * 5) / 16,
+        height / 2,
+        150,
+        50,
+        color(255, 0, 0),
+        color(0, 255, 0)
+      );
+
+      noStroke();
+      fill(255, 255, 0, 185);
+      ellipse((width * 3) / 8, height / 4 + 10, 70, 70);
+
+      fill(0);
+      textSize(18);
+      text(
+        "Glow represents the amount of new cases",
+        width / 2,
+        height / 4,
+        width / 5
+      );
+      text(
+        "Size of the Point represent the total number of cases",
+        width / 2,
+        (height * 3) / 8,
+        width / 5
+      );
+      text(
+        "Colour represent the number of death",
+        width / 2,
+        height / 2 + 10,
+        width / 5
+      );
+
+      textSize(10);
+      text("More Death", width / 3 - 40, height / 2 + 60, width / 5);
+      text("Less Death", width / 2 - 60, height / 2 + 60, width / 5);
+
+      textAlign(CENTER);
+      textSize(30);
+      text("Covid Visualisation Legends", width / 2, height / 6);
+    }
+  };
+
+  // Draw title of the data visualisation at the top
   let drawTitle = function () {
     fill(0);
     noStroke();
@@ -408,16 +470,5 @@ function covidMap() {
       self.layout.plotWidth() / 2 + self.layout.leftMargin,
       self.layout.topMargin - self.layout.marginSize / 2
     );
-  };
-
-  let setGradient = function (x, y, w, h, c1, c2) {
-    noFill();
-    // Left to right gradient
-    for (let i = x; i <= x + w; i++) {
-      let inter = map(i, x, x + w, 0, 1);
-      let c = lerpColor(c1, c2, inter);
-      stroke(c);
-      line(i, y, i, y + h);
-    }
   };
 }

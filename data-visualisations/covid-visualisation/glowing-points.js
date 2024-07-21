@@ -18,6 +18,7 @@ function glowingPoints(
   this.totalCase = totalCase;
   this.newCase = newCase;
   this.totalDeath = totalDeath;
+  // The size of the point object, will be called for the hovering effect
   this.pointSize = pointSize;
 
   /////////////////// Public Methods /////////////////////////
@@ -27,9 +28,12 @@ function glowingPoints(
 
     glowConditions();
 
-    drawGlow();
+    // Condition to make sure no point object is drawn past the map
+    if (this.pointY < 566) {
+      drawGlow();
 
-    drawPoints();
+      drawPoints();
+    }
   };
 
   /////////////////// Private Methods /////////////////////////
@@ -37,10 +41,12 @@ function glowingPoints(
   // Declare for variables in objects for Private Methods
   var self = this;
 
+  // map the speed of the glow with the size of the glow
   let glowSpeedToSize = function (value, min, max) {
     return map(value, min, max, 1, 2);
   };
 
+  // Using Mappa.js to convert the latitude and longitude to x and y coordinates
   let generatePointCoordinates = function () {
     country = myMap.latLngToPixel(lat, lng);
     self.pointX = country.x;
@@ -50,6 +56,7 @@ function glowingPoints(
   var glowSizeState = false;
   var glowSize = glowSpeedToSize(glowSpeed, 1, 5);
 
+  // Condition for the glow to increase and decrease size
   let glowConditions = function () {
     if (glowSizeState) {
       glowSize -= glowSize / (100 / glowSpeed);
@@ -64,6 +71,7 @@ function glowingPoints(
     }
   };
 
+  // Method to draw the glow of the object point
   let drawGlow = function () {
     fill(255, 255, 0, 185);
     noStroke();
@@ -75,6 +83,7 @@ function glowingPoints(
     );
   };
 
+  // Method to draw the point object itself
   let drawPoints = function () {
     fill(colour);
     stroke(0);

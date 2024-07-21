@@ -7,9 +7,9 @@ function Operation() {
   this.y = 576;
 
   // Placement of label to boxs
-  this.control_x_margin = 465;
-  this.control_x_axis = this.x + 30;
-  this.data_x_axis = this.x + 425;
+  this.controlXmargin = 465;
+  this.controlXaxis = this.x + 30;
+  this.dataXaxis = this.x + 425;
   this.labelHeight = [this.y + 68, this.y + 113, this.y + 158];
 
   // The status for the mouse click function, if true, it will register the data into the data table
@@ -33,7 +33,7 @@ function Operation() {
     noStroke();
     // unable to use ES6 as index is important
     for (let i = 0; i < array.length; i++) {
-      text(array[i], this.control_x_axis, this.labelHeight[i]);
+      text(array[i], this.controlXaxis, this.labelHeight[i]);
     }
   };
 
@@ -58,7 +58,7 @@ function Operation() {
           fill(255);
         }
         rect(
-          this.data_x_axis + previous,
+          this.dataXaxis + previous,
           this.y + 45 + 35 * i,
           length * gridLayout[j] - 5,
           30
@@ -100,6 +100,11 @@ function Operation() {
     // To shift the table to the left side of the mouse, this is to prevent the table from being out of the canvas
     if (mouseX > width - length) {
       displayX -= length + 10;
+    }
+
+    // To shift the table of the top of the mouse, this is to prevent the table from overlapping the control panel and data breakdown table
+    if (mouseY > 470) {
+      displayY -= height + 10;
     }
 
     // For the base grey rectangle
@@ -228,7 +233,7 @@ function Operation() {
       fill(colour);
       text(
         array[i],
-        self.data_x_axis + previousHeader + 5,
+        self.dataXaxis + previousHeader + 5,
         self.y + 60 + 35 * rowNumber,
         length * layout[i] - 5
       );
