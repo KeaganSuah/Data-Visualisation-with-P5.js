@@ -17,7 +17,7 @@ function PieChart(x, y, diameter) {
   /////////////////// Public Methods /////////////////////////
 
   // Convert the data into radians for the slice
-  this.get_radians = function (datas) {
+  this.getRadians = function (datas) {
     let total = sum(datas);
     let radians = [];
 
@@ -46,7 +46,7 @@ function PieChart(x, y, diameter) {
 
     // https://p5js.org/examples/form-pie-chart.html
 
-    let angles = this.get_radians(data);
+    let angles = this.getRadians(data);
     let lastAngle = 0;
     let colour;
 
@@ -164,26 +164,26 @@ function PieChart(x, y, diameter) {
     // Length of variables
     let opposite = abs(mouseY - self.y);
     let angle = 0;
-    let mouse_radian = asin(opposite / hypotenuse);
+    let mouseRadian = asin(opposite / hypotenuse);
 
     // Bottom-right quadrant
     if (mouseX < self.x && mouseY > self.y) {
-      angle = abs(PI / 2 - mouse_radian) + PI / 2;
+      angle = abs(PI / 2 - mouseRadian) + PI / 2;
       return angle;
     }
     // Bottom-left quadrant
     else if (mouseX < self.x && mouseY < self.y) {
-      angle = mouse_radian + PI;
+      angle = mouseRadian + PI;
       return angle;
     }
     // Top-left quadrant
     else if (mouseX > self.x && mouseY < self.y) {
-      angle = abs(PI / 2 - mouse_radian) + PI + PI / 2;
+      angle = abs(PI / 2 - mouseRadian) + PI + PI / 2;
       return angle;
     }
     // Top-right quadrant
     else if (mouseX > self.x && mouseY > self.y) {
-      angle = mouse_radian;
+      angle = mouseRadian;
       return angle;
     }
   };
