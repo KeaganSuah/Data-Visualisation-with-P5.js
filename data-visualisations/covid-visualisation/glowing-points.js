@@ -11,6 +11,8 @@ function glowingPoints(
   glowSpeed,
   myMap
 ) {
+  /////////////////// Public Variables /////////////////////////
+
   // Country name, latitude and longitude
   this.country = country;
   //  Data of covid cases according to country, such as the date, the number of total cases and death, and new cases
@@ -53,6 +55,7 @@ function glowingPoints(
     self.pointY = country.y;
   };
 
+  // Local variables for glowing condition
   var glowSizeState = false;
   var glowSize = glowSpeedToSize(glowSpeed, 1, 5);
 

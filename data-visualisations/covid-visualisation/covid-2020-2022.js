@@ -1,4 +1,6 @@
 function covidMap() {
+  /////////////////// Public Variables /////////////////////////
+
   // Name for the visualisation to appear in the menu bar.
   this.name = "Covid: 2020-2022";
 
@@ -8,13 +10,18 @@ function covidMap() {
   // Title to display above the plot.
   this.title = "Covid: 2020-2022";
 
-  // Load number of controls user has on the data
-  this.controlsLabel = ["Display Legend", "Filter Years", "Play Animation"];
-
   // Property to represent whether data has been loaded.
   this.loaded = false;
 
-  // Private variables
+  // Load number of controls user has on the data
+  this.controlsLabel = ["Display Legend", "Filter Years", "Play Animation"];
+
+  this.dataHeaders = ["Country", "Date", "New Case", "Total Case", "Death"];
+  this.dataList = [];
+  this.gridLayout = [0.22, 0.17, 0.2, 0.21, 0.2];
+
+  /////////////////// Local Variables /////////////////////////
+
   // to set the margin size for the plot
   let marginSize = 35;
 
@@ -40,13 +47,13 @@ function covidMap() {
   let playCurrentIndex = 0;
 
   // Layout object to store all common plot layout parameters and methods.
-  this.layout = {
+  let layout = {
     marginSize: marginSize,
     // Locations of margin positions. Left and bottom have double margin // size due to axis and tick labels.
     leftMargin: marginSize * 2,
     rightMargin: width - marginSize,
     topMargin: marginSize,
-    bottomMargin: height - operation.height - marginSize * 2,
+    bottomMargin: height - dataVisualisationTools.height - marginSize * 2,
     plotWidth: function () {
       return this.rightMargin - this.leftMargin;
     },
@@ -86,10 +93,7 @@ function covidMap() {
     textSize(16);
 
     // Reset the data table for new data visualisation
-    this.dataHeaders = ["Country", "Date", "New Case", "Total Case", "Death"];
-    this.dataList = [];
-    this.gridLayout = [0.22, 0.17, 0.2, 0.21, 0.2];
-    operation.refreshData(this.dataHeaders);
+    dataVisualisationTools.refreshData(this.dataHeaders);
 
     createMapSetup();
 
@@ -141,21 +145,27 @@ function covidMap() {
           let totalCase = covidRow[2];
           let newCase = covidRow[3];
           let totalDeath = covidRow[5];
-          let redIntensity = mapPointColour(
+          let redIntensity = map(
             totalDeath,
             minAmountDeathCase,
-            maxAmountDeathCase
+            maxAmountDeathCase,
+            255,
+            0
           );
           let colour = color(255 - redIntensity, redIntensity, 0);
-          let pointSize = mapPointSize(
+          let pointSize = map(
             totalCase,
             minAmountCovidCase,
-            maxAmountCovidCase
+            maxAmountCovidCase,
+            4,
+            50
           );
-          let glowSpeed = mapGlowSpeed(
+          let glowSpeed = map(
             newCase,
             minAmountCovidCaseIncrement,
-            maxAmountCovidCaseIncrement
+            maxAmountCovidCaseIncrement,
+            1,
+            5
           );
           this.covidPoints.push(
             new glowingPoints(
@@ -223,10 +233,10 @@ function covidMap() {
     drawTitle();
 
     // Display points hovered
-    operation.listDisplayData(this.dataList, this.gridLayout);
+    dataVisualisationTools.listDisplayData(this.dataList, this.gridLayout);
 
     // Draw control labels
-    // operation.listControlLabel(this.controlsLabel);
+    // dataVisualisationTools.listControlLabel(this.controlsLabel);
   };
 
   // This public method is update the Z-index of changes made on the map
@@ -253,7 +263,7 @@ function covidMap() {
       "<div id='map_draw'></div><canvas id='map'></canvas>"
     );
 
-    let c = createCanvas(1024, 576 + operation.height);
+    let c = createCanvas(1024, 576 + dataVisualisationTools.height);
     c.parent("#map_draw");
     canvas = select("#map");
 
@@ -275,21 +285,6 @@ function covidMap() {
     return value;
   };
 
-  // map the point colour with the total amount of death
-  let mapPointColour = function (value, min, max) {
-    return map(value, min, max, 255, 0);
-  };
-
-  // map the point size with the total amount of cases
-  let mapPointSize = function (value, min, max) {
-    return map(value, min, max, 4, 50);
-  };
-
-  // map the glow speed with the amount of new cases
-  let mapGlowSpeed = function (value, min, max) {
-    return map(value, min, max, 1, 5);
-  };
-
   // Function for the collision method to work when points hovered
   let hoverPoints = function (hoveredPoint) {
     distance = dist(hoveredPoint.pointX, hoveredPoint.pointY, mouseX, mouseY);
@@ -302,7 +297,10 @@ function covidMap() {
         hoveredPoint.totalDeath,
       ];
 
-      self.dataList = operation.mouseHoverTable(hoverArray, self.gridLayout);
+      self.dataList = dataVisualisationTools.mouseHoverTable(
+        hoverArray,
+        self.gridLayout
+      );
     }
   };
 
@@ -311,8 +309,9 @@ function covidMap() {
     // Create a select DOM element.
     self.dateFilter = createSelect();
     self.dateFilter.position(
-      operation.controlXmargin + operation.controlXaxis,
-      operation.labelHeight[0]
+      dataVisualisationTools.controlXmargin +
+        dataVisualisationTools.controlXaxis,
+      dataVisualisationTools.labelHeight[0]
     );
 
     // Fill the options with all dates in the CSV for each country.
@@ -323,7 +322,6 @@ function covidMap() {
       self.dateFilter.option(year);
       dateArray.push(year);
     }
-    console.log(dateArray);
   };
 
   // Function is to change the variable playStatus that start the animation or stop the animation
@@ -339,8 +337,9 @@ function covidMap() {
   let createStartStopButton = function () {
     self.playButton = createButton("Start/Stop");
     self.playButton.position(
-      operation.controlXmargin + operation.controlXaxis,
-      operation.labelHeight[1] - 2
+      dataVisualisationTools.controlXmargin +
+        dataVisualisationTools.controlXaxis,
+      dataVisualisationTools.labelHeight[1] - 2
     );
 
     // Call repaint() when the button is pressed.
@@ -384,10 +383,11 @@ function covidMap() {
 
   // Create the button that display the legend
   let createLegendButton = function () {
-    self.legendButton = createButton("Display Legend");
+    self.legendButton = createButton("Instructions");
     self.legendButton.position(
-      operation.controlXmargin + operation.controlXaxis,
-      operation.labelHeight[2] - 2
+      dataVisualisationTools.controlXmargin +
+        dataVisualisationTools.controlXaxis,
+      dataVisualisationTools.labelHeight[2] - 2
     );
 
     // Call repaint() when the button is pressed.
@@ -467,8 +467,8 @@ function covidMap() {
     textSize(16);
     text(
       self.title,
-      self.layout.plotWidth() / 2 + self.layout.leftMargin,
-      self.layout.topMargin - self.layout.marginSize / 2
+      layout.plotWidth() / 2 + layout.leftMargin,
+      layout.topMargin - layout.marginSize / 2
     );
   };
 }

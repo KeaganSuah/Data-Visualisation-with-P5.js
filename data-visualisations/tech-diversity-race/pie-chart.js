@@ -1,33 +1,19 @@
 function PieChart(x, y, diameter) {
-  // Public Variables
+  /////////////////// Public Variables /////////////////////////
+
   this.x = x;
   this.y = y;
   this.diameter = diameter;
   this.labelSpace = 30;
 
-  // Declare for variables in objects for Private Methods
-  var self = this;
+  /////////////////// Local Variables /////////////////////////
 
-  // Private Variables, not needed to be accessed outside
   let previousWord = "";
   let word = "";
   let wordSize = 20;
   let hoverColour = "";
 
   /////////////////// Public Methods /////////////////////////
-
-  // Convert the data into radians for the slice
-  this.getRadians = function (datas) {
-    let total = sum(datas);
-    let radians = [];
-
-    // Use ES6 method of taking element in array instead of by index
-    for (let data of datas) {
-      radians.push((data / total) * TWO_PI);
-    }
-
-    return radians;
-  };
 
   this.draw = function (data, labels, colours, title) {
     // Test that data is not empty and that each input array is the
@@ -46,7 +32,7 @@ function PieChart(x, y, diameter) {
 
     // https://p5js.org/examples/form-pie-chart.html
 
-    let angles = this.getRadians(data);
+    let angles = getRadians(data);
     let lastAngle = 0;
     let colour;
 
@@ -93,7 +79,7 @@ function PieChart(x, y, diameter) {
       displayCirlceData();
 
       if (labels) {
-        this.makeLegendItem(labels[i], i, colour, hoverColour == colour);
+        makeLegendItem(labels[i], i, colour, hoverColour == colour);
       }
 
       lastAngle += angles[i];
@@ -108,31 +94,24 @@ function PieChart(x, y, diameter) {
     }
   };
 
-  this.makeLegendItem = function (label, i, colour, hover) {
-    let x = this.x + 50 + this.diameter / 2;
-    let y = this.y + this.labelSpace * i - this.diameter / 3;
-    let boxWidth = this.labelSpace / 2;
-    let boxHeight = this.labelSpace / 2;
-
-    fill(colour);
-    rect(x, y, boxWidth, boxHeight);
-
-    fill("black");
-    noStroke();
-    textAlign("left");
-    textSize(12);
-    text(label, x + boxWidth + 10, y + boxWidth / 2);
-
-    // When slice is hovered, it will highlight the label as well
-    if (hover) {
-      noFill();
-      stroke(0, 0, 255);
-      rect(x - 5, y - 5, 100, 25, 5);
-    }
-  };
-
   /////////////////// Private Methods /////////////////////////
   // These Methods below are done by myself (Keagan Suah)
+
+  // Declare for variables in objects for Private Methods
+  var self = this;
+
+  // Convert the data into radians for the slice
+  let getRadians = function (datas) {
+    let total = sum(datas);
+    let radians = [];
+
+    // Use ES6 method of taking element in array instead of by index
+    for (let data of datas) {
+      radians.push((data / total) * TWO_PI);
+    }
+
+    return radians;
+  };
 
   // Private Method, Mouse condition to hover on the slice
   let mouseHover = function (distance, lastAngle, angle, data, colour) {
@@ -202,6 +181,29 @@ function PieChart(x, y, diameter) {
       text(displayWord, self.x - 95, self.y - 5, 200);
     } else {
       text("Hover over the Slice for Percentage", self.x - 95, self.y - 5, 200);
+    }
+  };
+
+  let makeLegendItem = function (label, i, colour, hover) {
+    let x = self.x + 50 + self.diameter / 2;
+    let y = self.y + self.labelSpace * i - self.diameter / 3;
+    let boxWidth = self.labelSpace / 2;
+    let boxHeight = self.labelSpace / 2;
+
+    fill(colour);
+    rect(x, y, boxWidth, boxHeight);
+
+    fill("black");
+    noStroke();
+    textAlign("left");
+    textSize(12);
+    text(label, x + boxWidth + 10, y + boxWidth / 2);
+
+    // When slice is hovered, it will highlight the label as well
+    if (hover) {
+      noFill();
+      stroke(0, 0, 255);
+      rect(x - 5, y - 5, 100, 25, 5);
     }
   };
 }

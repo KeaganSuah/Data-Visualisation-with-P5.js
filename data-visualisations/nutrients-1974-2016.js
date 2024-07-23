@@ -1,4 +1,6 @@
 function NutrientsTimeSeries() {
+  /////////////////// Public Variables /////////////////////////
+
   // Name for the visualisation to appear in the menu bar.
   this.name = "Nutrients: 1974-2016";
 
@@ -8,34 +10,39 @@ function NutrientsTimeSeries() {
   // Title to display above the plot.
   this.title = "Nutrients: 1974-2016.";
 
+  // Property to represent whether data has been loaded.
+  this.loaded = false;
+
+  // Load number of controls user has on the data
+  this.controlsLabel = ["Select Nutrient", "Zoom into 2017", "Zoom into 1880"];
+
+  this.dataHeaders = ["Nutrient", "year", "percentage"];
+  this.dataList = [];
+  this.gridLayout = [0.6, 0.2, 0.2];
+
+  /////////////////// Local Variables /////////////////////////
+
   //Names for each axis
-  this.xAxisLabel = "year";
-  this.yAxisLabel = "%";
+  let xAxisLabel = "year";
+  let yAxisLabel = "%";
 
   // Colour list of each nutrient line
-  this.colors = [];
+  let colors = [];
 
-  // Declare for variables in objects for Private Methods
-  var self = this;
-
-  // Private variables
   // to set the margin size for the plot
   let marginSize = 35;
 
   // Legend status if click or unclick
   let legendButton = false;
 
-  // Load number of controls user has on the data
-  this.controlsLabel = ["Select Nutrient", "Zoom into 2017", "Zoom into 1880"];
-
   // Layout object to store all common plot layout parameters and methods.
-  this.layout = {
+  let layout = {
     marginSize: marginSize,
     // Locations of margin positions. Left and bottom have double margin // size due to axis and tick labels.
     leftMargin: marginSize * 2,
     rightMargin: width - marginSize,
     topMargin: marginSize,
-    bottomMargin: height - operation.height - marginSize * 2,
+    bottomMargin: height - dataVisualisationTools.height - marginSize * 2,
 
     plotWidth: function () {
       return this.rightMargin - this.leftMargin;
@@ -50,9 +57,6 @@ function NutrientsTimeSeries() {
     numXTickLabels: 10,
     numYTickLabels: 8,
   };
-
-  // Property to represent whether data has been loaded.
-  this.loaded = false;
 
   /////////////////// Public Methods /////////////////////////
 
@@ -75,10 +79,7 @@ function NutrientsTimeSeries() {
     textSize(16);
 
     // Reset the data table for new data visualisation
-    this.dataHeaders = ["Nutrient", "year", "percentage"];
-    this.dataList = [];
-    this.gridLayout = [0.6, 0.2, 0.2];
-    operation.refreshData(this.dataHeaders);
+    dataVisualisationTools.refreshData(this.dataHeaders);
 
     // Set min and max years: assumes data is sorted by date.
     this.startYear = Number(this.data.columns[1]);
@@ -86,7 +87,7 @@ function NutrientsTimeSeries() {
 
     // Using ES6 wont make a different
     for (let i = 0; i < this.data.getRowCount(); i++) {
-      this.colors.push(color(random(0, 200), random(0, 200), random(0, 200)));
+      colors.push(color(random(0, 200), random(0, 200), random(0, 200)));
     }
 
     // Set the min and max percentage,
@@ -95,7 +96,7 @@ function NutrientsTimeSeries() {
     this.maxPercentage = 400;
 
     // Display filter selection button
-    operationControl();
+    dataVisualisationToolsControl();
 
     // Display Legend button
     createLegendButton();
@@ -117,7 +118,7 @@ function NutrientsTimeSeries() {
     background(255);
 
     // Draw the title above the plot.
-    this.drawTitle();
+    drawTitle();
 
     // Prevent slider ranges overlapping.
     if (this.startSlider.value() >= this.endSlider.value() - 10) {
@@ -131,16 +132,16 @@ function NutrientsTimeSeries() {
     drawYAxisTickLabels(
       this.minPercentage,
       this.maxPercentage,
-      this.layout,
-      this.mapNutrientsToHeight.bind(this),
+      layout,
+      mapNutrientsToHeight.bind(this),
       0
     );
 
     // Draw x and y axis.
-    drawAxis(this.layout);
+    drawAxis(layout);
 
     // Draw x and y axis labels.
-    drawAxisLabels(this.xAxisLabel, this.yAxisLabel, this.layout);
+    drawAxisLabels(xAxisLabel, yAxisLabel, layout);
 
     // Plot all pay gaps between startYear and endYear using the width
     // of the canvas minus margins.
@@ -172,16 +173,16 @@ function NutrientsTimeSeries() {
           ) {
             // Draw line segment connecting previous year to current
             // year pay gap.
-            stroke(this.colors[i]);
+            stroke(colors[i]);
             line(
-              this.mapYearToWidth(previous.year),
-              this.mapNutrientsToHeight(previous.percentage),
-              this.mapYearToWidth(current.year),
-              this.mapNutrientsToHeight(current.percentage)
+              mapYearToWidth(previous.year),
+              mapNutrientsToHeight(previous.percentage),
+              mapYearToWidth(current.year),
+              mapNutrientsToHeight(current.percentage)
             );
 
             // Points on line graph that can be hovered
-            fill(this.colors[i]);
+            fill(colors[i]);
             pointHover(current, pointSize);
           }
 
@@ -204,8 +205,8 @@ function NutrientsTimeSeries() {
             // Create vertical grid line, label at the bottom depends on the value of displayLabel variable
             drawXAxisTickLabel(
               previous.year,
-              this.layout,
-              this.mapYearToWidth.bind(this),
+              layout,
+              mapYearToWidth.bind(this),
               displayLabel
             );
           }
@@ -216,14 +217,14 @@ function NutrientsTimeSeries() {
           ) {
             noStroke();
             // draw nutrients legend table
-            makeLegendItem(title, i, this.colors[i], legendButton);
+            makeLegendItem(title, i, colors[i], legendButton);
 
             //draw the nutrients label
-            fill(this.colors[i]);
+            fill(colors[i]);
             text(
               title,
               width - 200,
-              this.mapNutrientsToHeight(row.getNum(numYears - 3) + 15)
+              mapNutrientsToHeight(row.getNum(numYears - 3) + 15)
             );
           }
         }
@@ -260,48 +261,50 @@ function NutrientsTimeSeries() {
     }
 
     // Display points hovered
-    operation.listDisplayData(this.dataList, this.gridLayout);
+    dataVisualisationTools.listDisplayData(this.dataList, this.gridLayout);
 
     // Draw control labels
-    operation.listControlLabel(this.controlsLabel);
+    dataVisualisationTools.listControlLabel(this.controlsLabel);
   };
 
-  this.drawTitle = function () {
+  /////////////////// Private Methods /////////////////////////
+
+  // Declare for variables in objects for Private Methods
+  var self = this;
+
+  let drawTitle = function () {
     fill(0);
     noStroke();
     textAlign("center", "center");
     textSize(16);
     text(
-      this.title,
-      this.layout.plotWidth() / 2 + this.layout.leftMargin,
-      this.layout.topMargin - this.layout.marginSize / 2
+      self.title,
+      layout.plotWidth() / 2 + layout.leftMargin,
+      layout.topMargin - layout.marginSize / 2
     );
   };
 
-  this.mapYearToWidth = function (value) {
+  let mapYearToWidth = function (value) {
     return map(
       value,
-      this.startYearValue,
-      this.endYearValue,
-      this.layout.leftMargin,
-      this.layout.rightMargin
+      self.startYearValue,
+      self.endYearValue,
+      layout.leftMargin,
+      layout.rightMargin
     );
   };
 
-  this.mapNutrientsToHeight = function (value) {
+  let mapNutrientsToHeight = function (value) {
     return map(
       value,
-      this.minPercentage,
-      this.maxPercentage,
-      this.layout.bottomMargin,
-      this.layout.topMargin
+      self.minPercentage,
+      self.maxPercentage,
+      layout.bottomMargin,
+      layout.topMargin
     );
   };
 
-  /////////////////// Private Methods /////////////////////////
-  // These Methods below are done by myself (Keagan Suah)
-
-  // Addition Extension of the nutrients graph
+  // These Methods below are done by myself (Keagan Suah) Addition Extension of the nutrients graph
   // function display the legend only when the variable legendButton is true
   let makeLegendItem = function (label, i, colour, show) {
     textAlign("left", "center");
@@ -334,8 +337,8 @@ function NutrientsTimeSeries() {
   let pointHover = function (current, pointSize) {
     // Create Points on Line graph to hover on
     ellipse(
-      self.mapYearToWidth(current.year),
-      self.mapNutrientsToHeight(current.percentage),
+      mapYearToWidth(current.year),
+      mapNutrientsToHeight(current.percentage),
       pointSize,
       pointSize
     );
@@ -345,13 +348,16 @@ function NutrientsTimeSeries() {
     let distancePoint = dist(
       mouseX,
       mouseY,
-      self.mapYearToWidth(current.year),
-      self.mapNutrientsToHeight(current.percentage)
+      mapYearToWidth(current.year),
+      mapNutrientsToHeight(current.percentage)
     );
     if (distancePoint < pointSize / 2) {
       // Array of data belonging to the point currently being hovered
       let hoverArray = [title, current.year, `${current.percentage}%`];
-      self.dataList = operation.mouseHoverTable(hoverArray, self.gridLayout);
+      self.dataList = dataVisualisationTools.mouseHoverTable(
+        hoverArray,
+        self.gridLayout
+      );
     }
   };
 
@@ -374,9 +380,12 @@ function NutrientsTimeSeries() {
   };
 
   // Control panel label and controls
-  // Display the operation controls on the graph for users
-  let operationControl = function () {
-    makeNutrientFilter(operation.controlXaxis, operation.labelHeight[0]);
+  // Display the dataVisualisationTools controls on the graph for users
+  let dataVisualisationToolsControl = function () {
+    makeNutrientFilter(
+      dataVisualisationTools.controlXaxis,
+      dataVisualisationTools.labelHeight[0]
+    );
 
     // Create sliders to control start and end years. Default to
     // To reduce the starting range of years.
@@ -387,8 +396,9 @@ function NutrientsTimeSeries() {
       1
     );
     self.startSlider.position(
-      operation.controlXmargin + operation.controlXaxis,
-      operation.labelHeight[1]
+      dataVisualisationTools.controlXmargin +
+        dataVisualisationTools.controlXaxis,
+      dataVisualisationTools.labelHeight[1]
     );
 
     // To reduce the ending range of years.
@@ -399,8 +409,9 @@ function NutrientsTimeSeries() {
       1
     );
     self.endSlider.position(
-      operation.controlXmargin + operation.controlXaxis,
-      operation.labelHeight[2]
+      dataVisualisationTools.controlXmargin +
+        dataVisualisationTools.controlXaxis,
+      dataVisualisationTools.labelHeight[2]
     );
   };
 
@@ -408,7 +419,7 @@ function NutrientsTimeSeries() {
   let makeNutrientFilter = function (x, y) {
     // Create a select DOM element.
     self.filterNutrient = createSelect();
-    self.filterNutrient.position(operation.controlXmargin + x, y);
+    self.filterNutrient.position(dataVisualisationTools.controlXmargin + x, y);
 
     // Fill the options with all company names.
     let nutrients = self.data.rows;

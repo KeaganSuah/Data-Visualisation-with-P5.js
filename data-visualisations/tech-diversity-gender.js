@@ -1,4 +1,6 @@
 function TechDiversityGender() {
+  /////////////////// Public Variables /////////////////////////
+
   // Name for the visualisation to appear in the menu bar.
   this.name = "Tech Diversity: Gender";
 
@@ -9,15 +11,19 @@ function TechDiversityGender() {
   // Title to display above the plot.
   this.title = "Tech Diversity: Gender.";
 
-  // Layout object to store all common plot layout parameters and
-  // methods.
-  this.layout = {
+  // Property to represent whether data has been loaded.
+  this.loaded = false;
+
+  /////////////////// Local Variables /////////////////////////
+
+  // Layout object to store all common plot layout parameters and methods.
+  let layout = {
     // Locations of margin positions. Left and bottom have double margin
     // size due to axis and tick labels.
     leftMargin: 130,
     rightMargin: width,
     topMargin: 30,
-    bottomMargin: height - operation.height - 50,
+    bottomMargin: height - dataVisualisationTools.height - 50,
     pad: 5,
 
     plotWidth: function () {
@@ -34,14 +40,11 @@ function TechDiversityGender() {
   };
 
   // Middle of the plot: for 50% line.
-  this.midX = this.layout.plotWidth() / 2 + this.layout.leftMargin;
+  let midX = layout.plotWidth() / 2 + layout.leftMargin;
 
   // Default visualisation colours.
-  this.femaleColour = color(255, 0, 0);
-  this.maleColour = color(0, 255, 0);
-
-  // Property to represent whether data has been loaded.
-  this.loaded = false;
+  let femaleColour = color(255, 0, 0);
+  let maleColour = color(0, 255, 0);
 
   /////////////////// Public Methods /////////////////////////
 
@@ -78,18 +81,18 @@ function TechDiversityGender() {
     background(255);
 
     // Draw the title above the plot.
-    this.drawTitle();
+    drawTitle();
 
     // Draw Female/Male labels at the top of the plot.
-    this.drawCategoryLabels();
+    drawCategoryLabels();
 
     let lineHeight =
-      (height - operation.height - 50 - this.layout.topMargin) /
+      (height - dataVisualisationTools.height - 50 - layout.topMargin) /
       this.data.getRowCount();
 
     for (let i = 0; i < this.data.getRowCount(); i++) {
       // Calculate the y position for each company.
-      let lineY = lineHeight * i + this.layout.topMargin;
+      let lineY = lineHeight * i + layout.topMargin;
 
       // Create an object that stores data from the current row.
       let company = {
@@ -103,56 +106,69 @@ function TechDiversityGender() {
       fill(0);
       noStroke();
       textAlign("right", "top");
-      text(company.name, this.layout.leftMargin - this.layout.pad, lineY);
+      text(company.name, layout.leftMargin - layout.pad, lineY);
 
       // Draw female employees rectangle.
-      fill(this.femaleColour);
+      fill(femaleColour);
       rect(
-        this.layout.leftMargin,
+        layout.leftMargin,
         lineY,
-        this.mapPercentToWidth(company.female),
-        lineHeight - this.layout.pad
+        mapPercentToWidth(company.female),
+        lineHeight - layout.pad
       );
 
       // Draw male employees rectangle.
-      fill(this.maleColour);
+      fill(maleColour);
       rect(
-        this.layout.leftMargin + this.mapPercentToWidth(company.female),
+        layout.leftMargin + mapPercentToWidth(company.female),
         lineY,
-        this.mapPercentToWidth(company.male),
-        lineHeight - this.layout.pad
+        mapPercentToWidth(company.male),
+        lineHeight - layout.pad
       );
     }
     // Draw 50% line
     stroke(150);
     strokeWeight(1);
-    line(this.midX, this.layout.topMargin, this.midX, this.layout.bottomMargin);
+    line(midX, layout.topMargin, midX, layout.bottomMargin);
   };
 
-  this.drawCategoryLabels = function () {
+  /////////////////// Private Methods /////////////////////////
+
+  // Declare for variables in objects for Private Methods
+  var self = this;
+
+  let drawCategoryLabels = function () {
     fill(0);
     noStroke();
     textAlign("left", "top");
-    text("Female", this.layout.leftMargin, height - operation.height - 50);
+    text(
+      "Female",
+      layout.leftMargin,
+      height - dataVisualisationTools.height - 50
+    );
     textAlign("center", "top");
-    text("50%", this.midX, height - operation.height - 50);
+    text("50%", midX, height - dataVisualisationTools.height - 50);
     textAlign("right", "top");
-    text("Male", this.layout.rightMargin, height - operation.height - 50);
+    text(
+      "Male",
+      layout.rightMargin,
+      height - dataVisualisationTools.height - 50
+    );
   };
 
-  this.mapPercentToWidth = function (percent) {
-    return map(percent, 0, 100, 0, this.layout.plotWidth());
+  let mapPercentToWidth = function (percent) {
+    return map(percent, 0, 100, 0, layout.plotWidth());
   };
 
-  this.drawTitle = function () {
+  let drawTitle = function () {
     fill(0);
     noStroke();
     textAlign("center", "center");
 
     text(
-      this.title,
-      this.layout.plotWidth() / 2 + this.layout.leftMargin,
-      this.layout.topMargin - 20
+      self.title,
+      layout.plotWidth() / 2 + layout.leftMargin,
+      layout.topMargin - 20
     );
   };
 }

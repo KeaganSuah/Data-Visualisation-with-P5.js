@@ -1,4 +1,6 @@
 function ClimateChange() {
+  /////////////////// Public Variables /////////////////////////
+
   // Name for the visualisation to appear in the menu bar.
   this.name = "Climate Change";
 
@@ -6,26 +8,31 @@ function ClimateChange() {
   // characters.
   this.id = "climate-change";
 
-  // Names for each axis.
-  this.xAxisLabel = "year";
-  this.yAxisLabel = "℃";
-
   // Title to display above the plot.
   this.title = "Climate Change Data, hover on the points for data";
+
+  // Property to represent whether data has been loaded.
+  this.loaded = false;
 
   // Load number of controls user has on the data
   this.controlsLabel = ["Zoom into 2017", "Zoom into 1880"];
 
-  // Private variables
+  this.dataHeaders = ["degree celsius", "percentage"];
+  this.dataList = [];
+  this.gridLayout = [0.5, 0.5];
+
+  /////////////////// Local Variables /////////////////////////
+
   // Create the margin gap for data visualisation
   let marginSize = 35;
 
-  // Declare for variables in objects for Private Methods
-  var self = this;
+  // Names for each axis.
+  let xAxisLabel = "year";
+  const drawLeftTitle = "℃";
 
   // Layout object to store all common plot layout parameters and
   // methods.
-  this.layout = {
+  let layout = {
     marginSize: marginSize,
 
     // Locations of margin positions. Left and bottom have double margin
@@ -33,7 +40,7 @@ function ClimateChange() {
     leftMargin: marginSize * 2,
     rightMargin: width - marginSize,
     topMargin: marginSize,
-    bottomMargin: height - operation.height - marginSize * 2,
+    bottomMargin: height - dataVisualisationTools.height - marginSize * 2,
     pad: 5,
 
     plotWidth: function () {
@@ -52,9 +59,6 @@ function ClimateChange() {
     numXTickLabels: 8,
     numYTickLabels: 8,
   };
-
-  // Property to represent whether data has been loaded.
-  this.loaded = false;
 
   /////////////////// Public Methods /////////////////////////
 
@@ -79,10 +83,7 @@ function ClimateChange() {
     textAlign("center", "center");
 
     // Reset the data table for new data visualisation
-    this.dataHeaders = ["degree celsius", "percentage"];
-    this.dataList = [];
-    this.gridLayout = [0.5, 0.5];
-    operation.refreshData(this.dataHeaders);
+    dataVisualisationTools.refreshData(this.dataHeaders);
 
     // Set min and max years: assumes data is sorted by year.
     this.minYear = this.data.getNum(0, "year");
@@ -99,7 +100,7 @@ function ClimateChange() {
     // started so that we can animate the plot.
     this.frameCount = 0;
 
-    operationControl(this.minYear, this.maxYear);
+    dataVisualisationToolsControl(this.minYear, this.maxYear);
   };
 
   this.destroy = function () {
@@ -116,10 +117,10 @@ function ClimateChange() {
     background(255);
 
     // Draw control labels
-    operation.listControlLabel(this.controlsLabel);
+    dataVisualisationTools.listControlLabel(this.controlsLabel);
 
     // Display points hovered
-    operation.listDisplayData(this.dataList, this.gridLayout);
+    dataVisualisationTools.listDisplayData(this.dataList, this.gridLayout);
     // reset textsize
     textSize(16);
 
@@ -134,35 +135,35 @@ function ClimateChange() {
     drawYAxisTickLabels(
       this.minTemperature,
       this.maxTemperature,
-      this.layout,
-      this.mapTemperatureToHeight.bind(this),
+      layout,
+      mapTemperatureToHeight.bind(this),
       1
     );
 
     // Draw the title above the plot.
-    this.drawTitle();
+    drawTitle();
 
     // Draw x and y axis.
-    drawAxis(this.layout);
+    drawAxis(layout);
 
     // Draw x and y axis labels.
-    drawAxisLabels(this.xAxisLabel, this.yAxisLabel, this.layout);
+    drawAxisLabels(xAxisLabel, drawLeftTitle, layout);
 
     // Plot average line.
     stroke(200);
     strokeWeight(1);
     line(
-      this.layout.leftMargin,
-      this.mapTemperatureToHeight(this.meanTemperature),
-      this.layout.rightMargin,
-      this.mapTemperatureToHeight(this.meanTemperature)
+      layout.leftMargin,
+      mapTemperatureToHeight(this.meanTemperature),
+      layout.rightMargin,
+      mapTemperatureToHeight(this.meanTemperature)
     );
 
     // Plot all temperatures between startYear and endYear using the
     // width of the canvas minus margins.
     let previous;
     let numYears = this.endYear - this.startYear;
-    let segmentWidth = this.layout.plotWidth() / numYears;
+    let segmentWidth = layout.plotWidth() / numYears;
 
     // Count the number of years plotted each frame to create
     // animation effect.
@@ -190,22 +191,22 @@ function ClimateChange() {
         // Draw background gradient to represent colour temperature of
         // the current year.
         noStroke();
-        fill(this.mapTemperatureToColour(current.temperature));
+        fill(mapTemperatureToColour(current.temperature));
         rect(
-          this.mapYearToWidth(previous.year),
-          this.layout.topMargin,
+          mapYearToWidth(previous.year),
+          layout.topMargin,
           segmentWidth,
-          this.layout.plotHeight()
+          layout.plotHeight()
         );
 
         // Draw line segment connecting previous year to current
         // year temperature.
         stroke(0);
         line(
-          this.mapYearToWidth(previous.year),
-          this.mapTemperatureToHeight(previous.temperature),
-          this.mapYearToWidth(current.year),
-          this.mapTemperatureToHeight(current.temperature)
+          mapYearToWidth(previous.year),
+          mapTemperatureToHeight(previous.temperature),
+          mapYearToWidth(current.year),
+          mapTemperatureToHeight(current.temperature)
         );
 
         // my own extension
@@ -213,14 +214,14 @@ function ClimateChange() {
 
         // The number of x-axis labels to skip so that only
         // numXTickLabels are drawn.
-        let xLabelSkip = ceil(numYears / this.layout.numXTickLabels);
+        let xLabelSkip = ceil(numYears / layout.numXTickLabels);
 
         // Draw the tick label marking the start of the previous year.
         if (yearCount % xLabelSkip == 0) {
           drawXAxisTickLabel(
             previous.year,
-            this.layout,
-            this.mapYearToWidth.bind(this),
+            layout,
+            mapYearToWidth.bind(this),
             true
           );
         }
@@ -230,8 +231,8 @@ function ClimateChange() {
         if (numYears <= 6 && yearCount == numYears - 1) {
           drawXAxisTickLabel(
             current.year,
-            this.layout,
-            this.mapYearToWidth.bind(this),
+            layout,
+            mapYearToWidth.bind(this),
             true
           );
         }
@@ -287,54 +288,57 @@ function ClimateChange() {
     }
   };
 
-  this.mapYearToWidth = function (value) {
+  /////////////////// Private Methods /////////////////////////
+  // These Methods below are done by myself (Keagan Suah)
+
+  // Declare for variables in objects for Private Methods
+  var self = this;
+
+  let mapYearToWidth = function (value) {
     return map(
       value,
-      this.startYear,
-      this.endYear,
-      this.layout.leftMargin, // Draw left-to-right from margin.
-      this.layout.rightMargin
+      self.startYear,
+      self.endYear,
+      layout.leftMargin, // Draw left-to-right from margin.
+      layout.rightMargin
     );
   };
 
-  this.mapTemperatureToHeight = function (value) {
+  let mapTemperatureToHeight = function (value) {
     return map(
       value,
-      this.minTemperature,
-      this.maxTemperature,
-      this.layout.bottomMargin, // Lower temperature at bottom.
-      this.layout.topMargin
+      self.minTemperature,
+      self.maxTemperature,
+      layout.bottomMargin, // Lower temperature at bottom.
+      layout.topMargin
     ); // Higher temperature at top.
   };
 
-  this.mapTemperatureToColour = function (value) {
-    let red = map(value, this.minTemperature, this.maxTemperature, 0, 255);
+  let mapTemperatureToColour = function (value) {
+    let red = map(value, self.minTemperature, self.maxTemperature, 0, 255);
     let blue = 255 - red;
     return color(red, 0, blue, 100);
   };
 
-  this.drawTitle = function () {
+  let drawTitle = function () {
     fill(0);
     noStroke();
     textAlign("center", "center");
 
     text(
-      this.title,
-      this.layout.plotWidth() / 2 + this.layout.leftMargin,
-      this.layout.topMargin - 20
+      self.title,
+      layout.plotWidth() / 2 + layout.leftMargin,
+      layout.topMargin - 20
     );
   };
-
-  /////////////////// Private Methods /////////////////////////
-  // These Methods below are done by myself (Keagan Suah)
 
   // Private Method, design and display the points of the graph
   let temperaturePoints = function (previous, pointSize) {
     // Draw the Points on the line
     fill(255);
     ellipse(
-      self.mapYearToWidth(previous.year),
-      self.mapTemperatureToHeight(previous.temperature),
+      mapYearToWidth(previous.year),
+      mapTemperatureToHeight(previous.temperature),
       pointSize,
       pointSize
     );
@@ -347,8 +351,8 @@ function ClimateChange() {
     let distance = dist(
       mouseX,
       mouseY,
-      self.mapYearToWidth(previous.year),
-      self.mapTemperatureToHeight(previous.temperature)
+      mapYearToWidth(previous.year),
+      mapTemperatureToHeight(previous.temperature)
     );
 
     // When conditions are met, draw the value on the canvas
@@ -358,25 +362,30 @@ function ClimateChange() {
         `${current.temperature} degree celsius`,
         `During ${current.year}`,
       ];
-      self.dataList = operation.mouseHoverTable(hoverArray, self.gridLayout);
+      self.dataList = dataVisualisationTools.mouseHoverTable(
+        hoverArray,
+        self.gridLayout
+      );
     }
   };
 
   // Control panel label and controls
-  // Display the operation controls on the graph for users
-  let operationControl = function (min, max) {
+  // Display the dataVisualisationTools controls on the graph for users
+  let dataVisualisationToolsControl = function (min, max) {
     // Create sliders to control start and end years. Default to
     // visualise full range.
     self.startSlider = createSlider(min, max - 1, min, 1);
     self.startSlider.position(
-      operation.controlXmargin + operation.controlXaxis,
-      operation.labelHeight[0]
+      dataVisualisationTools.controlXmargin +
+        dataVisualisationTools.controlXaxis,
+      dataVisualisationTools.labelHeight[0]
     );
 
     self.endSlider = createSlider(min + 1, max, max, 1);
     self.endSlider.position(
-      operation.controlXmargin + operation.controlXaxis,
-      operation.labelHeight[1]
+      dataVisualisationTools.controlXmargin +
+        dataVisualisationTools.controlXaxis,
+      dataVisualisationTools.labelHeight[1]
     );
   };
 }

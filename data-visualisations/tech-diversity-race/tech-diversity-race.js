@@ -38,7 +38,7 @@ function TechDiversityRace() {
       return;
     }
 
-    operationControl();
+    dataVisualisationToolsControl();
 
     // Fill the options with all company names.
     let companies = this.data.columns;
@@ -55,7 +55,7 @@ function TechDiversityRace() {
   // Create a new pie chart object.
   this.pie = new PieChart(
     width / 2,
-    (height - operation.height) / 2,
+    (height - dataVisualisationTools.height) / 2,
     width * 0.4
   );
 
@@ -68,8 +68,8 @@ function TechDiversityRace() {
     // Draw the background for the visualisation
     background(255);
 
-    // Draw operation label
-    operation.listControlLabel(this.controlsLabel);
+    // Draw dataVisualisationTools label
+    dataVisualisationTools.listControlLabel(this.controlsLabel);
 
     // Make a title.
     let title = "Employee diversity at " + companyName;
@@ -97,13 +97,14 @@ function TechDiversityRace() {
   // These Methods below are done by myself (Keagan Suah)
 
   // Control panel label and controls
-  // Display the operation controls on the graph for users
-  let operationControl = function () {
+  // Display the dataVisualisationTools controls on the graph for users
+  let dataVisualisationToolsControl = function () {
     // Create a select DOM element.
     self.select = createSelect();
     self.select.position(
-      operation.controlXmargin + operation.controlXaxis,
-      operation.labelHeight[0]
+      dataVisualisationTools.controlXmargin +
+        dataVisualisationTools.controlXaxis,
+      dataVisualisationTools.labelHeight[0]
     );
   };
 }

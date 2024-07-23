@@ -8,18 +8,17 @@ function bounchingBall(
   ageText,
   layout
 ) {
-  // Public Variables
-  // Layout Object from Bankruptcy file
-  this.layout = layout;
+  /////////////////// Public Variables /////////////////////////
+
   // Size and coordinates
   this.size = size;
   this.x = random(
-    this.layout.leftMargin + this.size / 2,
-    this.layout.rightMargin - this.size / 2
+    layout.leftMargin + this.size / 2,
+    layout.rightMargin - this.size / 2
   );
   this.y = random(
-    this.layout.topMargin + this.size / 2,
-    this.layout.bottomMargin - this.size / 2
+    layout.topMargin + this.size / 2,
+    layout.bottomMargin - this.size / 2
   );
   // Coordinates speed
   this.xspeed = speed * random([-1, 1]);
@@ -31,7 +30,11 @@ function bounchingBall(
   this.gender = gender;
   this.bankruptAmt = bankruptAmt;
 
+  /////////////////// Local Variables /////////////////////////
+
   let interactiveSpeed = 1;
+
+  /////////////////// Public Methods /////////////////////////
 
   // Draw balls on convas
   this.draw = function () {
@@ -57,14 +60,14 @@ function bounchingBall(
   // Condition to keep the balls within the canvas
   this.checkCondition = function () {
     if (
-      this.x > this.layout.rightMargin - this.size / 2 ||
-      this.x < this.layout.leftMargin + this.size / 2
+      this.x > layout.rightMargin - this.size / 2 ||
+      this.x < layout.leftMargin + this.size / 2
     ) {
       this.xspeed *= -1;
     }
     if (
-      this.y > this.layout.bottomMargin - this.size / 2 ||
-      this.y < this.layout.topMargin + this.size / 2
+      this.y > layout.bottomMargin - this.size / 2 ||
+      this.y < layout.topMargin + this.size / 2
     ) {
       this.yspeed *= -1;
     }

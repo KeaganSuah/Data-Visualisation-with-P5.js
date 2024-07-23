@@ -1,4 +1,6 @@
 function PayGapByJob2017() {
+  /////////////////// Public Variables /////////////////////////
+
   // Name for the visualisation to appear in the menu bar.
   this.name = "Pay gap by job: 2017";
 
@@ -9,19 +11,20 @@ function PayGapByJob2017() {
   // Property to represent whether data has been loaded.
   this.loaded = false;
 
-  // Graph properties.
-  this.pad = 20;
-  this.dotSizeMin = 15;
-  this.dotSizeMax = 40;
-
   // Title to display above the plot.
   this.title = "Pay Gap by job 2017 quadrant chart";
 
-  // Load number of controls user has on the data
-  this.controlsLabel = 0;
+  // Reset the data table for new data visualisation
+  this.dataHeaders = ["Industry", "Female", "Pay Gap"];
+  this.dataList = [];
+  this.gridLayout = [0.6, 0.2, 0.2];
 
-  // Declare for variables in objects for Private Methods
-  var self = this;
+  /////////////////// Local Variables /////////////////////////
+
+  // Graph properties.
+  let pad = 20;
+  let dotSizeMin = 15;
+  let dotSizeMax = 40;
 
   /////////////////// Public Methods /////////////////////////
 
@@ -41,11 +44,7 @@ function PayGapByJob2017() {
   };
 
   this.setup = function () {
-    // Reset the data table for new data visualisation
-    this.dataHeaders = ["Industry", "Female", "Pay Gap"];
-    this.dataList = [];
-    this.gridLayout = [0.6, 0.2, 0.2];
-    operation.refreshData(this.dataHeaders);
+    dataVisualisationTools.refreshData(this.dataHeaders);
   };
 
   this.destroy = function () {};
@@ -59,13 +58,13 @@ function PayGapByJob2017() {
     background(255);
 
     // Draw the title above the plot.
-    this.drawTitle();
+    drawTitle();
 
     // Draw the axes.
-    this.addAxes();
+    addAxes();
 
     // Display points hovered
-    operation.listDisplayData(this.dataList, this.gridLayout);
+    dataVisualisationTools.listDisplayData(this.dataList, this.gridLayout);
 
     // Get data from the table object.
     let jobs = this.data.getColumn("job_subtype");
@@ -112,27 +111,15 @@ function PayGapByJob2017() {
       );
 
       ellipse(
-        map(
-          propFemale[i],
-          propFemaleMin,
-          propFemaleMax,
-          this.pad,
-          width - this.pad
-        ),
+        map(propFemale[i], propFemaleMin, propFemaleMax, pad, width - pad),
         map(
           payGap[i],
           payGapMin,
           payGapMax,
-          height - operation.height - this.pad,
-          this.pad
+          height - dataVisualisationTools.height - pad,
+          pad
         ),
-        map(
-          numJobs[i],
-          numJobsMin,
-          numJobsMax,
-          this.dotSizeMin,
-          this.dotSizeMax
-        )
+        map(numJobs[i], numJobsMin, numJobsMax, dotSizeMin, dotSizeMax)
       );
 
       // When points hovered, show breakdown details
@@ -168,7 +155,13 @@ function PayGapByJob2017() {
     }
   };
 
-  this.addAxes = function () {
+  /////////////////// Private Methods /////////////////////////
+  // These Methods below are done by myself (Keagan Suah)
+
+  // Declare for variables in objects for Private Methods
+  var self = this;
+
+  let addAxes = function () {
     // Add quadrant onto the axis
     quadrant();
 
@@ -177,31 +170,28 @@ function PayGapByJob2017() {
     // Add vertical line.
     line(
       width / 2,
-      0 + this.pad,
+      0 + pad,
       width / 2,
-      height - operation.height - this.pad - 20
+      height - dataVisualisationTools.height - pad - 20
     );
 
     // Add horizontal line.
     line(
-      0 + this.pad,
-      (height - operation.height) / 2,
-      width - this.pad,
-      (height - operation.height) / 2
+      0 + pad,
+      (height - dataVisualisationTools.height) / 2,
+      width - pad,
+      (height - dataVisualisationTools.height) / 2
     );
   };
 
-  this.drawTitle = function () {
+  let drawTitle = function () {
     fill(0);
     noStroke();
     textAlign("center", "center");
 
     textSize(16);
-    text(this.title, width / 2, 10);
+    text(self.title, width / 2, 10);
   };
-
-  /////////////////// Private Methods /////////////////////////
-  // These Methods below are done by myself (Keagan Suah)
 
   let colourIntensifier = function (
     payGap,
@@ -252,20 +242,20 @@ function PayGapByJob2017() {
     distance = dist(
       mouseX,
       mouseY,
-      map(propFemale, propFemaleMin, propFemaleMax, self.pad, width - self.pad),
+      map(propFemale, propFemaleMin, propFemaleMax, pad, width - pad),
       map(
         payGap,
         payGapMin,
         payGapMax,
-        height - operation.height - self.pad,
-        self.pad
+        height - dataVisualisationTools.height - pad,
+        pad
       )
     );
 
     // when mouse is on the points, it passes the condition
     if (
       distance <
-      map(numJobs, numJobsMin, numJobsMax, self.dotSizeMin, self.dotSizeMax) / 2
+      map(numJobs, numJobsMin, numJobsMax, dotSizeMin, dotSizeMax) / 2
     ) {
       // Array of data belonging to the point currently being hovered
       let hoverArray = [
@@ -273,7 +263,10 @@ function PayGapByJob2017() {
         `${propFemale.toFixed(2)}%`,
         `${payGap.toFixed(2)}`,
       ];
-      self.dataList = operation.mouseHoverTable(hoverArray, self.gridLayout);
+      self.dataList = dataVisualisationTools.mouseHoverTable(
+        hoverArray,
+        self.gridLayout
+      );
     }
   };
 
@@ -283,34 +276,34 @@ function PayGapByJob2017() {
     // Top-Left Quadrant
     fill(0, 0, 255, 50);
     rect(
-      self.pad,
-      self.pad,
-      width / 2 - self.pad,
-      (height - operation.height) / 2 - self.pad
+      pad,
+      pad,
+      width / 2 - pad,
+      (height - dataVisualisationTools.height) / 2 - pad
     );
     // Top-Right Quadrant
     fill(128, 0, 128, 50);
     rect(
       width / 2,
-      self.pad,
-      width / 2 - self.pad,
-      (height - operation.height) / 2 - self.pad
+      pad,
+      width / 2 - pad,
+      (height - dataVisualisationTools.height) / 2 - pad
     );
     // Bottom-Left Quadrant
     fill(255, 165, 0, 50);
     rect(
-      self.pad,
-      (height - operation.height) / 2,
-      width / 2 - self.pad,
-      (height - operation.height) / 2 - self.pad - 20
+      pad,
+      (height - dataVisualisationTools.height) / 2,
+      width / 2 - pad,
+      (height - dataVisualisationTools.height) / 2 - pad - 20
     );
     // Bottom-Left Quadrant
     fill(255, 192, 203, 50);
     rect(
       width / 2,
-      (height - operation.height) / 2,
-      width / 2 - self.pad,
-      (height - operation.height) / 2 - self.pad - 20
+      (height - dataVisualisationTools.height) / 2,
+      width / 2 - pad,
+      (height - dataVisualisationTools.height) / 2 - pad - 20
     );
 
     // Add Quadrant boxes label
@@ -321,28 +314,28 @@ function PayGapByJob2017() {
     text(
       "Male-Dominated, Higher Male Pay",
       width / 4,
-      (height - operation.height) / 4
+      (height - dataVisualisationTools.height) / 4
     );
     // Top-Right Quadrant
     fill(0, 0, 55);
     text(
       "Female-Dominated, Higher Male Pay",
       3 * (width / 4),
-      (height - operation.height) / 4
+      (height - dataVisualisationTools.height) / 4
     );
     // Bottom-Left Quadrant
     fill(0, 0, 55);
     text(
       "Male-Dominated, Higher Female Pay",
       width / 4,
-      3 * ((height - operation.height) / 4)
+      3 * ((height - dataVisualisationTools.height) / 4)
     );
     // Bottom-Left Quadrant
     fill(0, 0, 55);
     text(
       "Female-Dominated, Higher Female Pay",
       3 * (width / 4),
-      3 * ((height - operation.height) / 4)
+      3 * ((height - dataVisualisationTools.height) / 4)
     );
   };
 }

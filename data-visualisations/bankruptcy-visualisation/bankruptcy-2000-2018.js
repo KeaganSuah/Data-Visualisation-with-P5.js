@@ -1,6 +1,7 @@
 // This extension was inspired by the interview with the pro for the data visualisation where they show dynamic bouncing ball data visualisation. I only got the inspiration for the design, but the code was design entire by myself(Keagan Suah).
 function bankruptDyanmicBall() {
-  // Add global variables
+  /////////////////// Public Variables /////////////////////////
+
   // Name for the visualisation to appear in the menu bar.
   this.name = "Bankruptcy: 2000-2018";
 
@@ -10,13 +11,18 @@ function bankruptDyanmicBall() {
   // Title to display above the plot.
   this.title = "Bankruptcy Amount by Age & Sex: 2000-2018";
 
-  // Load number of controls user has on the data
-  this.controlsLabel = ["Filter Years", "Balls Animation", "Balls Speed"];
-
   // Property to represent whether data has been loaded.
   this.loaded = false;
 
-  // Private variables
+  // Load number of controls user has on the data
+  this.controlsLabel = ["Filter Years", "Balls Animation", "Balls Speed"];
+
+  this.dataHeaders = ["Gender", "Age Group", "Year", "Bankrupt Amt"];
+  this.dataList = [];
+  this.gridLayout = [0.25, 0.25, 0.25, 0.25];
+
+  /////////////////// Local Variables /////////////////////////
+
   // status for the balls to bounce or to freeze on screen
   let bounceStatus = true;
 
@@ -29,13 +35,13 @@ function bankruptDyanmicBall() {
   let previousYear = 2000;
 
   // Layout object to store all common plot layout parameters and methods.
-  this.layout = {
+  let layout = {
     marginSize: marginSize,
     // Locations of margin positions. Left and bottom have double margin // size due to axis and tick labels.
     leftMargin: marginSize * 2,
     rightMargin: width - marginSize,
     topMargin: marginSize,
-    bottomMargin: height - operation.height - marginSize * 2,
+    bottomMargin: height - dataVisualisationTools.height - marginSize * 2,
     plotWidth: function () {
       return this.rightMargin - this.leftMargin;
     },
@@ -64,10 +70,7 @@ function bankruptDyanmicBall() {
     textSize(16);
 
     // Reset the data table for new data visualisation
-    this.dataHeaders = ["Gender", "Age Group", "Year", "Bankrupt Amt"];
-    this.dataList = [];
-    this.gridLayout = [0.25, 0.25, 0.25, 0.25];
-    operation.refreshData(this.dataHeaders);
+    dataVisualisationTools.refreshData(this.dataHeaders);
 
     // Get the Largest amount and smallest amount
     let maxAmount = MinMaxAmt(this.data, 0, max);
@@ -95,8 +98,8 @@ function bankruptDyanmicBall() {
         }
         // Ball dataHeaders
         let bankruptAmt = bankruptAmtByYear[i];
-        let size = mapAmtSize(bankruptAmt, minAmount, maxAmount);
-        let speed = mapAmtSpeed(bankruptAmt, minAmount, maxAmount);
+        let size = map(bankruptAmt, minAmount, maxAmount, 50, 150);
+        let speed = map(bankruptAmt, minAmount, maxAmount, 2, 0.1);
         let ageText = this.data.columns.slice(1)[i];
         yearList.push(
           new bounchingBall(
@@ -106,7 +109,7 @@ function bankruptDyanmicBall() {
             gender,
             bankruptAmt,
             ageText,
-            this.layout
+            layout
           )
         );
       }
@@ -135,7 +138,7 @@ function bankruptDyanmicBall() {
     background(255);
 
     // Draw the title above the plot.
-    this.drawTitle();
+    drawTitle();
 
     let filterValue = this.yearFilter.value();
     let years = this.data.getColumn(0);
@@ -156,7 +159,7 @@ function bankruptDyanmicBall() {
         }
         // Two loops to prevent the balls to overlap with the data
         for (let i = 0; i < this.data.getColumnCount() - 1; i++) {
-          // Push the data into the operation data table when points hovered
+          // Push the data into the dataVisualisationTools data table when points hovered
           ballHover(this.ball, years[j], j, i);
         }
       }
@@ -166,29 +169,29 @@ function bankruptDyanmicBall() {
     previousYear = filterValue;
 
     // Display points hovered
-    operation.listDisplayData(this.dataList, this.gridLayout);
+    dataVisualisationTools.listDisplayData(this.dataList, this.gridLayout);
 
     // Draw control labels
-    operation.listControlLabel(this.controlsLabel);
-  };
-
-  // Draw the standardise title on the top of the data visualisation
-  this.drawTitle = function () {
-    fill(0);
-    noStroke();
-    textAlign("center", "center");
-    textSize(16);
-    text(
-      this.title,
-      this.layout.plotWidth() / 2 + this.layout.leftMargin,
-      this.layout.topMargin - this.layout.marginSize / 2
-    );
+    dataVisualisationTools.listControlLabel(this.controlsLabel);
   };
 
   /////////////////// Private Methods /////////////////////////
 
   // Declare for variables in objects for Private Methods
   var self = this;
+
+  // Draw the standardise title on the top of the data visualisation
+  let drawTitle = function () {
+    fill(0);
+    noStroke();
+    textAlign("center", "center");
+    textSize(16);
+    text(
+      self.title,
+      layout.plotWidth() / 2 + layout.leftMargin,
+      layout.topMargin - layout.marginSize / 2
+    );
+  };
 
   // Get the max amount among the years, age groups and gender, using Higher Order Function
   let MinMaxAmt = function (data, value, fn) {
@@ -199,16 +202,6 @@ function bankruptDyanmicBall() {
       value = fn(value, valueInList);
     }
     return value;
-  };
-
-  // map value of max and min bankrupt amount to create a better range for ball size
-  let mapAmtSize = function (value, min, max) {
-    return map(value, min, max, 50, 150);
-  };
-
-  // map value of max and min bankrupt amount to create a better range for ball speed, bigger amount will have slower speed, small amount will have faster speed
-  let mapAmtSpeed = function (value, min, max) {
-    return map(value, min, max, 2, 0.1);
   };
 
   // When ball hovered, it changes the details array into the data on the balls
@@ -226,7 +219,10 @@ function bankruptDyanmicBall() {
         currentBall.bankruptAmt,
       ];
 
-      self.dataList = operation.mouseHoverTable(hoverArray, self.gridLayout);
+      self.dataList = dataVisualisationTools.mouseHoverTable(
+        hoverArray,
+        self.gridLayout
+      );
     }
   };
 
@@ -235,8 +231,9 @@ function bankruptDyanmicBall() {
     // Create a select DOM element.
     self.yearFilter = createSelect();
     self.yearFilter.position(
-      operation.controlXmargin + operation.controlXaxis,
-      operation.labelHeight[0]
+      dataVisualisationTools.controlXmargin +
+        dataVisualisationTools.controlXaxis,
+      dataVisualisationTools.labelHeight[0]
     );
 
     // Fill the options with all bankruptcy years.
@@ -252,8 +249,9 @@ function bankruptDyanmicBall() {
   let createSpeedSlider = function () {
     self.speedSlider = createSlider(0.2, 3, 1, 0.2);
     self.speedSlider.position(
-      operation.controlXmargin + operation.controlXaxis,
-      operation.labelHeight[2]
+      dataVisualisationTools.controlXmargin +
+        dataVisualisationTools.controlXaxis,
+      dataVisualisationTools.labelHeight[2]
     );
   };
 
@@ -270,8 +268,9 @@ function bankruptDyanmicBall() {
   let createStopButton = function () {
     self.bounceButton = createButton("Start/Stop Bouncing");
     self.bounceButton.position(
-      operation.controlXmargin + operation.controlXaxis,
-      operation.labelHeight[1] - 2
+      dataVisualisationTools.controlXmargin +
+        dataVisualisationTools.controlXaxis,
+      dataVisualisationTools.labelHeight[1] - 2
     );
 
     // Call repaint() when the button is pressed.

@@ -1,7 +1,8 @@
 // Global variable to store the gallery object. The gallery object is a container for all the visualisations.
 let gallery;
-// Height of bottom operation display
-let operation;
+// Global variable to be assigned with the dataVisualisationToolss object
+let dataVisualisationTools;
+// Global variable of the canvas, which has to be accessed throughout all data visualisations
 var c;
 
 function setup() {
@@ -11,10 +12,10 @@ function setup() {
   // Create a new gallery object.
   gallery = new Gallery();
 
-  // Create a new Operation Object
-  operation = new Operation();
+  // Create a new dataVisualisationTools Object
+  dataVisualisationTools = new DataVisualisationTools();
 
-  c = createCanvas(1024, 576 + operation.height);
+  c = createCanvas(1024, 576 + dataVisualisationTools.height);
   c.parent("app");
 
   // Add the visualisation objects here.
@@ -36,12 +37,12 @@ function draw() {
   }
 }
 
-// To change the mouse click status to true so that the data will be registered into the data table in the operations object
+// To change the mouse click status to true so that the data will be registered into the data table in the dataVisualisationToolss object
 function mousePressed() {
-  operation.mouseClickStatus = true;
+  dataVisualisationTools.mouseClickStatus = true;
 }
 
-// reset the object operations variable
+// reset the object dataVisualisationToolss variable
 function mouseReleased() {
-  operation.mouseClickStatus = false;
+  dataVisualisationTools.mouseClickStatus = false;
 }
