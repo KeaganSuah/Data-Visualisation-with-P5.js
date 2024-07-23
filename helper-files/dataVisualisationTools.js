@@ -1,6 +1,7 @@
 // This dataVisualisationTools object is used to improve the overall UI/UX design of the data visualisation. This entire object is done by myself (Keagan Suah)
 function DataVisualisationTools() {
   /////////////////// Public Variables /////////////////////////
+
   // set the height of the dataVisualisationTools table
   this.height = 200;
   //   set the coordinates of the dataVisualisationTools table
@@ -19,17 +20,17 @@ function DataVisualisationTools() {
 
   /////////////////// Local Variables /////////////////////////
 
-  // to set the margin size for the plot
-  let marginSize = 35;
-
   // Nested array to keep array of data
-  let dataBreakdown = [];
+  let dataQueue = new Queue();
 
   // Array for data table headers
   let dataHeader = [];
 
   // Data breakdown table X axis for data visualisations to place their data
   let dataXaxis = this.x + 425;
+
+  // To keep track of previous click data, this prevents the data table to add in same data
+  let previousClicked = [];
 
   /////////////////// Public Methods /////////////////////////
 
@@ -77,16 +78,25 @@ function DataVisualisationTools() {
       }
     }
 
-    // Display text and data inside boxes
-    for (let j = 0; j < dataBreakdown.length; j++) {
-      displayTextRow(dataBreakdown[j], gridLayout, color(0), length, j + 1);
+    // Display the row of elements of the data the user has clicked
+    for (let j = 0; j < dataQueue.length(); j++) {
+      displayTextRow(
+        dataQueue.printQueue()[j],
+        gridLayout,
+        color(0),
+        length,
+        dataQueue.length() - j
+      );
     }
 
-    // Display Data Headers
+    // Display Data breakdown table header
     displayTextRow(dataHeader, gridLayout, color(255), length, 0);
 
-    // To add the datas inside the data table
-    dataQueueCondition(array);
+    // Only when points are clicked, array will not be empty and can proceed with function
+    if (!array.length == 0) {
+      // To add the datas inside the data table
+      dataQueueCondition(array);
+    }
 
     stroke(1);
   };
@@ -181,7 +191,9 @@ function DataVisualisationTools() {
   // Refresh the data breakdown table
   this.refreshData = function (array) {
     dataHeader = array;
-    dataBreakdown = [];
+    for (let i = 0; i <= dataQueue.length() + 1; i++) {
+      dataQueue.dequeue();
+    }
   };
 
   /////////////////// Private Methods /////////////////////////
@@ -230,6 +242,7 @@ function DataVisualisationTools() {
     );
   };
 
+  // Display the elements in the array on to the data table row base on the row number
   let displayTextRow = function (array, layout, colour, length, rowNumber) {
     // Display Header for Data Table
     let previousHeader = 0;
@@ -247,27 +260,34 @@ function DataVisualisationTools() {
 
   // Condition for the data points to be added into the table
   let dataQueueCondition = function (array) {
-    // Only when points are clicked, array will not be empty and can proceed with function
-    if (!array.length == 0) {
-      // To initalise the first data inside dataBreakdown Array
-      if (dataBreakdown.length == 0) {
-        dataBreakdown.push(array);
-      }
-      // For any other new data Clicked, add into the queue of data for the data table
-      else {
-        if (
-          dataBreakdown[0][0] != array[0] ||
-          dataBreakdown[0][1] != array[1]
-        ) {
-          // If the queue have reached max, add from the front and remove the last
-          if (dataBreakdown.length == 3) {
-            dataBreakdown.splice(0, 0, array);
-            dataBreakdown.pop();
-          } else {
-            dataBreakdown.splice(0, 0, array);
-          }
+    // To initalise the first data inside dataQueue Array
+    if (dataQueue.isEmpty()) {
+      dataQueue.enqueue(array);
+      previousClicked = array;
+    }
+    // For any other new data Clicked, add into the queue of data for the data table
+    else {
+      if (compareArrays(array)) {
+        // If the queue have reached max, add from the front and remove the last
+        if (dataQueue.length() == 3) {
+          dataQueue.dequeue();
+          dataQueue.enqueue(array);
+          previousClicked = array;
+        } else {
+          dataQueue.enqueue(array);
+          previousClicked = array;
         }
       }
     }
+  };
+
+  // To compare the previous array and currently clicked array to see if its the same
+  let compareArrays = function (array) {
+    for (let i = 0; i < array.length; i++) {
+      if (array[i] != previousClicked[i]) {
+        return true;
+      }
+    }
+    return false;
   };
 }
