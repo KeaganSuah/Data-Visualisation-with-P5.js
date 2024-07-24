@@ -40,11 +40,11 @@ function TechDiversityGender() {
   };
 
   // Middle of the plot: for 50% line.
-  let midX = layout.plotWidth() / 2 + layout.leftMargin;
+  const midX = layout.plotWidth() / 2 + layout.leftMargin;
 
   // Default visualisation colours.
-  let femaleColour = color(255, 0, 0);
-  let maleColour = color(0, 255, 0);
+  const femaleColour = color(255, 0, 0);
+  const maleColour = color(0, 255, 0);
 
   /////////////////// Public Methods /////////////////////////
 

@@ -24,15 +24,15 @@ function ClimateChange() {
   /////////////////// Local Variables /////////////////////////
 
   // Create the margin gap for data visualisation
-  let marginSize = 35;
+  const marginSize = 35;
 
   // Names for each axis.
-  let xAxisLabel = "year";
+  const xAxisLabel = "year";
   const drawLeftTitle = "℃";
 
   // Layout object to store all common plot layout parameters and
   // methods.
-  let layout = {
+  const layout = {
     marginSize: marginSize,
 
     // Locations of margin positions. Left and bottom have double margin
@@ -365,6 +365,7 @@ function ClimateChange() {
         dataVisualisationTools.controlXaxis,
       dataVisualisationTools.labelHeight[0]
     );
+    dataVisualisationTools.designDOM(self.startSlider);
 
     self.endSlider = createSlider(min + 1, max, max, 1);
     self.endSlider.position(
@@ -372,5 +373,6 @@ function ClimateChange() {
         dataVisualisationTools.controlXaxis,
       dataVisualisationTools.labelHeight[1]
     );
+    dataVisualisationTools.designDOM(self.endSlider);
   };
 }

@@ -21,7 +21,11 @@ class Queue {
 
   // Return the length of the queue
   length() {
-    return this.items.length;
+    if (this.isEmpty()) {
+      return "Empty";
+    } else {
+      return this.items.length;
+    }
   }
 
   // return true if the queue is empty.

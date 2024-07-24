@@ -27,12 +27,19 @@ function DataVisualisationTools() {
   let dataHeader = [];
 
   // Data breakdown table X axis for data visualisations to place their data
-  let dataXaxis = this.x + 425;
+  const dataXaxis = this.x + 425;
 
   // To keep track of previous click data, this prevents the data table to add in same data
   let previousClicked = [];
 
   /////////////////// Public Methods /////////////////////////
+
+  // Standardise the DOM object design
+  this.designDOM = function (domObject) {
+    domObject.style("z-index", "2");
+    domObject.style("width", "200px");
+    domObject.style("font-size", "16px");
+  };
 
   // Draw title of the data visualisation at the top
   this.drawTitle = function (title) {
@@ -59,7 +66,7 @@ function DataVisualisationTools() {
 
   // To display and list out all the data in the data breakdown table
   this.listDisplayData = function (array, gridLayout) {
-    let length = 495;
+    const length = 495;
     displayData();
 
     // Display Industry and values
@@ -104,7 +111,8 @@ function DataVisualisationTools() {
     // Only when points are clicked, array will not be empty and can proceed with function
     if (!array.length == 0) {
       // To add the datas inside the data table
-      dataQueueCondition(array);
+      // dataQueueCondition(array);
+      dataQueueSwitch(array);
     }
 
     stroke(1);
@@ -115,8 +123,8 @@ function DataVisualisationTools() {
     cursor(HAND);
 
     // Variables for the mouse Hover Table
-    let length = 330;
-    let height = 88;
+    const length = 330;
+    const height = 88;
     let displayX = mouseX + 10;
     let displayY = mouseY + 10;
 
@@ -200,9 +208,7 @@ function DataVisualisationTools() {
   // Refresh the data breakdown table
   this.refreshData = function (array) {
     dataHeader = array;
-    for (let i = 0; i <= dataQueue.length() + 1; i++) {
-      dataQueue.dequeue();
-    }
+    emptyQueue(dataQueue.length(), dataQueue);
   };
 
   /////////////////// Private Methods /////////////////////////
@@ -267,29 +273,6 @@ function DataVisualisationTools() {
     }
   };
 
-  // Condition for the data points to be added into the table
-  let dataQueueCondition = function (array) {
-    // To initalise the first data inside dataQueue Array
-    if (dataQueue.isEmpty()) {
-      dataQueue.enqueue(array);
-      previousClicked = array;
-    }
-    // For any other new data Clicked, add into the queue of data for the data table
-    else {
-      if (compareArrays(array)) {
-        // If the queue have reached max, add from the front and remove the last
-        if (dataQueue.length() == 3) {
-          dataQueue.dequeue();
-          dataQueue.enqueue(array);
-          previousClicked = array;
-        } else {
-          dataQueue.enqueue(array);
-          previousClicked = array;
-        }
-      }
-    }
-  };
-
   // To compare the previous array and currently clicked array to see if its the same
   let compareArrays = function (array) {
     for (let i = 0; i < array.length; i++) {
@@ -298,5 +281,39 @@ function DataVisualisationTools() {
       }
     }
     return false;
+  };
+
+  // Condition for the data points to be added into the table
+  let dataQueueSwitch = function (array) {
+    switch (dataQueue.length()) {
+      // To initalise the first data inside dataQueue Array
+      case "Empty":
+        dataQueue.enqueue(array);
+        previousClicked = array;
+      // For any other new data Clicked, add into the queue of data for the data table
+      case 1:
+      case 2:
+        if (compareArrays(array)) {
+          dataQueue.enqueue(array);
+          previousClicked = array;
+        }
+      // When the queue have reached max, add from the front and remove the last
+      case 3:
+        if (compareArrays(array)) {
+          dataQueue.dequeue();
+          dataQueue.enqueue(array);
+          previousClicked = array;
+        }
+    }
+  };
+
+  // Recursive Function used to empty the data table queue when changing between visualisations
+  let emptyQueue = function (length, queue) {
+    if (queue.isEmpty()) {
+      return;
+    } else {
+      queue.dequeue();
+      emptyQueue(length - 1, queue);
+    }
   };
 }

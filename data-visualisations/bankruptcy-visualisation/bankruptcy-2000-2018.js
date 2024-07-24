@@ -27,7 +27,7 @@ function bankruptDyanmicBall() {
   let bounceStatus = true;
 
   // to set the margin size for the plot
-  let marginSize = 35;
+  const marginSize = 35;
 
   // Get the previous speed of the ball
   let previousSpeed = 0;
@@ -35,7 +35,7 @@ function bankruptDyanmicBall() {
   let previousYear = 2000;
 
   // Layout object to store all common plot layout parameters and methods.
-  let layout = {
+  const layout = {
     marginSize: marginSize,
     // Locations of margin positions. Left and bottom have double margin // size due to axis and tick labels.
     leftMargin: marginSize * 2,
@@ -131,6 +131,9 @@ function bankruptDyanmicBall() {
     this.bounceButton.remove();
     this.yearFilter.remove();
     this.speedSlider.remove();
+
+    // reset the status when changing visualisation
+    bounceStatus = true;
   };
 
   this.draw = function () {
@@ -219,6 +222,7 @@ function bankruptDyanmicBall() {
         dataVisualisationTools.controlXaxis,
       dataVisualisationTools.labelHeight[0]
     );
+    dataVisualisationTools.designDOM(self.yearFilter);
 
     // Fill the options with all bankruptcy years.
     let years = self.data.getColumn(0);
@@ -237,25 +241,29 @@ function bankruptDyanmicBall() {
         dataVisualisationTools.controlXaxis,
       dataVisualisationTools.labelHeight[2]
     );
+    dataVisualisationTools.designDOM(self.speedSlider);
   };
 
   // Function is to change the variable legendButton so that is alternate when it is called
   let stopBounceClick = function () {
     if (bounceStatus) {
       bounceStatus = false;
+      self.bounceButton.html("Start");
     } else {
       bounceStatus = true;
+      self.bounceButton.html("Stop");
     }
   };
 
   // Create the button that start and stop the ball movement animation
   let createStopButton = function () {
-    self.bounceButton = createButton("Start/Stop Bouncing");
+    self.bounceButton = createButton("Stop");
     self.bounceButton.position(
       dataVisualisationTools.controlXmargin +
         dataVisualisationTools.controlXaxis,
-      dataVisualisationTools.labelHeight[1] - 2
+      dataVisualisationTools.labelHeight[1] - 5
     );
+    dataVisualisationTools.designDOM(self.bounceButton);
 
     // Call repaint() when the button is pressed.
     self.bounceButton.mousePressed(stopBounceClick);

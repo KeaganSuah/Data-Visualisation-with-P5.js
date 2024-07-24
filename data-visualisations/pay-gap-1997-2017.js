@@ -18,14 +18,14 @@ function PayGapTimeSeries() {
   /////////////////// Local Variables /////////////////////////
 
   // Names for each axis.
-  let xAxisLabel = "year";
-  let yAxisLabel = "%";
+  const xAxisLabel = "year";
+  const yAxisLabel = "%";
 
-  let marginSize = 35;
+  const marginSize = 35;
 
   // Layout object to store all common plot layout parameters and
   // methods.
-  let layout = {
+  const layout = {
     marginSize: marginSize,
 
     // Locations of margin positions. Left and bottom have double margin
@@ -111,7 +111,7 @@ function PayGapTimeSeries() {
     // Plot all pay gaps between startYear and endYear using the width
     // of the canvas minus margins.
     let previous;
-    let numYears = this.endYear - this.startYear;
+    const numYears = this.endYear - this.startYear;
 
     // Loop over all rows and draw a line from the previous value to
     // the current.
@@ -136,7 +136,7 @@ function PayGapTimeSeries() {
 
         // The number of x-axis labels to skip so that only
         // numXTickLabels are drawn.
-        let xLabelSkip = ceil(numYears / layout.numXTickLabels);
+        const xLabelSkip = ceil(numYears / layout.numXTickLabels);
 
         // Draw the tick label marking the start of the previous year.
         if (i % xLabelSkip == 0) {

@@ -109,5 +109,6 @@ function TechDiversityRace() {
         dataVisualisationTools.controlXaxis,
       dataVisualisationTools.labelHeight[0]
     );
+    dataVisualisationTools.designDOM(self.select);
   };
 }

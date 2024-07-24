@@ -23,14 +23,14 @@ function NutrientsTimeSeries() {
   /////////////////// Local Variables /////////////////////////
 
   //Names for each axis
-  let xAxisLabel = "year";
-  let yAxisLabel = "%";
+  const xAxisLabel = "year";
+  const yAxisLabel = "%";
 
   // Colour list of each nutrient line
   let colors = [];
 
   // to set the margin size for the plot
-  let marginSize = 35;
+  const marginSize = 35;
 
   // Legend status if click or unclick
   let legendButton = false;
@@ -218,6 +218,7 @@ function NutrientsTimeSeries() {
 
             //draw the nutrients label
             fill(colors[i]);
+            textSize(16);
             text(
               title,
               width - 200,
@@ -295,10 +296,10 @@ function NutrientsTimeSeries() {
     textAlign("left", "center");
     if (show) {
       // Private variables for the legend, showing the axis and length
-      let boxWidth = 50;
-      let boxHeight = 15;
-      let x = 700;
-      let y = 50 + (boxHeight + 2) * i;
+      const boxWidth = 50;
+      const boxHeight = 15;
+      const x = 700;
+      const y = 50 + (boxHeight + 2) * i;
 
       fill(245);
       rect(x, y, 250, 20);
@@ -359,6 +360,7 @@ function NutrientsTimeSeries() {
   let createLegendButton = function () {
     self.button = createButton("Show Legend");
     self.button.position(width + 130, 12);
+    dataVisualisationTools.designDOM(self.button);
 
     // Call repaint() when the button is pressed.
     self.button.mousePressed(legendButtonClick);
@@ -386,6 +388,8 @@ function NutrientsTimeSeries() {
       dataVisualisationTools.labelHeight[1]
     );
 
+    dataVisualisationTools.designDOM(self.startSlider);
+
     // To reduce the ending range of years.
     self.endSlider = createSlider(
       self.startYear + 11,
@@ -398,6 +402,7 @@ function NutrientsTimeSeries() {
         dataVisualisationTools.controlXaxis,
       dataVisualisationTools.labelHeight[2]
     );
+    dataVisualisationTools.designDOM(self.endSlider);
   };
 
   // To create the filter option button to filter the nutrients, user can pick which nutrient they would like to see
@@ -406,6 +411,7 @@ function NutrientsTimeSeries() {
     self.filterNutrient = createSelect();
     self.filterNutrient.position(dataVisualisationTools.controlXmargin + x, y);
 
+    dataVisualisationTools.designDOM(self.filterNutrient);
     // Fill the options with all company names.
     let nutrients = self.data.rows;
 

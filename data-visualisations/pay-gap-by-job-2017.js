@@ -22,9 +22,9 @@ function PayGapByJob2017() {
   /////////////////// Local Variables /////////////////////////
 
   // Graph properties.
-  let pad = 20;
-  let dotSizeMin = 15;
-  let dotSizeMax = 40;
+  const pad = 20;
+  const dotSizeMin = 15;
+  const dotSizeMax = 40;
 
   /////////////////// Public Methods /////////////////////////
 
@@ -77,15 +77,15 @@ function PayGapByJob2017() {
     // Set ranges for axes.
     //
     // Use full 100% for x-axis (proportion of women in roles).
-    let propFemaleMin = 0;
-    let propFemaleMax = 100;
+    const propFemaleMin = 0;
+    const propFemaleMax = 100;
 
     // For y-axis (pay gap) use a symmetrical axis equal to the
     // largest gap direction so that equal pay (0% pay gap) is in the
     // centre of the canvas. Above the line means men are paid
     // more. Below the line means women are paid more.
-    let payGapMin = -20;
-    let payGapMax = 20;
+    const payGapMin = -20;
+    const payGapMax = 20;
 
     // Find smallest and largest numbers of people across all
     // categories to scale the size of the dots.

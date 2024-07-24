@@ -23,7 +23,7 @@ function covidMap() {
   /////////////////// Local Variables /////////////////////////
 
   // to set the margin size for the plot
-  let marginSize = 35;
+  const marginSize = 35;
 
   // Mappa related variables
   let myMap;
@@ -50,7 +50,7 @@ function covidMap() {
   let playCurrentIndex = 0;
 
   // Layout object to store all common plot layout parameters and methods.
-  let layout = {
+  const layout = {
     marginSize: marginSize,
     // Locations of margin positions. Left and bottom have double margin // size due to axis and tick labels.
     leftMargin: marginSize * 2,
@@ -204,6 +204,9 @@ function covidMap() {
     this.playButton.remove();
     this.legendButton.remove();
 
+    // reset the status when changing visualisation
+    playStatus = false;
+
     // To destroy the map when change to another visualisation
     select("#stage").html("<div id='app'></div>");
     //recreate a new canvas for the other app
@@ -315,7 +318,7 @@ function covidMap() {
         dataVisualisationTools.controlXaxis,
       dataVisualisationTools.labelHeight[1]
     );
-    self.dateFilter.style("z-index", "2");
+    dataVisualisationTools.designDOM(self.dateFilter);
 
     // Fill the options with all dates in the CSV for each country.
     let years = self.data.getColumn(1).slice(0, 27);
@@ -331,20 +334,22 @@ function covidMap() {
   let startStopClick = function () {
     if (playStatus) {
       playStatus = false;
+      self.playButton.html("Start");
     } else {
       playStatus = true;
+      self.playButton.html("Stop");
     }
   };
 
   // Create the button that start the data animation
   let createStartStopButton = function () {
-    self.playButton = createButton("Start/Stop");
+    self.playButton = createButton("Start");
     self.playButton.position(
       dataVisualisationTools.controlXmargin +
         dataVisualisationTools.controlXaxis,
-      dataVisualisationTools.labelHeight[2] - 2
+      dataVisualisationTools.labelHeight[2] - 5
     );
-    self.playButton.style("z-index", "2");
+    dataVisualisationTools.designDOM(self.playButton);
 
     // Call repaint() when the button is pressed.
     self.playButton.mousePressed(startStopClick);
@@ -375,20 +380,22 @@ function covidMap() {
   let legendClick = function () {
     if (legendState) {
       legendState = false;
+      self.legendButton.html("Display");
     } else {
       legendState = true;
+      self.legendButton.html("Close");
     }
   };
 
   // Create the button that display the legend
   let createLegendButton = function () {
-    self.legendButton = createButton("Instructions");
+    self.legendButton = createButton("Display");
     self.legendButton.position(
       dataVisualisationTools.controlXmargin +
         dataVisualisationTools.controlXaxis,
-      dataVisualisationTools.labelHeight[0] - 2
+      dataVisualisationTools.labelHeight[0] - 5
     );
-    self.legendButton.style("z-index", "2");
+    dataVisualisationTools.designDOM(self.legendButton);
 
     // Call repaint() when the button is pressed.
     self.legendButton.mousePressed(legendClick);
