@@ -57,9 +57,6 @@ function PayGapByJob2017() {
     // Draw the background for the visualisation
     background(255);
 
-    // Draw the title above the plot.
-    drawTitle();
-
     // Draw the axes.
     addAxes();
 
@@ -182,15 +179,6 @@ function PayGapByJob2017() {
       width - pad,
       (height - dataVisualisationTools.height) / 2
     );
-  };
-
-  let drawTitle = function () {
-    fill(0);
-    noStroke();
-    textAlign("center", "center");
-
-    textSize(16);
-    text(self.title, width / 2, 10);
   };
 
   let colourIntensifier = function (

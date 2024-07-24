@@ -34,6 +34,8 @@ function draw() {
   cursor(ARROW);
   if (gallery.selectedVisual != null) {
     gallery.selectedVisual.draw();
+    // Draw the title of each data visualisation
+    dataVisualisationTools.drawTitle(gallery.selectedVisual.title);
   }
 }
 

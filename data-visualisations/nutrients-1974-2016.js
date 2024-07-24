@@ -117,9 +117,6 @@ function NutrientsTimeSeries() {
     // Draw the background for the visualisation
     background(255);
 
-    // Draw the title above the plot.
-    drawTitle();
-
     // Prevent slider ranges overlapping.
     if (this.startSlider.value() >= this.endSlider.value() - 10) {
       this.startSlider.value(this.endSlider.value() - 11);
@@ -271,18 +268,6 @@ function NutrientsTimeSeries() {
 
   // Declare for variables in objects for Private Methods
   var self = this;
-
-  let drawTitle = function () {
-    fill(0);
-    noStroke();
-    textAlign("center", "center");
-    textSize(16);
-    text(
-      self.title,
-      layout.plotWidth() / 2 + layout.leftMargin,
-      layout.topMargin - layout.marginSize / 2
-    );
-  };
 
   let mapYearToWidth = function (value) {
     return map(

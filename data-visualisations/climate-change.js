@@ -9,7 +9,7 @@ function ClimateChange() {
   this.id = "climate-change";
 
   // Title to display above the plot.
-  this.title = "Climate Change Data, hover on the points for data";
+  this.title = "Climate Change: 1880 - 2018";
 
   // Property to represent whether data has been loaded.
   this.loaded = false;
@@ -139,9 +139,6 @@ function ClimateChange() {
       mapTemperatureToHeight.bind(this),
       1
     );
-
-    // Draw the title above the plot.
-    drawTitle();
 
     // Draw x and y axis.
     drawAxis(layout);
@@ -318,18 +315,6 @@ function ClimateChange() {
     let red = map(value, self.minTemperature, self.maxTemperature, 0, 255);
     let blue = 255 - red;
     return color(red, 0, blue, 100);
-  };
-
-  let drawTitle = function () {
-    fill(0);
-    noStroke();
-    textAlign("center", "center");
-
-    text(
-      self.title,
-      layout.plotWidth() / 2 + layout.leftMargin,
-      layout.topMargin - 20
-    );
   };
 
   // Private Method, design and display the points of the graph

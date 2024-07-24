@@ -34,6 +34,15 @@ function DataVisualisationTools() {
 
   /////////////////// Public Methods /////////////////////////
 
+  // Draw title of the data visualisation at the top
+  this.drawTitle = function (title) {
+    fill(0);
+    noStroke();
+    textAlign("center", "center");
+    textSize(18);
+    text(title, width / 2, 15);
+  };
+
   // To list out the label for all the controls
   this.listControlLabel = function (array) {
     controlPanel(array);

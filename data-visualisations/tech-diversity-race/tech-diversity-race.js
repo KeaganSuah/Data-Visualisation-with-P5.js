@@ -6,6 +6,9 @@ function TechDiversityRace() {
   // characters.
   this.id = "tech-diversity-race";
 
+  // Title to display above the plot.
+  this.title = "Tech Diversity: Race";
+
   // Property to represent whether data has been loaded.
   this.loaded = false;
 
@@ -38,7 +41,7 @@ function TechDiversityRace() {
       return;
     }
 
-    dataVisualisationToolsControl();
+    companyFilter();
 
     // Fill the options with all company names.
     let companies = this.data.columns;
@@ -71,12 +74,12 @@ function TechDiversityRace() {
     // Draw dataVisualisationTools label
     dataVisualisationTools.listControlLabel(this.controlsLabel);
 
-    // Make a title.
-    let title = "Employee diversity at " + companyName;
-
     // Get the value of the company we're interested in from the
     // select item.
     var companyName = this.select.value();
+
+    // Make a title.
+    title = "Employee diversity at " + companyName;
 
     // Get the column of raw data for companyName.
     let col = this.data.getColumn(companyName);
@@ -97,8 +100,8 @@ function TechDiversityRace() {
   // These Methods below are done by myself (Keagan Suah)
 
   // Control panel label and controls
-  // Display the dataVisualisationTools controls on the graph for users
-  let dataVisualisationToolsControl = function () {
+  // Display the companyFilter controls on the graph for users
+  let companyFilter = function () {
     // Create a select DOM element.
     self.select = createSelect();
     self.select.position(

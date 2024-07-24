@@ -137,9 +137,6 @@ function bankruptDyanmicBall() {
     // Draw the background for the visualisation
     background(255);
 
-    // Draw the title above the plot.
-    drawTitle();
-
     let filterValue = this.yearFilter.value();
     let years = this.data.getColumn(0);
     let updateSpeed = this.speedSlider.value();
@@ -179,19 +176,6 @@ function bankruptDyanmicBall() {
 
   // Declare for variables in objects for Private Methods
   var self = this;
-
-  // Draw the standardise title on the top of the data visualisation
-  let drawTitle = function () {
-    fill(0);
-    noStroke();
-    textAlign("center", "center");
-    textSize(16);
-    text(
-      self.title,
-      layout.plotWidth() / 2 + layout.leftMargin,
-      layout.topMargin - layout.marginSize / 2
-    );
-  };
 
   // Get the max amount among the years, age groups and gender, using Higher Order Function
   let MinMaxAmt = function (data, value, fn) {

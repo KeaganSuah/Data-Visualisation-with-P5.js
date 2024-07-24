@@ -38,10 +38,13 @@ function covidMap() {
     style: "http://{s}.tile.osm.org/{z}/{x}/{y}.png",
   };
 
+  // Use to keep the dates in an array
   let dateArray = [];
 
+  // Status of the legend, true to display false to undisplay
   let legendState = false;
 
+  // variables for the animation of the data visualisation
   let playStatus = false;
   let playCount = 60 * 2;
   let playCurrentIndex = 0;
@@ -212,6 +215,8 @@ function covidMap() {
     // Based on user input, set the date for the variable
     let userSelectDate = playCondition();
 
+    drawDateOnMap(userSelectDate);
+
     // Loop to draw every point object
     for (let point of this.covidPoints) {
       if (point.date == userSelectDate) {
@@ -229,14 +234,11 @@ function covidMap() {
     // Draw legend when display legend state is true
     drawLegend();
 
-    // Draw the title above the plot.
-    drawTitle();
-
     // Display points hovered
     dataVisualisationTools.listDisplayData(this.dataList, this.gridLayout);
 
     // Draw control labels
-    // dataVisualisationTools.listControlLabel(this.controlsLabel);
+    dataVisualisationTools.listControlLabel(this.controlsLabel);
   };
 
   // This public method is update the Z-index of changes made on the map
@@ -311,8 +313,9 @@ function covidMap() {
     self.dateFilter.position(
       dataVisualisationTools.controlXmargin +
         dataVisualisationTools.controlXaxis,
-      dataVisualisationTools.labelHeight[0]
+      dataVisualisationTools.labelHeight[1]
     );
+    self.dateFilter.style("z-index", "2");
 
     // Fill the options with all dates in the CSV for each country.
     let years = self.data.getColumn(1).slice(0, 27);
@@ -339,8 +342,9 @@ function covidMap() {
     self.playButton.position(
       dataVisualisationTools.controlXmargin +
         dataVisualisationTools.controlXaxis,
-      dataVisualisationTools.labelHeight[1] - 2
+      dataVisualisationTools.labelHeight[2] - 2
     );
+    self.playButton.style("z-index", "2");
 
     // Call repaint() when the button is pressed.
     self.playButton.mousePressed(startStopClick);
@@ -362,11 +366,6 @@ function covidMap() {
       } else {
         state = dateArray[playCurrentIndex];
         playCount--;
-        if (playCount < 60 * 2 && playCount > 60) {
-          fill(0);
-          textSize(80);
-          text(state, width - 280, height - 250);
-        }
       }
     }
     return state;
@@ -387,8 +386,9 @@ function covidMap() {
     self.legendButton.position(
       dataVisualisationTools.controlXmargin +
         dataVisualisationTools.controlXaxis,
-      dataVisualisationTools.labelHeight[2] - 2
+      dataVisualisationTools.labelHeight[0] - 2
     );
+    self.legendButton.style("z-index", "2");
 
     // Call repaint() when the button is pressed.
     self.legendButton.mousePressed(legendClick);
@@ -403,6 +403,15 @@ function covidMap() {
       let c = lerpColor(c1, c2, inter);
       stroke(c);
       line(i, y, i, y + h);
+    }
+  };
+
+  let drawDateOnMap = function (date) {
+    if (date != undefined) {
+      fill(0);
+      textSize(80);
+      textAlign("left");
+      text(date, width - 280, height - 250);
     }
   };
 
@@ -457,18 +466,5 @@ function covidMap() {
       textSize(30);
       text("Covid Visualisation Legends", width / 2, height / 6);
     }
-  };
-
-  // Draw title of the data visualisation at the top
-  let drawTitle = function () {
-    fill(0);
-    noStroke();
-    textAlign("center", "center");
-    textSize(16);
-    text(
-      self.title,
-      layout.plotWidth() / 2 + layout.leftMargin,
-      layout.topMargin - layout.marginSize / 2
-    );
   };
 }

@@ -80,9 +80,6 @@ function TechDiversityGender() {
     // Draw the background for the visualisation
     background(255);
 
-    // Draw the title above the plot.
-    drawTitle();
-
     // Draw Female/Male labels at the top of the plot.
     drawCategoryLabels();
 
@@ -158,17 +155,5 @@ function TechDiversityGender() {
 
   let mapPercentToWidth = function (percent) {
     return map(percent, 0, 100, 0, layout.plotWidth());
-  };
-
-  let drawTitle = function () {
-    fill(0);
-    noStroke();
-    textAlign("center", "center");
-
-    text(
-      self.title,
-      layout.plotWidth() / 2 + layout.leftMargin,
-      layout.topMargin - 20
-    );
   };
 }
