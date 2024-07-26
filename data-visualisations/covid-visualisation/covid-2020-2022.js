@@ -372,6 +372,7 @@ function covidMap() {
         playCurrentIndex += 1;
         if (playCurrentIndex == dateArray.length) {
           playStatus = false;
+          self.playButton.html("Start");
         }
       } else {
         state = dateArray[playCurrentIndex];
