@@ -26,14 +26,17 @@ function glowingPoints(
   /////////////////// Public Methods /////////////////////////
 
   this.draw = function () {
+    // Mappa.js to draw the points onto the map
     generatePointCoordinates();
 
+    // Collision method for the point object when mouse hovered
     glowConditions();
 
     // Condition to make sure no point object is drawn past the map
-    if (this.pointY < 566) {
+    if (this.pointY < 515) {
+      // Draw the glow of the point object
       drawGlow();
-
+      // Draw the point object itself
       drawPoints();
     }
   };

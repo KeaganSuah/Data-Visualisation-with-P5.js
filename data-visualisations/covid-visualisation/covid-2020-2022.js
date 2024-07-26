@@ -1,3 +1,4 @@
+// This is my third and personal extension for the data visualisation applications. It shows the world map as well as the point that indicate the covid amount of total cases, new cases and deaths that is within the points object.
 function covidMap() {
   /////////////////// Public Variables /////////////////////////
 
@@ -32,8 +33,8 @@ function covidMap() {
 
   // put all map options in a single object
   const options = {
-    lat: 33,
-    lng: 50,
+    lat: 23,
+    lng: 10,
     zoom: 1.5,
     style: "http://{s}.tile.osm.org/{z}/{x}/{y}.png",
   };
@@ -46,7 +47,9 @@ function covidMap() {
 
   // variables for the animation of the data visualisation
   let playStatus = false;
-  let playCount = 60 * 2;
+  // timer is set to half a second
+  let playCountReset = 60;
+  let playCount = playCountReset;
   let playCurrentIndex = 0;
 
   // Layout object to store all common plot layout parameters and methods.
@@ -203,6 +206,8 @@ function covidMap() {
     this.dateFilter.remove();
     this.playButton.remove();
     this.legendButton.remove();
+
+    dateArray = [];
 
     // reset the status when changing visualisation
     playStatus = false;
@@ -363,7 +368,7 @@ function covidMap() {
       playCurrentIndex = 0;
     } else {
       if (playCount <= 0) {
-        playCount += 60 * 2;
+        playCount += playCountReset;
         playCurrentIndex += 1;
         if (playCurrentIndex == dateArray.length) {
           playStatus = false;
@@ -413,12 +418,54 @@ function covidMap() {
     }
   };
 
+  // This draws the date on the map
   let drawDateOnMap = function (date) {
-    if (date != undefined) {
+    // variables within the function
+    let startX = 20;
+    let length = width - 40;
+    let endX = startX + length;
+    let lineY = 540;
+    const spaceBetween = length / (dateArray.length - 1);
+
+    // draw the main line
+    fill(0);
+    stroke(0);
+    strokeWeight(3);
+    line(startX, lineY, endX, lineY);
+
+    // To display the line and text
+    for (let i = 0; i < dateArray.length; i++) {
+      let textY = lineY - 18;
+      // Condition to alternate the height of the text displayed, alternate between above and below main line
+      switch (i % 2) {
+        case 0:
+          textY -= 38;
+        case 1:
+          textY += 38;
+      }
+      // Draw the line in between the main line
+      strokeWeight(3);
+      stroke(0);
+      line(
+        startX + spaceBetween * i,
+        lineY - 10,
+        startX + spaceBetween * i,
+        lineY + 10
+      );
+
+      // draw a yellow cirlce on the current date the user is viewing or the animation of the date it is currently on
+      if (date == dateArray[i]) {
+        strokeWeight(1);
+        fill(255, 255, 0);
+        ellipse(startX + spaceBetween * i, lineY, 15, 15);
+      }
+
+      // Display the text above or below the line, depanding on the switch condition
+      noStroke();
+      textSize(12);
       fill(0);
-      textSize(80);
-      textAlign("left");
-      text(date, width - 280, height - 250);
+      textAlign("center");
+      text(dateArray[i], startX + spaceBetween * i, textY);
     }
   };
 

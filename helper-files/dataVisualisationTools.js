@@ -283,7 +283,7 @@ function DataVisualisationTools() {
     return false;
   };
 
-  // Condition for the data points to be added into the table
+  // Condition for the data points to be added into the table, using switch as the content in the variable determines the different cases
   let dataQueueSwitch = function (array) {
     switch (dataQueue.length()) {
       // To initalise the first data inside dataQueue Array
