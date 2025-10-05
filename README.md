@@ -1,4 +1,4 @@
-# Data Visualisation Project
+# 📊 Data Visualisation Project
 
 An interactive web-based collection of data visualisations exploring social, environmental, and economic trends through creative coding and visual storytelling. Built using JavaScript and the p5.js framework, this project transforms complex datasets into engaging, intuitive experiences.
 
