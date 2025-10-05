@@ -71,6 +71,3 @@ Example topics include:
 * Using p5.js for dynamic, interactive rendering
 * Applying design thinking principles to data communication
 
-
-Would you like me to **export this as a ready-to-upload `README.md` file**?
-```
